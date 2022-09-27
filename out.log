@@ -3,13 +3,19 @@ VCFtools - v0.1.13
 (C) Adam Auton and Anthony Marcketta 2009
 
 Parameters as interpreted:
-	--vcf /wehisan/bioinf/lab_bahlo/users/robertson.e/R_package_github/FoundHaplo/temp/FAME1_test_cohort.snp.0.98.sample.0.98.vcf
+	--gzvcf /wehisan/bioinf/lab_bahlo/users/robertson.e/R_package_github/FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/ALL.chr8.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz
 	--chr 8
+	--to-bp 0
+	--keep /wehisan/bioinf/lab_bahlo/users/robertson.e/R_package_github/FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt
 	--recode-INFO-all
+	--max-alleles 2
+	--min-alleles 2
 	--recode
+	--remove-indels
+	--from-bp 0
 	--stdout
 
-After filtering, kept 7 out of 7 Individuals
+Using zlib version: 1.2.7
+Keeping individuals in 'keep' list
+After filtering, kept 2504 out of 2504 Individuals
 Outputting VCF file...
-After filtering, kept 3346 out of a possible 3346 Sites
-Run Time = 0.00 seconds
