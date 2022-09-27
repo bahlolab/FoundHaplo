@@ -1,0 +1,15 @@
+
+VCFtools - v0.1.13
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf /wehisan/bioinf/lab_bahlo/users/robertson.e/R_package_github/FoundHaplo/temp/FAME1_test_cohort.snp.0.98.sample.0.98.vcf
+	--chr 8
+	--recode-INFO-all
+	--recode
+	--stdout
+
+After filtering, kept 7 out of 7 Individuals
+Outputting VCF file...
+After filtering, kept 3346 out of a possible 3346 Sites
+Run Time = 0.00 seconds

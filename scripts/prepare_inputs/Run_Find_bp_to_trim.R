@@ -1,11 +1,11 @@
 args = commandArgs(trailingOnly=TRUE)
 
-input_vcf=args[1]
-dir_output=args[2]
-type=args[3]
-sample_names=args[4]
+input_vector=args[1]
+dir_geneticMap=args[2]
+output_file=args[3]
+
 
 library(FoundHaplo)
 
-Phasing_by_pedigree(input_vcf,dir_output,type,sample_names)
+Find_bp_to_trim(input_vector,dir_geneticMap,output_file)
 
