@@ -8,4 +8,17 @@ Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
 Encoding: UTF-8
+Imports:
+    pryr, 
+    plyr,
+    stringi,
+    stringr,
+    tibble,
+    dplyr,
+    data.table,
+    R.utils,
+    vcfR,
+    foreach,
+    doParallel
 LazyData: true
+RoxygenNote: 7.2.1
