@@ -25,7 +25,7 @@
 #' setwd( temp_dir )
 #' library(vcfR)
 #' write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz"))
-#' sample_info=data.frame(rbind(c("HG00362_1_HG00362_1,HG00362_2_HG00362_2","duo"),c("NA11920_NA11920,Affected_parent_NA11920_Affected_parent_NA11920,Unaffected_parent_NA11920_Unaffected_parent_NA11920","trio"),c("HG00313_1_HG00313_1,HG00313_2_HG00313_2","duo")))
+#' sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
 #' write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 #' Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
 #'                          dir_output = temp_dir,
@@ -35,7 +35,7 @@
 Phasing_by_pedigree=function(input_vcf,dir_output,sample_info_file)
 {
     sample_info=read.delim(sample_info_file,header=FALSE)
-    n.cores <- 10
+    n.cores <- min(nrow(sample_info),10)
 
     #create the cluster
     my.cluster <- parallel::makeCluster(

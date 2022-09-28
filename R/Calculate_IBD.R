@@ -37,23 +37,17 @@
 #' orig_dir <- getwd()
 #' temp_dir <- tempdir()
 #' setwd( temp_dir )
-#' write.table(trimmed_chr8_hg19_ALL.sites.2015_08,paste0(temp_dir,"/","hg19_ALL.sites.2015_08.txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-#' write.table(trimmed_chr8_hg19_AFR.sites.2015_08,paste0(temp_dir,"/","hg19_AFR.sites.2015_08.txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-#' write.table(trimmed_chr8_hg19_AMR.sites.2015_08,paste0(temp_dir,"/","hg19_AMR.sites.2015_08.txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-#' write.table(trimmed_chr8_hg19_EUR.sites.2015_08,paste0(temp_dir,"/","hg19_EUR.sites.2015_08.txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-#' write.table(trimmed_chr8_hg19_EAS.sites.2015_08,paste0(temp_dir,"/","hg19_EAS.sites.2015_08.txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-#' write.table(trimmed_chr8_hg19_SAS.sites.2015_08,paste0(temp_dir,"/","hg19_SAS.sites.2015_08.txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-#' write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf"))
-#' Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf"),
-#'                          dir_input_ref = temp_dir,
-#'                          dir_output = temp_dir,
-#'                          type="trio",
-#'                          sample_names = c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"))
+#' write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz"))
+#' sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
+#' write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
+#' Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
+#'                    dir_output = temp_dir,
+#'                    sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
 #' disease_file <-fread(paste0(temp_dir,"/",paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
 #' write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
 #' test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
 #' test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info,DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
-#' MAF=sapply(strsplit(disease_file$INFO,";",fixed=TRUE),"[[", 3)
+#' MAF=sapply(strsplit(disease_file$INFO,";",fixed=TRUE),"[[", 9)
 #' MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[", 2)
 #' disease_file=as.data.frame(cbind(disease_file[,c("#CHROM","POS","REF","ALT")],MAF,disease_file[,"h1"]))
 #' disease_file=disease_file[,c("#CHROM","POS","REF","ALT","MAF","h1")]
