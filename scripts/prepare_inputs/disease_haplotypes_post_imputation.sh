@@ -13,11 +13,16 @@ SAMPLE_INFO_FILE=$8 # Path to a tab delimitted .txt file with sample names and t
 #' For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
 #' For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
 
+
+module unload vcftools
+module unload bcftools
+module unload htslib
 module load vcftools
 module load bcftools
 module load htslib
 
-module load R/4.2.0 # load the R version with FoundHaplo
+module unload R
+module load R/4.2.0 # edit this line accordingly. load the R version with FoundHaplo
 
 Rscript $MAIN_PATH/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $MAIN_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37 $MAIN_PATH/temp/DCV_bp.txt
 START_BP=$(cut -f2 $MAIN_PATH/temp/DCV_bp.txt)

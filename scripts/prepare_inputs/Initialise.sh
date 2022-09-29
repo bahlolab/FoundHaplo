@@ -85,6 +85,9 @@ tar -xvf GenotypeHarmonizer-1.4.23-dist.tar.gz
 #download ANNOVAR using https://annovar.openbioinformatics.org/en/latest/user-guide/download/ by getting registerered
 
 
-#download VCFtools using https://vcftools.github.io/examples.html
+# VCFtools  https://vcftools.github.io/examples.html
 
-#download BCFtools using http://www.htslib.org/download/
+# BCFtools  http://www.htslib.org/download/
+
+# htslib http://www.htslib.org/download/
+

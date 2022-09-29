@@ -6,9 +6,15 @@ INPUT_VCF_BASE_NAME=$3 # example : FAME1_test_cohort.snp.0.98.sample.0.98.chr8
 CHROMOSOME=$4 # no "chr" prefix # example : 8
 DCV=$5 # example : "FAME1.chr8.119379052."
 
-
+module unload vcftools
+module unload bcftools
 module load vcftools
 module load bcftools
+
+
+module unload R
+module load R/4.2.0 # edit this line accordingly. load the R version with FoundHaplo
+
 
 Rscript $MAIN_PATH/scripts/prepare_inputs/Find_bp_to_trim.R $DCV $MAIN_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37 $MAIN_PATH/temp/DCV_bp.txt
 START_BP=$(cut -f2 $MAIN_PATH/temp/DCV_bp.txt)
