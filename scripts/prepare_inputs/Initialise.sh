@@ -32,32 +32,34 @@ wget --recursive --no-parent http://hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genome
 # 1000 Genomes sample names are in /FoundHaplo/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt, EUR.txt, AMR.txt, EAS.txt, SAS.txt and AFR.txt.
 
 # create control cohorts for the disease variant for all five super populations.
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/ALL
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/EUR
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/AMR
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/SAS
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/EAS
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/AFR
 
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/ALL/samples
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/EUR/samples
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/AMR/samples
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/SAS/samples
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/EAS/samples
-mkdir $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/AFR/samples
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant
 
-split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt  $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/ALL/samples/file
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/ALL
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AMR
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/SAS
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EAS
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AFR
 
-split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/EUR.txt  $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/EUR/samples/file
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/ALL/samples
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR/samples
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AMR/samples
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/SAS/samples
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EAS/samples
+mkdir $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AFR/samples
 
-split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/AMR.txt  $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/AMR/samples/file
+split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt  $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/ALL/samples/file
 
-split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/SAS.txt  $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/SAS/samples/file
+split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/EUR.txt  $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR/samples/file
 
-split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/EAS.txt  $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/EAS/samples/file
+split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_control_haplotypesG_haplotypes/1000G_haplotypes_samples_by_population/AMR.txt  $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_control_haplotypes/AMR/samples/file
 
-split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/AFR.txt  $MAIN_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_by_variant/AFR/samples/file
+split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/SAS.txt  $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/SAS/samples/file
+
+split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/EAS.txt  $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EAS/samples/file
+
+split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/AFR.txt  $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AFR/samples/file
 
 
 
