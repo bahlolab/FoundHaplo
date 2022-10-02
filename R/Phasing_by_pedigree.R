@@ -36,7 +36,7 @@
 Phasing_by_pedigree=function(input_vcf,dir_output,sample_info_file)
 {
     sample_info=read.delim(sample_info_file,header=FALSE)
-
+    chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
     if (nzchar(chk) && chk == "TRUE") {
       # use 2 cores in CRAN/Travis/AppVeyor
       n.cores <- 2
