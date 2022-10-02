@@ -1,2 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^docs$
+^Documentation$
+^example$
+^images$
+^input_files$
+^scripts$
+^temp$
