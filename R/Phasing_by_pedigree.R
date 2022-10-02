@@ -36,7 +36,7 @@
 Phasing_by_pedigree=function(input_vcf,dir_output,sample_info_file)
 {
     sample_info=read.delim(sample_info_file,header=FALSE)
-    n.cores <- min(nrow(sample_info),10)
+    n.cores <- min(nrow(sample_info),10,detectCores())
 
     #create the cluster
     my.cluster <- parallel::makeCluster(
