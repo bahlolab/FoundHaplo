@@ -27,5 +27,4 @@ setwd( temp_dir )
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
 Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),dir_geneticMap=temp_dir,output_file=paste0(temp_dir,"/DCV_bp.txt"))
 setwd( orig_dir )
-Edit the script if necessary
 }

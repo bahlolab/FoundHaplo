@@ -15,41 +15,41 @@
 #' write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
 #' Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),dir_geneticMap=temp_dir,output_file=paste0(temp_dir,"/DCV_bp.txt"))
 #' setwd( orig_dir )
-#' Edit the script if necessary
+
 
 
 Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
 {
     DCV_list=input_vector
-    
+
     positions=list()
     for(j in 1:length(DCV_list))
     {
-        
+
         DCV_adjusted=strsplit(DCV_list[j], ".",fixed=TRUE)
         DCV_adjusted=as.vector(unlist(DCV_adjusted,recursive = FALSE))
         chr=DCV_adjusted[2]
-        
+
         path=paste0(dir_geneticMap,"/genetic_map_GRCh37_",chr,".txt") # Edit this line depending on how "dir_geneticMap Path" is given
         recombination_map=read.delim(path)
         colnames(recombination_map)=c("Chromosome","position_bp","Rate.cM.Mb.","position_cM")
-        
+
         fun <- approxfun(recombination_map$position_bp,recombination_map$position_cM,ties=mean)
         DCV_cM=fun(DCV_adjusted[3])
-        
-        
+
+
         DCV_cM_left=DCV_cM-20
         DCV_cM_right=DCV_cM+20
-        
-        
+
+
         temp=(recombination_map$position_cM>as.numeric(DCV_cM_left))
         POS_DCV_cM_left=table(temp)["FALSE"]+1
         POS_DCV_cM_left=POS_DCV_cM_left-1
-        
+
         temp=(recombination_map$position_cM>as.numeric(DCV_cM_right))
         POS_RE_cM_right=table(temp)["FALSE"]+1
-        
-        
+
+
         a1=recombination_map$position_bp[POS_DCV_cM_left]
         a2=recombination_map$position_bp[POS_RE_cM_right]
         if(is.na(a1))
@@ -60,15 +60,15 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
         {
             a2=max(recombination_map$position_bp)
         }
-        
+
         positions[[j]]=c(a1,a2)
     }
-    
+
     positions_start=sapply(positions, "[[", 1)
     positions_end=sapply(positions, "[[",2)
-    
+
     final_file=as.data.frame(cbind(DCV_list,positions_start,positions_end))
-    
+
     write.table(final_file,output_file,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
   return(final_file)
 }
