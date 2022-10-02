@@ -15,6 +15,7 @@
 #' @import vcfR
 #' @import foreach
 #' @import doParallel
+#' @import parallel
 #' @importFrom plyr join
 #' @importFrom dplyr mutate_all
 #' @importFrom stringr str_count
@@ -234,5 +235,6 @@ Phasing_by_pedigree=function(input_vcf,dir_output,sample_info_file)
         write.table(data_file,paste0(dir_output,"/",sample_info[line,1],".vcf"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = TRUE,append=TRUE)
 
     })
+    parallel::stopCluster(my.cluster)
 }
 
