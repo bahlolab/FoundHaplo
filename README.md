@@ -14,4 +14,5 @@ see [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentati
 ## install using devtools packages
 ```bash
 devtools::install_github("bahlolab/FoundHaplo")
+git clone --depth=1 https://github.com/bahlolab/Foundhaplo.git
 ```
