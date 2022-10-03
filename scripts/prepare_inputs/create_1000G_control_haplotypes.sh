@@ -1,9 +1,10 @@
+#!/bin/bash
 # * Run this once for one DCV* 
-
+set -eu
 MAIN_PATH=$1
 DCV=$2
 CHROMOSOME=$3
-set -eu
+
 module unload R
 module load R/4.2.0 # edit this line accordingly. load the R version with FoundHaplo
 
