@@ -8,6 +8,7 @@ CHROMOSOME=$4 # no "chr" prefix # example: 8
 GENOTYPEHARMONIZER_PATH=$5
 PLINK_TOOL_PATH=$6
 
+set -eu
 
 module unload vcftools
 module unload htslib
