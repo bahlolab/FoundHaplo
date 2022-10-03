@@ -2,7 +2,7 @@
 % Please edit documentation in R/Generate_FH_score.R
 \name{Generate_FH_score}
 \alias{Generate_FH_score}
-\title{A wrapper function to generate FH_score and IBD details for each test/control - disease pair}
+\title{A wrapper function to generate FH score and IBD details for each test/control - disease pair}
 \usage{
 Generate_FH_score(
   DCV,

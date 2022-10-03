@@ -53,7 +53,6 @@ bcftools annotate -x ^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/A
 mkdir $MAIN_PATH/input_files/input_vcf_data/disease_haplotypes
 
 Rscript $MAIN_PATH/scripts/prepare_inputs/Run_Phasing_by_pedigree.R $MAIN_PATH/temp/ready.to.phase.vcf $MAIN_PATH/input_files/input_vcf_data/disease_haplotypes $SAMPLE_INFO_FILE
-bgzip -c $MAIN_PATH/input_files/input_vcf_data/disease_haplotypes $SAMPLE_INFO_FILE
 
 
 ls $MAIN_PATH/input_files/input_vcf_data/disease_haplotypes/*.vcf | xargs -n1 bgzip

@@ -85,7 +85,7 @@
 #' read.delim(list.files(paste0(temp_dir,"/4"))[1],header=FALSE)
 #' setwd(orig_dir)
 
-Generate_FH_score_test=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report)
+Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report)
 {
     gen_allele_mismatch_rate = 0.01 # genotype/imputation allele_mismatch rate allowed
     g1=gen_allele_mismatch_rate
@@ -133,20 +133,25 @@ Generate_FH_score_test=function(DCV,minor_allele_cutoff=0,imputation_quality_sco
     
     if(r2>0)
     {
-        
         R2=strsplit(fix_file_to_test$INFO,";",fixed=TRUE) # save all R^2 values
         
         keep_R2=grep("R2",R2)
         
         fix_file_to_test=fix_file_to_test[keep_R2,]
         
-        R2=sapply(strsplit(fix_file_to_test$INFO,";",fixed=TRUE),"[[", 3)
+        R2=strsplit(fix_file_to_test$INFO,";",fixed=TRUE) # save all R^2 values
+        R2_list=vector()
+        for(ii in 1:length(lengths(R2))){R2_list[ii]=R2[[ii]]  %>%  str_subset(pattern = "R2")}
+        R2=R2_list
+        R2=sapply(strsplit(R2,"=",fixed=TRUE),"[[",2)
         
-        R2=sapply(strsplit(R2,"=",fixed=TRUE),"[[", 2)
         fix_file_to_test$R2=R2
+        fix_file_to_test$R2=as.numeric(as.character(fix_file_to_test$R2))
         fix_file_to_test=subset(fix_file_to_test,fix_file_to_test$R2>=r2) #remove markers with R^2 < r2
         fix_file_to_test=as.data.frame(fix_file_to_test)
         fix_file_to_test=fix_file_to_test[,!(names(fix_file_to_test) %in% "R2")] # remove temorary column R2
+        
+
         
     }
     

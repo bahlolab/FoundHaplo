@@ -6,4 +6,5 @@
 ^images$
 ^input_files$
 ^scripts$
-^temp$
+^vignettes
+
