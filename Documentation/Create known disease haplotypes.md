@@ -12,9 +12,13 @@ Can merge as many samples from differnt families into a single VCF file as long 
 1. Run FoundHaplo/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh.
 
 ```bash
-FoundHaplo/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh MAIN_PATH INPUT_VCF_PATH INPUT_VCF_BASE_NAME CHROMOSOME GENOTYPEHARMONIZER_PATH PLINK_PATH VCFTOOLS_PATH
+MAIN_PATH=
+INPUT_VCF_PATH=
+INPUT_VCF_BASE_NAME=
+
+FoundHaplo/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh "$MAIN_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" CHROMOSOME GENOTYPEHARMONIZER_PATH PLINK_PATH VCFTOOLS_PATH
 ```
-Arguments are explained below,
+Set the variables as directed below:
 
 * MAIN_PATH : Path to FoundHaplo directory i.e path/FoundHaplo
 * INPUT_VCF_PATH :  Path to VCF file with individuals with known diease variants that can be pedigree phased.

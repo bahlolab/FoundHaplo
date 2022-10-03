@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Run as:
+# bash disease_haplotypes_pre_imputation.sh
+
+set -eu
 
 MAIN_PATH=$1 # path of FoundHaplo directory
 INPUT_PLINK_PATH=$2 # example: FoundHaplo/example

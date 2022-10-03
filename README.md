@@ -16,3 +16,8 @@ see [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentati
 devtools::install_github("bahlolab/FoundHaplo")
 git clone --depth=1 https://github.com/bahlolab/Foundhaplo.git
 ```
+
+
+```
+git clone --depth=1 https://github.com/bahlolab/Foundhaplo.git
+```
