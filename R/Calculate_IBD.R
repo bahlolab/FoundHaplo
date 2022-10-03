@@ -34,6 +34,7 @@
 #' @examples
 #' library(vcfR)
 #' library(data.table)
+#' library(dplyr)
 #' orig_dir <- getwd()
 #' temp_dir <- tempdir()
 #' setwd( temp_dir )

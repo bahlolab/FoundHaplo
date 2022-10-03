@@ -46,6 +46,7 @@ Genome built should be GRCh37 and genetic map in "dir_geneticMap" must have chro
 \examples{
 library(vcfR)
 library(data.table)
+library(dplyr)
 orig_dir <- getwd()
 temp_dir <- tempdir()
 setwd( temp_dir )
