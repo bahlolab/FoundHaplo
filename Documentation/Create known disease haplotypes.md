@@ -12,9 +12,16 @@ Can merge as many samples from differnt families into a single VCF file as long 
 1. Run FoundHaplo/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh.
 
 ```bash
-FoundHaplo/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh MAIN_PATH INPUT_VCF_PATH INPUT_VCF_BASE_NAME CHROMOSOME GENOTYPEHARMONIZER_PATH PLINK_PATH VCFTOOLS_PATH
+MAIN_PATH= 
+INPUT_VCF_PATH= 
+INPUT_VCF_BASE_NAME=
+CHROMOSOME=
+GENOTYPEHARMONIZER_PATH=
+PLINK_PATH= 
+FoundHaplo/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh "$MAIN_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$CHROMOSOME" "$GENOTYPEHARMONIZER_PATH" "$PLINK_PATH"
 ```
-Arguments are explained below,
+
+Set the variables as below,
 
 * MAIN_PATH : Path to FoundHaplo directory i.e path/FoundHaplo
 * INPUT_VCF_PATH :  Path to VCF file with individuals with known diease variants that can be pedigree phased.
@@ -22,30 +29,35 @@ Arguments are explained below,
 * CHROMOSOME: Chromosome relevant to the interested disease variant without "chr" prefix
 * GENOTYPEHARMONIZER_PATH : Path to GenotypeHarmonizer.jar
 * PLINK_PATH : Path to Plink executable 
-* VCFTOOLS_PATH : Path to vcftoools executable 
 
 2. Impute the generated VCF file in MAIN_PATH/temp/ using Michigan imputation server with 1000G phase 3 as refereance panel and hg19 built. Do not filter for imutation quality yet. 
 
 3. Create disease haplotypes using the imputed VCF file generated in step 2 and FoundHaplo/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh. 
 ```bash
-FoundHaplo/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh MAIN_PATH INPUT_VCF_PATH INPUT_VCF_BASE_NAME CHROMOSOME DCV VCFTOOLS_PATH ANNOVAR_PATH ANNOVAR_HUMANDB_DIR_PATH BCFTOOLS_PATH TYPE SAMPLE_NAMES
+MAIN_PATH= 
+INPUT_VCF_PATH= 
+INPUT_VCF_BASE_NAME=
+CHROMOSOME=
+DCV=
+ANNOVAR_PATH=
+ANNOVAR_HUMANDB_DIR_PATH= 
+SAMPLE_INFO_FILE=
+FoundHaplo/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh "$MAIN_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$CHROMOSOME" "$DCV"  "$ANNOVAR_PATH" "$ANNOVAR_HUMANDB_DIR_PATH" "$SAMPLE_INFO_FILE"
+
 ```
 
-Arguments are explained below,
+Set the variables as below,
 
 * MAIN_PATH : Path to FoundHaplo directory i.e path/FoundHaplo
 * INPUT_VCF_PATH :  Path to imputed VCF file with individuals with known diease variants that can be pedigree phased.
 * INPUT_VCF_BASE_NAME : File name of the imputed INPUT_VCF 
 * CHROMOSOME : Chromosome relevant to the interested disease variant without "chr" prefix
 * DCV : Name the disease variant of interest in the format of disease.chr.position. i.e FAME1.chr8.119379052.
-* VCFTOOLS_PATH : Path to vcftoools executable 
 * ANNOVAR_PATH : Path to ANNOVAR directory
 * ANNOVAR_HUMANDB_DIR_PATH : Path to ANNOVAR database
-* BCFTOOLS_PATH : Path to bcftoools executable
-* TYPE : Type of phasing , "trio" or "duo"
-* SAMPLE_NAMES : Give sample names to phase in specific order,
-               If TYPE is "trio", SAMPLE_NAMES="affected offspring" "affected parent" "unaffected parent"
-               If TYPE is "duo", SAMPLE_NAMES="affected individual 1" "affected individual 2"
+* SAMPLE_INFO_FILE : Path to a tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the VCF file in mentioned order.   
+For the type "trio", affected-offspring,affected-parent,unaffected-parent trio  
+For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
 
 The disease_haplotypes_post_imputation.sh will create a seperate file with VCF columns for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/, additionaly it will remove multiallelic SNPs using gnomAD frequency files downlaoded with ANNOVAR. 
 
