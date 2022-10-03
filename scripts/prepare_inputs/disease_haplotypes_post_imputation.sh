@@ -9,6 +9,7 @@ ANNOVAR_PATH=$6 # path o ANNOVAR directory
 ANNOVAR_HUMANDB_DIR_PATH=$7 # path to ANNOVAR databases
 
 SAMPLE_INFO_FILE=$8 # Path to a tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the VCF file in mentioned order. # example : FoundHaplo/sample_info.txt
+set -eu
 
 #' For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
 #' For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
