@@ -3,8 +3,10 @@
 #' Example hg19 HapMap genetic map for chromosome 8
 #'
 #' @docType data
-#'
-#' @usage data(genetic_map_chr8)
-#'
+#' @name genetic_map_chr8
+#' @usage data(genetic_map_GRCh37_chr8)
+#' @format ## `genetic_map_GRCh37_chr8`
 #' @keywords datasets
-#' @export
+"genetic_map_GRCh37_chr8"
+
+

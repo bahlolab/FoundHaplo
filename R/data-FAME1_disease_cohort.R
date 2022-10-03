@@ -3,8 +3,9 @@
 #' Example disease VCF files simulated from 1000 Genomes phase 3
 #'
 #' @docType data
-#'
+#' @name FAME1_disease_cohort
 #' @usage data(FAME1_disease_cohort)
-#'
+#' @format ## `FAME1_disease_cohort`
 #' @keywords datasets
-#' @export
+"FAME1_disease_cohort"
+

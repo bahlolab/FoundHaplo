@@ -3,8 +3,11 @@
 #' Example control cohort simulated from 1000 Genomes phase 3
 #'
 #' @docType data
-#'
+#' @name FAME1_control_cohort
 #' @usage data(FAME1_control_cohort)
-#'
+#' @format ## `FAME1_control_cohort`
 #' @keywords datasets
-#' @export
+"FAME1_control_cohort"
+
+
+
