@@ -38,8 +38,8 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
         DCV_cM=fun(DCV_adjusted[3])
 
 
-        DCV_cM_left=DCV_cM-20
-        DCV_cM_right=DCV_cM+20
+        DCV_cM_left=DCV_cM-10
+        DCV_cM_right=DCV_cM+10
 
 
         temp=(recombination_map$position_cM>as.numeric(DCV_cM_left))

@@ -1,4 +1,4 @@
-#' A wrapper function to generate FH_score and IBD details for each test/control - disease pair
+#' A wrapper function to generate FH score and IBD details for each test/control - disease pair
 #'
 #' @description
 #' This function save FH score and IBD details for each test/control - disease pair in a .txt file in "dir_to_save_report"
