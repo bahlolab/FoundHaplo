@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -eu
 
 MAIN_PATH=$1 # path of FoundHaplo directory
 INPUT_VCF_PATH=$2 # imputed vcf file path # example: FoundHaplo/temp/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz
@@ -6,7 +7,7 @@ INPUT_VCF_BASE_NAME=$3 # example : FAME1_test_cohort.snp.0.98.sample.0.98.chr8
 CHROMOSOME=$4 # no "chr" prefix # example : 8
 DCV=$5 # example : "FAME1.chr8.119379052."
 
-set -eu
+
 module unload vcftools
 module unload bcftools
 module load vcftools
