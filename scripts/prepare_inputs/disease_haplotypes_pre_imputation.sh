@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -eu
 
 MAIN_PATH=$1 # path of FoundHaplo directory
 INPUT_PLINK_PATH=$2 # example: FoundHaplo/example
@@ -8,7 +9,6 @@ CHROMOSOME=$4 # no "chr" prefix # example: 8
 GENOTYPEHARMONIZER_PATH=$5
 PLINK_TOOL_PATH=$6
 
-set -eu
 
 module unload vcftools
 module unload htslib
