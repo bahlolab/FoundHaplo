@@ -5,13 +5,13 @@ VCFtools - v0.1.13
 Parameters as interpreted:
 	--gzvcf /wehisan/bioinf/lab_bahlo/users/robertson.e/Plan2/disease_hap1/SCN1B/Bron/michigan.imputed/vcf/SCN1B.vcf.gz
 	--chr 19
-	--to-bp 44286473
+	--to-bp 59097160
 	--recode-INFO-all
 	--max-alleles 2
 	--min-alleles 2
 	--recode
 	--remove-indels
-	--from-bp 28707015
+	--from-bp 253938
 	--stdout
 
 Using zlib version: 1.2.7

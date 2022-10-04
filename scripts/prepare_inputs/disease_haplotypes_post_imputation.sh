@@ -43,14 +43,14 @@ $ANNOVAR_HUMANDB_DIR_PATH -buildver hg19 \
 
 
 # $OUTPUT_FILENAME_BASE.hg19_multianno.vcf has annotated INFO based on gnomAD
-bcftools annotate -x ^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $MAIN_PATH/temp/ready.to.phase.vcf
+bcftools annotate -x ^INFO/R2,^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $MAIN_PATH/temp/ready.to.phase.vcf
 
 # phase by pedigrees
 
 
 # Rscript will create seperate VCF files with known disease haplotypes
 
-mkdir $MAIN_PATH/input_files/input_vcf_data/disease_haplotypes
+mkdir -p $MAIN_PATH/input_files/input_vcf_data/disease_haplotypes
 
 Rscript $MAIN_PATH/scripts/prepare_inputs/Run_Phasing_by_pedigree.R $MAIN_PATH/temp/ready.to.phase.vcf $MAIN_PATH/input_files/input_vcf_data/disease_haplotypes $SAMPLE_INFO_FILE
 

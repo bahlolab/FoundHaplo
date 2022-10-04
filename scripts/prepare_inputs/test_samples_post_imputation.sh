@@ -23,12 +23,12 @@ START_BP=$(cut -f2 $MAIN_PATH/temp/DCV_bp.txt)
 END_BP=$(cut -f3 $MAIN_PATH/temp/DCV_bp.txt)
 
 
-mkdir $MAIN_PATH/input_files/input_vcf_data
-mkdir $MAIN_PATH/input_files/input_vcf_data/test_cohort
+mkdir -p $MAIN_PATH/input_files/input_vcf_data
+mkdir -p $MAIN_PATH/input_files/input_vcf_data/test_cohort
 
 vcftools --gzvcf $INPUT_VCF_PATH --chr $CHROMOSOME --remove-indels --min-alleles 2 --max-alleles 2 --from-bp $START_BP --to-bp $END_BP --recode --recode-INFO-all --stdout | bgzip -c > $MAIN_PATH/input_files/input_vcf_data/test_cohort/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz
 
-mkdir $MAIN_PATH/input_files/input_vcf_data/test_cohort/samples
+mkdir -p $MAIN_PATH/input_files/input_vcf_data/test_cohort/samples
 
 bcftools query -l $MAIN_PATH/input_files/input_vcf_data/test_cohort/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz > $MAIN_PATH/input_files/input_vcf_data/test_cohort/samples/samples.txt
 cd $MAIN_PATH/input_files/input_vcf_data/test_cohort/samples
