@@ -1,4 +1,6 @@
-Below R function generates FH_score values for each test/control - disease pair by taking user input shown below.
+Generate_FH_score is the main wrapper function that generates FH score values for each test/control - disease pair by taking user input shown below.
+
+* Note: Generate_FH_score function only works on the command line as it uses system() function to query from VCFtools and BCFtools. Hence recomended to use a nextflow pipeline as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md).
 
 ```bash
 Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report)
