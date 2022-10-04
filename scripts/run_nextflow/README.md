@@ -1,17 +1,17 @@
 # Example
 
-This folder contains an example of running FoundHaplo for two disease variants i) FAME1 variant on chromosome 8, SAMD12 that causes Familial Adult Myclonic Epilepsy ii) GEFS+ variant on chromosome 19, SCN1B that causes General Epilepsy with Febrile Seizures Plus type 1. 
+This folder contains an example nextflow scripts of running FoundHaplo for FAME1 variant on chromosome 8, SAMD12 that causes Familial Adult Myclonic Epilepsy 
 
 Example data are simulated using 1000 Genomes WGS haplotypes
 
-*Test VCF files are predominantely European and are in /Example/Cohort_A/FAME1/ and /Example/Cohort_A/SCN1B_GEFS+/
+*Test VCF files are predominantely European and must be created in  /FoundHaplo/input_files/input_vcf_data/test_cohort/  using /FoundHaplo/scripts/prepare_inputs/
 
-*Disease sample VCF files are in /Example/Derived_disease_haplotypes/FAME1/Input_disease_VCF and /Example/Derived_disease_haplotypes/SCN1B_GEFS+/Input_disease_VCF
-    Phase the disease sample VCF files using [R/Phasing_by_pedigree.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Phasing_by_pedigree.R), and save the output in /Example/Derived_disease_haplotypes/FAME1/Disease_haplotypes and /Example/Derived_disease_haplotypes/SCN1B_GEFS+/Disease_haplotypes 
+*Disease sample VCF files must be created in /FoundHaplo/input_files/input_vcf_data/disease_haplotypes/ using /FoundHaplo/scripts/prepare_inputs/
 
-*Control cohort VCF files are in /Example/Control_cohort/EUR/ for both disease variants. 
+*Control cohort VCF files must be created in /FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant
 
-*Install FoundHaplo with devtools::install_github("bahlolab/FoundHaplo") and run nextflow pipeline in Example/Cohort_A/FAME1/Run_FH_Nextflow/ and Example/Cohort_A/SCN1B_GEFS+/Run_FH_Nextflow/
+*Install FoundHaplo with devtools::install_github("bahlolab/FoundHaplo") and run nextflow pipeline using /FoundHaplo/scripts/prepare_inputs/run_nextflow/run_nextflow.nf
+Edit all teh scripts as necesssary. 
 
 nextflow - 
 nextflow.config - Configuration file
