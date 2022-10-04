@@ -11,5 +11,6 @@ Publicly available software tools required to run FoundHaplo
 * [Plink](https://zzz.bwh.harvard.edu/plink/plink2.shtml) is used to perform quality control steps on input VCF data. 
 * [ANNOVAR](https://annovar.openbioinformatics.org/en/latest/user-guide/download/) tool is used to annotate population frequencies form gnomAD data.
 * [VCFtools](https://vcftools.github.io/downloads.html) and [BCFtools](http://www.htslib.org/download/) to perform queries on VCF files 
+* [Nextflow](https://www.nextflow.io/) to parallely run FoundHaplo.
 
 Use FoundHaplo/scripts/prepare_inputs/Initialise.sh as a guide to download the public data files into the relevant directories and software tools required by FoundHaplo

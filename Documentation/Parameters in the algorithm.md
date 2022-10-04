@@ -9,7 +9,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
 
 1. **DCV** Name of the disease causing variant of interest i.e FAME1.chr8.119379052 
 2. **minor_allele_cutoff** The minimum minor allele frequncy of SNPs allowed, we recommend this to be 0 
-3. **imputation_quality_score_cutoff_test** Minimum allowed imputation quality which is R-squared. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise 
+3. **imputation_quality_score_cutoff_test** Minimum allowed imputation quality cut off, which is R-squared for the test cohort. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise 
 4. **frequency_type** population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc 
 5. **dir_geneticMap** directory path to genetic_map_HapMapII_GRCh37 files
 6. **dir_disease_files** directory path of the disease haplotype VCFs gzipped
