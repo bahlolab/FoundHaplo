@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Make sure you have installd FoundHaplo in R
-
+# Make sure you have installed FoundHaplo in R
+#### Do not change the code in between
 MAIN_PATH=$1
 #Publicly available reference files required to run FoundHaplo
 
@@ -61,10 +61,9 @@ split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000
 
 split -l 100 -d --additional-suffix=.txt $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/AFR.txt  $MAIN_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AFR/samples/file
 
+#### Do not change the code in between
 
-
-
-
+# change paths of software tools as necessary
 
 # 1) GenotypeHarmonizer tool is used to harmomize input VCF data to 1000Genomes.
 # 2) Plink is used to perform quality control steps on input VCF data.
@@ -93,3 +92,4 @@ tar -xvf GenotypeHarmonizer-1.4.23-dist.tar.gz
 
 # htslib http://www.htslib.org/download/
 
+# nextflow https://www.nextflow.io/
