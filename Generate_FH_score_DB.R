@@ -51,33 +51,33 @@
 #' @import data.table
 #' @import R.utils
 #' @import vcfR
+#' @import RMariaDB
+#' @import DBI
 #' @export
 #' @examples
-#' orig_dir <- getwd()
-#' setwd(tempdir())
-#' file.remove(list.files())
-#' if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} #to save disease haplotypes
-#' if(!dir.exists(paste0(tempdir(), "/2"))){dir.create(paste0(tempdir(), "/2"))} #to save test_list of sample names in .txt files
-#' if(!dir.exists(paste0(tempdir(), "/3"))){dir.create(paste0(tempdir(), "/3"))}  # dir_controls_file
-#' if(!dir.exists(paste0(tempdir(), "/4"))){dir.create(paste0(tempdir(), "/4"))} # to save IBD results
-#' temp_dir <- tempdir() # To carryout the main workload
-#' library(vcfR)
-#' write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz"))
-#' sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
-#' write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-#' Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
-#'                   dir_output = paste0(temp_dir,"/1"),
-#'                   sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
-#' write.vcf(FAME1_test_cohort,paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"))
-#' write.table(file00,paste0(temp_dir,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-#' write.vcf(FAME1_control_cohort,paste0(temp_dir,"/3/","FAME1.chr8.vcf.gz"))
-#' Generate_FH_score(DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_dir,"/2/","file00.txt"),data_type="test",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"))
-#' setwd(paste0(temp_dir,"/4"))
-#' read.delim(list.files(paste0(temp_dir,"/4"))[1],header=FALSE)
-#' setwd(orig_dir)
 
-Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report)
+
+Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report)
 {
+  db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_pwd,dbname=db_name,unix.socket=unix_socket)
+
+  #select mutation_id
+  q1=dbSendQuery(db, paste0("SELECT * FROM PathogenicMutations where disease_id=","\"",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),"\"",";"))
+  PathogenicMutations <- dbFetch(q1,)
+  mutation_id=PathogenicMutations$mutation_id
+
+  # select individuals with the given mutation_id
+  q2=dbSendQuery(db, paste0("SELECT * FROM IndividualsWithKnownMutations where mutation_id=","\"",mutation_id,"\"",";"))
+  list_of_disease_individuals <- dbFetch(q2,)
+  list_of_disease_individuals=list_of_disease_individuals$individual_id
+
+  # select sample ids for respective individuals
+
+  c1=capture.output(cat(paste0("SELECT * FROM Samples where individual_id"," in ","("),paste0(list_of_disease_individuals[1:(length(list_of_disease_individuals)-1)],","),list_of_disease_individuals[length(list_of_disease_individuals)],paste0(")",";")))
+  q3=dbSendQuery(db,c1)
+  sample_id=dbFetch(q3,)
+  sample_id=sample_id$sample_id
+
   gen_allele_mismatch_rate = 0.01 # genotype/imputation allele_mismatch rate allowed
   g1=gen_allele_mismatch_rate
 
@@ -86,7 +86,6 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
   #add disease sample names in order
 
 
-  list_of_disease_individuals=list.files(dir_disease_files,full.names = TRUE)
 
 
   tmpfile <- tempfile('1', tempdir())
@@ -94,39 +93,39 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
 
   if(data_type!="controls"  & !grepl(".gz", test_file, fixed = TRUE)) # if we are testing the test individuals of interest
   {
-      
-      command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",tmpfile,".vcf")
-      system(command) # invoke a system command that will create a temporary vcf file only with the selected sample ids.
-      
-      fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
+
+    command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",tmpfile,".vcf")
+    system(command) # invoke a system command that will create a temporary vcf file only with the selected sample ids.
+
+    fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
   }
   if(data_type!="controls"  & grepl(".gz", test_file, fixed = TRUE)) # if we are testing the test individuals of interest
   {
-      
-      command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",tmpfile,".vcf")
-      system(command) # invoke a system command that will create a temporary vcf file only with the selected sample ids.
-      
-      fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
+
+    command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",tmpfile,".vcf")
+    system(command) # invoke a system command that will create a temporary vcf file only with the selected sample ids.
+
+    fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
   }
-  
+
   if(data_type=="controls" & !grepl(".gz", test_file, fixed = TRUE)) # if the test file is not gzipped
   {
-      
-      command=paste0("cut -f1-9 ",test_file, " > " ,tmpfile,".vcf") # save the first 9 fixed columns of the vcf file in a temporary file
-      system(command)
-      
-      fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
-      
+
+    command=paste0("cut -f1-9 ",test_file, " > " ,tmpfile,".vcf") # save the first 9 fixed columns of the vcf file in a temporary file
+    system(command)
+
+    fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
+
   }
-  
+
   if(data_type=="controls" & grepl(".gz", test_file, fixed = TRUE)) # if the test file is gzipped
   {
-      
-      command=paste0("zcat ",test_file," | ","cut -f1-9 ", " > " ,tmpfile,".vcf") # save the first 9 fixed columns of the vcf file in a temporary file
-      system(command)
-      
-      fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
-      
+
+    command=paste0("zcat ",test_file," | ","cut -f1-9 ", " > " ,tmpfile,".vcf") # save the first 9 fixed columns of the vcf file in a temporary file
+    system(command)
+
+    fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
+
   }
 
 
@@ -156,44 +155,41 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
 
 
 
-  for(j in 1:length(list_of_disease_individuals))
+  for(j in sample_id)
   {
+
+
+    q4=dbSendQuery(db, paste0("SELECT * FROM Genotypes where sample_id=","\"",sample_id,"\"",";"))
+    Genotypes <- dbFetch(q4,)
+
+
+    q5=dbSendQuery(db,"SELECT * FROM GeneticMarkers;") # will have to change this as the database grow, cant load the entire table to R
+    GeneticMarkers <- dbFetch(q5,)
+
+    Genotypes_markers=merge(GeneticMarkers, Genotypes, by=c("marker_id"))
+
+#   c1=capture.output(cat(paste0("SELECT * FROM GeneticMarkers where marker_id"," in ","("),paste0(Genotypes$marker_id[1:(length(Genotypes$marker_id)-1)],","),Genotypes$marker_id[length(Genotypes$marker_id)],paste0(")",";")))
+
+
     #load the relevant controls file and the relevant population frequency
     if(frequency_type=="ALL")
     {
-      MAF_list=vector()
-      database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
-      MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_raw")}
-      MAF=MAF_list
-      MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
+
+      MAF=Genotypes_markers[,"maf_gnomad_ALL"]
 
       controls_file <-fread(paste0(dir_controls_file,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
     }
     if(frequency_type=="AFR")
     {
 
-      MAF_list=vector()
-      database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
-      MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_afr")}
-      MAF=MAF_list
-      MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
-
+      MAF=Genotypes_markers[,"maf_gnomad_AFR"]
       controls_file <-fread(paste0(dir_controls_file,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
     }
 
     if(frequency_type=="EUR")
     {
 
-      MAF_list=vector()
-      database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
-      MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_nfe")}
-      MAF=MAF_list
-      MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
-
-
+      MAF=Genotypes_markers[,"maf_gnomad_NFE"]
       controls_file <-fread(paste0(dir_controls_file,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
 
     }
@@ -201,13 +197,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
     if(frequency_type=="AMR")
     {
 
-      MAF_list=vector()
-      database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
-      MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_amr")}
-      MAF=MAF_list
-      MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
-
+      MAF=Genotypes_markers[,"maf_gnomad_AMR"]
       controls_file <-fread(paste0(dir_controls_file,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
 
     }
@@ -215,49 +205,31 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
     if(frequency_type=="EAS")
     {
 
-      MAF_list=vector()
-      database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
-      MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_eas")}
-      MAF=MAF_list
-      MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
-
+      MAF=Genotypes_markers[,"maf_gnomad_EAS"]
       controls_file <-fread(paste0(dir_controls_file,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
 
     }
 
     if(frequency_type=="SAS")
     {
-      MAF_list=vector()
-      database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
-      MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_sas")}
-      MAF=MAF_list
-      MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
-
+      MAF=Genotypes_markers[,"maf_gnomad_SAS"]
       controls_file <-fread(paste0(dir_controls_file,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
 
     }
 
+    database_file=as.data.frame(cbind(Genotypes_markers[,c("chr","position_hg19","ref","alt")],MAF,Genotypes_markers[,"genotype"]))
 
-    database_file=as.data.frame(cbind(database_file[,c("#CHROM","POS","REF","ALT")],MAF,database_file[,"h1"]))
-    database_file=database_file[,c("#CHROM","POS","REF","ALT","MAF","h1")]
-    h1=substr(database_file[,"h1"],0,1) # h1 is the disease haplotype. get the first allele of every marker in the VCF file. both alleles are the same in database_file
+    q6=dbSendQuery(db, paste0("SELECT * FROM Samples where sample_id=","\"",j,"\"",";"))
+    disease_individual <- dbFetch(q6,)
+    disease_individual=disease_individual$external_lab_id
 
-    database_file[,"h1"]=h1
-
-    temp=str_count(list_of_disease_individuals[j], "/")
-
-    disease_individual = sapply(strsplit(list_of_disease_individuals[j],"/",fixed=TRUE),"[[", temp+1)
-
-    colnames(database_file)[ncol(database_file)]=disease_individual # add the name of the disease individual into the database_file
-
+     colnames(database_file)=c("#CHROM","POS", "REF","ALT","MAF",disease_individual)
 
     database_file$MAF=as.numeric(database_file$MAF)
     database_file=subset(database_file,database_file$MAF>0)
 
-
     database_file[,"#CHROM"]=fix_file_to_test[,"#CHROM"][1]
+
 
     # extract positions common to database and test cohort
     common_markers=merge(database_file, fix_file_to_test, by=c("#CHROM","POS", "REF","ALT"))
@@ -265,8 +237,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
 
 
     # extract positions common to database , test cohort and control cohort
-
-        controls_file[,"#CHROM"]=fix_file_to_test[,"#CHROM"][1]
+    controls_file[,"#CHROM"]=fix_file_to_test[,"#CHROM"][1]
 
     common_markers=merge(fix, controls_file, by=c("#CHROM","POS", "REF","ALT"))
 
@@ -454,6 +425,10 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
   }
 
   system(paste0("rm -rf ",tmpfile,".vcf")) # delete the temporary vcf file created
+  dbHasCompleted(q1,q2,q3,q4,q5,q6)
+  dbClearResult(q1,q2,q3,q4,q5,q6)
+  #close the connection once everythings done
+  dbDisconnect(db)
 
 
 }
