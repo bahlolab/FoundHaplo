@@ -55,10 +55,16 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
         if(is.na(a1))
         {
             a1=min(recombination_map$position_bp)
+            left_length=DCV_cM-fun(a1)
+            print("warning : Chromosome ends before +10cM to the left")
+            print(paste0("allowing only ",left_length,"cM to the left"))
         }
         if(is.na(a2))
         {
             a2=max(recombination_map$position_bp)
+           right_length=fun(a2)-DCV_cM
+            print("warning : Chromosome ends before +10cM to the right")
+            print(paste0("allowing only ",right_length,"cM to the right"))
         }
 
         positions[[j]]=c(a1,a2)

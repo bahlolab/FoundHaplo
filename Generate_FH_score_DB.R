@@ -57,7 +57,7 @@
 #' @examples
 
 
-Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report)
+Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report)
 {
   db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_pwd,dbname=db_name,unix.socket=unix_socket)
 
