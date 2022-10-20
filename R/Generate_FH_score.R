@@ -164,7 +164,15 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       MAF_list=vector()
       database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
       MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_raw")}
+      
+      # if annotated from ANNOVAR
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "AF_raw"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_raw")}
+      }       # if annotated from 100G
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "ALL"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "ALL")}
+      }
+      
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -176,7 +184,15 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       MAF_list=vector()
       database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
       MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_afr")}
+           # if annotated from ANNOVAR
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "AF_afr"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_afr")}
+      }     # if annotated from 1000G
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "AFR"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AFR")}
+      }
+      
+      
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -189,7 +205,15 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       MAF_list=vector()
       database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
       MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_nfe")}
+     
+           # if annotated from ANNOVAR
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "AF_nfe"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_nfe")}
+      }     # if annotated from 1000G
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "EUR"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "EUR")}
+      }
+      
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -204,7 +228,15 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       MAF_list=vector()
       database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
       MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_amr")}
+           # if annotated from ANNOVAR
+     if(length(MAF[[1]]  %>%  str_subset(pattern = "AF_amr"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_amr")}
+      }     # if annotated from 1000G
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "AMR"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AMR")}
+      }
+
+      
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -218,7 +250,16 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       MAF_list=vector()
       database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
       MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_eas")}
+           # if annotated from ANNOVAR
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "AF_eas"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_eas")}
+      }     # if annotated from 1000G
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "EAS"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "EAS")}
+      }
+
+      
+      
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -231,7 +272,16 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       MAF_list=vector()
       database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
       MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_sas")}
+
+        # if annotated from ANNOVAR
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "AF_sas"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_sas")}
+      }  # if annotated from 1000G
+      if(length(MAF[[1]]  %>%  str_subset(pattern = "SAS"))>0){
+          for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "SAS")}
+      }
+
+      
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
