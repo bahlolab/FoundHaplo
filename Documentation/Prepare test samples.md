@@ -4,21 +4,21 @@
 
 ```bash
 MAIN_PATH= 
-INPUT_VCF_PATH= 
-INPUT_VCF_BASE_NAME=
+INPUT_PLINK_PATH= 
+INPUT_PLINK_BASE_NAME=
 CHROMOSOME=
 GENOTYPEHARMONIZER_PATH=
-PLINK_PATH= 
+PLINK_TOOL_PATH= 
 FoundHaplo/scripts/prepare_inputs/test_samples_pre_imputation.sh "$MAIN_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$CHROMOSOME" "$GENOTYPEHARMONIZER_PATH" "$PLINK_PATH"
 ```
 Set the variables as below,
 
 * MAIN_PATH : Path to FoundHaplo directory i.e path/FoundHaplo
-* INPUT_VCF_PATH :  Path to VCF file with individuals with known diease variants that can be pedigree phased.
-* INPUT_VCF_BASE_NAME : File name of the INPUT_VCF 
+* INPUT_PLINK_PATH :  Path to VCF file with individuals with known diease variants that can be pedigree phased.
+* INPUT_PLINK_BASE_NAME : File name of the INPUT_VCF 
 * CHROMOSOME: Chromosome relevant to the interested disease variant without "chr" prefix
 * GENOTYPEHARMONIZER_PATH : Path to GenotypeHarmonizer.jar
-* PLINK_PATH : Path to Plink executable 
+* PLINK_TOOL_PATH : Path to Plink executable 
 
 2. Impute the generated VCF file in MAIN_PATH/temp/ using Michigan imputation server with 1000G phase 3 as reference panel and hg19 built. Do not filter for imutation quality yet. 
 

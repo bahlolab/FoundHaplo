@@ -2,7 +2,7 @@
 set -eu
 
 MAIN_PATH=$1 # path of FoundHaplo directory
-INPUT_VCF_FILE=$2 # imputed vcf file path # example: FoundHaplo/temp/FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz
+INPUT_VCF_PATH=$2 # imputed vcf file path # example: FoundHaplo/temp/FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz
 INPUT_VCF_BASE_NAME=$3 # example : FAME1_disease_cohort.snp.0.98.sample.0.98.chr8
 CHROMOSOME=$4 # no "chr" prefix # example : 8
 DCV=$5 # example : "FAME1.chr8.119379052."
@@ -29,7 +29,7 @@ Rscript $MAIN_PATH/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $MAIN_PATH/
 START_BP=$(cut -f2 $MAIN_PATH/temp/DCV_bp.txt)
 END_BP=$(cut -f3 $MAIN_PATH/temp/DCV_bp.txt)
 
-vcftools --gzvcf $INPUT_VCF_FILE --chr $CHROMOSOME --remove-indels --min-alleles 2 --max-alleles 2 --from-bp $START_BP --to-bp $END_BP --recode --recode-INFO-all --stdout | bgzip -c > $MAIN_PATH/temp/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz
+vcftools --gzvcf $INPUT_VCF_PATH --chr $CHROMOSOME --remove-indels --min-alleles 2 --max-alleles 2 --from-bp $START_BP --to-bp $END_BP --recode --recode-INFO-all --stdout | bgzip -c > $MAIN_PATH/temp/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz
 
 ANNOVAR_SCRIPT=$ANNOVAR_PATH/table_annovar.pl
 
@@ -43,7 +43,8 @@ $ANNOVAR_HUMANDB_DIR_PATH -buildver hg19 \
 
 
 # $OUTPUT_FILENAME_BASE.hg19_multianno.vcf has annotated INFO based on gnomAD
-bcftools annotate -x ^INFO/R2,^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $MAIN_PATH/temp/ready.to.phase.vcf
+bcftools annotate -x ^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $MAIN_PATH/temp/ready.to.phase.vcf
+
 
 # phase by pedigrees
 
