@@ -62,5 +62,7 @@ For the type "duo" or "related", affected-offspring,affected-parent,unaffected-p
 The disease_haplotypes_post_imputation.sh will create a seperate file with VCF columns for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/, additionaly it will remove multiallelic SNPs using gnomAD frequency files downlaoded with ANNOVAR. 
 
 
+Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
+
 
 
