@@ -30,7 +30,7 @@ Set the variables as below,
 * GENOTYPEHARMONIZER_PATH : Path to GenotypeHarmonizer.jar
 * PLINK_TOOL_PATH : Path to Plink executable 
 
-2. Impute the generated VCF file in FoundHaplo_PATH/temp/ using Michigan imputation server with 1000G phase 3 as refereance panel and hg19 built. Do not filter for imutation quality yet. 
+2. Impute the generated VCF file in $FoundHaplo_PATH/temp/ using Michigan imputation server with 1000G phase 3 as refereance panel and hg19 built. Do not filter for imutation quality yet. 
 
 3. Create disease haplotypes using the imputed VCF file generated in step 2 and [FoundHaplo/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh) 
 ```bash
@@ -57,7 +57,7 @@ Set the variables as below,
 For the type "trio", affected-offspring,affected-parent,unaffected-parent trio  
 For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
 
-The post imputation script will create a seperate file with VCF columns for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/, additionaly it will remove multiallelic SNPs using gnomAD frequency files downlaoded with ANNOVAR. 
+The post imputation script will create a seperate file with VCF columns for each derived disease haplotype in $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes/, additionaly it will remove multiallelic SNPs using gnomAD frequency files downlaoded with ANNOVAR. 
 
 
 Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
