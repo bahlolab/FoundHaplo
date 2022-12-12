@@ -19,5 +19,5 @@ devtools::install_github("bahlolab/FoundHaplo")
 
 ## Clone the repository
 ```bash
-git clone --depth=1 https://github.com/bahlolab/Foundhaplo.git
+git clone --depth=1 https://github.com/bahlolab/FoundHaplo.git
 ```
