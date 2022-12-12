@@ -7,3 +7,4 @@
 * [Run FoundHaplo parallely using Nextflow pipeline](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md)
 
 
+Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
