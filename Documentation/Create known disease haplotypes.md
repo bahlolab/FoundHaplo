@@ -37,12 +37,11 @@ Set the variables as below,
 MAIN_PATH= 
 INPUT_VCF_PATH= 
 INPUT_VCF_BASE_NAME=
-CHROMOSOME=
 DCV=
 ANNOVAR_PATH=
 ANNOVAR_HUMANDB_DIR_PATH= 
 SAMPLE_INFO_FILE=
-FoundHaplo/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh "$MAIN_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$CHROMOSOME" "$DCV"  "$ANNOVAR_PATH" "$ANNOVAR_HUMANDB_DIR_PATH" "$SAMPLE_INFO_FILE"
+FoundHaplo/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh "$MAIN_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$DCV" "$ANNOVAR_PATH" "$ANNOVAR_HUMANDB_DIR_PATH" "$SAMPLE_INFO_FILE"
 
 ```
 
@@ -51,7 +50,6 @@ Set the variables as below,
 * MAIN_PATH : Path to FoundHaplo directory i.e path/FoundHaplo
 * INPUT_VCF_PATH :  Path to imputed VCF file with individuals with known diease variants that can be pedigree phased.
 * INPUT_VCF_BASE_NAME : File name of the imputed INPUT_VCF 
-* CHROMOSOME : Chromosome relevant to the interested disease variant without "chr" prefix
 * DCV : Name the disease variant of interest in the format of disease.chr.position. i.e FAME1.chr8.119379052.
 * ANNOVAR_PATH : Path to ANNOVAR directory
 * ANNOVAR_HUMANDB_DIR_PATH : Path to ANNOVAR database
@@ -61,6 +59,8 @@ For the type "duo" or "related", affected-offspring,affected-parent,unaffected-p
 
 The disease_haplotypes_post_imputation.sh will create a seperate file with VCF columns for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/, additionaly it will remove multiallelic SNPs using gnomAD frequency files downlaoded with ANNOVAR. 
 
+
+Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
 
 
 

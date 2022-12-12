@@ -11,8 +11,13 @@ Using a Hidden Markov Model, Foundhaplo calculates the FH score, which is the li
 see [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md) about input file formats and guide to use parallel processing.
 
 
-## install using devtools packages
-```bash
+## Install the R package using devtools packages
+
+```R
 devtools::install_github("bahlolab/FoundHaplo")
-git clone --depth=1 https://github.com/bahlolab/Foundhaplo.git
+```
+
+## Clone the repository
+```bash
+git clone --depth=1 https://github.com/bahlolab/FoundHaplo.git
 ```
