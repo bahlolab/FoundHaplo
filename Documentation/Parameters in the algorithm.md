@@ -49,5 +49,5 @@ name of each text file will be data_type.test_name.DCV.disease_individual.test_i
 
 Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis
 
-
+Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
 
