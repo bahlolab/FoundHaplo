@@ -1,6 +1,6 @@
 ## If you have SNP chip data
 
-1. Run FoundHaplo/scripts/prepare_inputs/test_samples_pre_imputation.sh.
+1. Run [FoundHaplo/scripts/prepare_inputs/test_samples_pre_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/test_samples_pre_imputation.sh)
 
 ```bash
 FoundHaplo_PATH= 
@@ -20,9 +20,9 @@ Set the variables as below,
 * GENOTYPEHARMONIZER_PATH : Path to GenotypeHarmonizer.jar
 * PLINK_TOOL_PATH : Path to Plink executable 
 
-2. Impute the generated VCF file in MAIN_PATH/temp/ using Michigan imputation server with 1000G phase 3 as reference panel and hg19 built. Do not filter for imutation quality yet. 
+2. Impute the generated VCF file in $FoundHaplo_PATH/temp/ using Michigan imputation server with 1000G phase 3 as reference panel and hg19 built. Do not filter for imutation quality yet. 
 
-3. Create the test cohort with test individual haplotypes using the imputed VCF file generated in step 2 and FoundHaplo/scripts/prepare_inputs/test_samples_post_imputation.sh. 
+3. Create the test cohort with test individual haplotypes using the imputed VCF file generated in step 2 and [FoundHaplo/scripts/prepare_inputs/test_samples_post_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/test_samples_post_imputation.sh)
 
 ```bash
 FoundHaplo_PATH= 
