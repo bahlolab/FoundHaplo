@@ -10,9 +10,9 @@ Use FoundHaplo/scripts/prepare_inputs/Initialise.sh as a guide to download the p
 Publicly available software tools required to run FoundHaplo
 
 * [GenotypeHarmonizer](https://github.com/molgenis/systemsgenetics/wiki/Genotype-Harmonizer-Download) tool is used to harmomize input VCF data to 1000Genomes.
-* [Plink](https://zzz.bwh.harvard.edu/plink/plink2.shtml) is used to perform quality control steps on input VCF data. 
+* [Plink](https://zzz.bwh.harvard.edu/plink/plink2.shtml) version 1.9 is used to perform quality control steps on input VCF data. 
 * [ANNOVAR](https://annovar.openbioinformatics.org/en/latest/user-guide/download/) tool is used to annotate population frequencies form gnomAD data.
-* [VCFtools](https://vcftools.github.io/downloads.html) and [BCFtools](http://www.htslib.org/download/) to perform queries on VCF files 
+* [VCFtools](https://vcftools.github.io/downloads.html) version v0.1.13 and [BCFtools](http://www.htslib.org/download/) version 1.16 to perform queries on VCF files 
 * [Nextflow](https://www.nextflow.io/) to parallely run FoundHaplo
 
 Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
