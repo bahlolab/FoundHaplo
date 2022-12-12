@@ -18,7 +18,7 @@ INPUT_PLINK_BASE_NAME=
 CHROMOSOME=
 GENOTYPEHARMONIZER_PATH=
 PLINK_TOOL_PATH= 
-FoundHaplo/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh "$FoundHaplo_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$CHROMOSOME" "$GENOTYPEHARMONIZER_PATH" "$PLINK_PATH"
+$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh "$FoundHaplo_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$CHROMOSOME" "$GENOTYPEHARMONIZER_PATH" "$PLINK_PATH"
 ```
 
 Set the variables as below,
@@ -41,7 +41,7 @@ DCV=
 ANNOVAR_PATH=
 ANNOVAR_HUMANDB_DIR_PATH= 
 SAMPLE_INFO_FILE=
-FoundHaplo/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh "$FoundHaplo_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$DCV" "$ANNOVAR_PATH" "$ANNOVAR_HUMANDB_DIR_PATH" "$SAMPLE_INFO_FILE"
+$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh "$FoundHaplo_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$DCV" "$ANNOVAR_PATH" "$ANNOVAR_HUMANDB_DIR_PATH" "$SAMPLE_INFO_FILE"
 
 ```
 
