@@ -14,3 +14,6 @@ Publicly available software tools required to run FoundHaplo
 * [Nextflow](https://www.nextflow.io/) to parallely run FoundHaplo.
 
 Use FoundHaplo/scripts/prepare_inputs/Initialise.sh as a guide to download the public data files into the relevant directories and software tools required by FoundHaplo
+
+
+Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
