@@ -46,3 +46,5 @@ The test_samples_post_imputation.sh will create a VCF file with test individuals
 ## If you have WGS data
 
 This is still a work in progress
+
+Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
