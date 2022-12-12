@@ -1,5 +1,11 @@
 ## Run FoundHaplo parallelly using Nextflow
 
+Install the R package using devtools packages
+
+```R
+devtools::install_github("bahlolab/FoundHaplo")
+```
+
 Refer https://www.nextflow.io/docs/latest/process.html for more details
 
 We recommend using a nextflow pipeline to run test/control cohort of 100 samples together in one job. i.e if there are 10000 samples in the test cohort nextflow will run 100 jobs.
