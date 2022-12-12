@@ -1,5 +1,5 @@
 
-## Clone the repository
+Clone the repository
 ```bash
 git clone --depth=1 https://github.com/bahlolab/Foundhaplo.git
 ```
