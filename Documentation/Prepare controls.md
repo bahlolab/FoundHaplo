@@ -16,4 +16,4 @@ Set the variables as below,,
 The create_1000G_control_haplotypes.sh will create separate VCF files for each disease variant that you want to test inside five sub folders in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant corresponding to five super populations.   
 Each sub folder must only contain VCF files with samples from the respective population listed in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/EUR.txt,AMR.txt,EAS.txt,SAS.txt and AFR.txt. 
 
-Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
+Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
