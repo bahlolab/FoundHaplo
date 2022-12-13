@@ -15,4 +15,4 @@ This requires two nextflow scripts [Nextflow.config](https://github.com/bahlolab
 manifest.txt file can be easily generated using the script [Create_jobs.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Create_jobs.R)
 
 
-Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
+Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
