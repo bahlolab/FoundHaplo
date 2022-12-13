@@ -18,7 +18,7 @@ INPUT_PLINK_BASE_NAME=
 CHROMOSOME=
 GENOTYPEHARMONIZER_PATH=
 PLINK_TOOL_PATH= 
-$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh "$FoundHaplo_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$CHROMOSOME" "$GENOTYPEHARMONIZER_PATH" "$PLINK_PATH"
+$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh "$FoundHaplo_PATH" "$INPUT_PLINK_PATH" "$INPUT_PLINK_BASE_NAME" "$CHROMOSOME" "$GENOTYPEHARMONIZER_PATH" "$PLINK_TOOL_PATH"
 ```
 
 Set the variables as below,
