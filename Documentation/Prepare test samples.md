@@ -9,7 +9,7 @@ INPUT_PLINK_BASE_NAME=
 CHROMOSOME=
 GENOTYPEHARMONIZER_PATH=
 PLINK_TOOL_PATH= 
-$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_pre_imputation.sh "$FoundHaplo_PATH" "$INPUT_PLINK_PATH" "$INPUT_PLINK_BASE_NAME" "$CHROMOSOME" "$GENOTYPEHARMONIZER_PATH" "$PLINK_TOOL_PATH"
+$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_pre_imputation.sh "$FoundHaplo_PATH" "$FoundHaplo_PATH/example" "FAME1_test_cohort" "8" "$GENOTYPEHARMONIZER_PATH" "$PLINK_TOOL_PATH"
 ```
 Set the variables as below,
 
@@ -29,7 +29,7 @@ FoundHaplo_PATH=
 INPUT_VCF_PATH= 
 INPUT_VCF_BASE_NAME=
 DCV= 
-$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_post_imputation.sh "$FoundHaplo_PATH" "$INPUT_VCF_PATH" "$INPUT_VCF_BASE_NAME" "$DCV" 
+$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_post_imputation.sh "$FoundHaplo_PATH" "$FoundHaplo_PATH//temp/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1.chr8.119379052." 
 ```
 Set the variables as below,
 
