@@ -8,13 +8,14 @@ DCV=$4 # example : "FAME1.chr8.119379052."
 ANNOVAR_PATH=$5 # path o ANNOVAR directory
 ANNOVAR_HUMANDB_DIR_PATH=$6 # path to ANNOVAR databases
 
-SAMPLE_INFO_FILE=$7 # Path to a tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the VCF file in mentioned order. # example : FoundHaplo/sample_info.txt
+SAMPLE_INFO_FILE=$7 # Path to a tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the VCF file in mentioned order. # example : FoundHaplo/example/sample_info.txt
 
 #' For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
 #' For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
 
 CHROMOSOME=$(echo "$DCV" | cut -d'.' -f2)
-
+prefix="chr"
+CHROMOSOME=${CHROMOSOME#"$prefix"}
 
 module unload vcftools
 module unload bcftools
@@ -24,7 +25,7 @@ module load bcftools
 module load htslib
 
 module unload R
-module load R/4.2.0 # edit this line accordingly. load the R version with FoundHaplo
+module load R/4.2.0 # edit this line accordingly. load the R version with FoundHaplo [MB: --> this doesn't belong in your script because this is only certain specific HPC setups, people should manage modules themselves outside running any scripts you provide (and people who don't use module system or have different version numbers will get errors)]
 
 Rscript $FoundHaplo_PATH/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37 $FoundHaplo_PATH/temp/DCV_bp.txt
 START_BP=$(cut -f2 $FoundHaplo_PATH/temp/DCV_bp.txt)
