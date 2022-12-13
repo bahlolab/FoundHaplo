@@ -3,7 +3,7 @@
 ### Prepare input data
 
 3. [Set-up software tools and publicly available input files](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Publicly%20available%20Input%20files%20and%20software%20tools.md)
-4. [Prepare known disease haplotypes](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Create%20known%20disease%20haplotypes.md) 
+4. [Prepare known disease haplotypes](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20known%20disease%20haplotypes.md) 
      * [Prepare controls](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20controls.md)
 5. [Prepare test cohorts](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20test%20samples.md)
 
