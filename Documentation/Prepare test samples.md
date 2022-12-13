@@ -44,4 +44,4 @@ The test_samples_post_imputation.sh will create a VCF file with test individuals
 
 This is still a work in progress
 
-Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
+Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
