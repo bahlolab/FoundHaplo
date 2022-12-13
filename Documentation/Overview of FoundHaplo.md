@@ -4,4 +4,4 @@ The statistic FoundHaplo score (FH score) is the combined log likelihood ratios 
 
 <img src="https://github.com/bahlolab/FoundHaplo/blob/main/images/FH_input_output.png" width="500">
 
-Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
+Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
