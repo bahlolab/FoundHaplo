@@ -28,6 +28,10 @@ cd $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplo
 
 wget --recursive --no-parent http://hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/
 
+mv $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/* $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
+
+rm -r $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu
+
 # 1000 Genomes sample names are in /FoundHaplo/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt, EUR.txt, AMR.txt, EAS.txt, SAS.txt and AFR.txt.
 
 # create control cohorts for the disease variant for all five super populations.

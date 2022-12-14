@@ -76,7 +76,7 @@
 #' read.delim(list.files(paste0(temp_dir,"/4"))[1],header=FALSE)
 #' setwd(orig_dir)
 
-Generate_FH_score_testing=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report,dir_TEMP)
+Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report,dir_TEMP)
 {
   gen_allele_mismatch_rate = 0.01 # genotype/imputation allele_mismatch rate allowed
   g1=gen_allele_mismatch_rate

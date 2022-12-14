@@ -14,6 +14,8 @@ module unload vcftools
 module unload bcftools
 module load vcftools
 module load bcftools
+module load htslib
+module load samtools
 
 
 module unload R
