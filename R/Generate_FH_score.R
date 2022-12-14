@@ -18,7 +18,7 @@
 #' @param data_type "test" or "control (type \code{"character"})
 #' @param dir_controls_file Directory where the 1000genome control files are stored  (type \code{"character"})
 #' @param dir_to_save_report Directory path to save the required details of the IBD sharing to analyze later  (type \code{"character"})
-#' @param dir_TEMP Directory path to save the temporary files  (type \code{"character"}) 
+#' @param dir_TEMP Directory path to save the temporary files  (type \code{"character"})
 #' @return All details of IBD sharing for each test/control sample will be saved in a seperate tab delimitted text file in dir_to_save_report location, with below columns :
 #' name of each text file will be data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt
 #'
@@ -72,7 +72,7 @@
 #' write.vcf(FAME1_test_cohort,paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"))
 #' write.table(file00,paste0(temp_dir,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 #' write.vcf(FAME1_control_cohort,paste0(temp_dir,"/3/","FAME1.chr8.vcf.gz"))
-#' Generate_FH_score(DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_dir,"/2/","file00.txt"),data_type="test",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"))
+#' Generate_FH_score(DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_dir,"/2/","file00.txt"),data_type="test",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"),temp_dir)
 #' setwd(paste0(temp_dir,"/4"))
 #' read.delim(list.files(paste0(temp_dir,"/4"))[1],header=FALSE)
 #' setwd(orig_dir)
@@ -89,47 +89,47 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
 
   list_of_disease_individuals=list.files(dir_disease_files,full.names = TRUE)
 
-  
+
   rand_string=system(paste0("echo $RANDOM | md5sum | head -c 32"),intern = TRUE)
   rand_string
-  
+
   ## do not save in /temp, give a path to a server in dir_TEMP
 
   if(data_type!="controls"  & !grepl(".gz", test_file, fixed = TRUE)) # if we are testing the test individuals of interest
   {
-      
+
       command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",dir_TEMP,"/",rand_string,".vcf")
       system(command) # invoke a system command that will create a temporary vcf file only with the selected sample ids.
-      
+
       fix_file_to_test <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
   }
   if(data_type!="controls"  & grepl(".gz", test_file, fixed = TRUE)) # if we are testing the test individuals of interest
   {
-      
+
       command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",dir_TEMP,"/",rand_string,".vcf")
       system(command) # invoke a system command that will create a temporary vcf file only with the selected sample ids.
-      
+
       fix_file_to_test <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
   }
-  
+
   if(data_type=="controls" & !grepl(".gz", test_file, fixed = TRUE)) # if the test file is not gzipped
   {
-      
+
       command=paste0("cut -f1-9 ",test_file, " > " ,dir_TEMP,"/",rand_string,".vcf") # save the first 9 fixed columns of the vcf file in a temporary file
       system(command)
-      
+
       fix_file_to_test <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
-      
+
   }
-  
+
   if(data_type=="controls" & grepl(".gz", test_file, fixed = TRUE)) # if the test file is gzipped
   {
-      
+
       command=paste0("zcat ",test_file," | ","cut -f1-9 ", " > " ,dir_TEMP,"/",rand_string,".vcf") # save the first 9 fixed columns of the vcf file in a temporary file
       system(command)
-      
+
       fix_file_to_test <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
-      
+
   }
 
 
@@ -167,7 +167,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       MAF_list=vector()
       database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
       MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-      
+
       # if annotated from ANNOVAR
       if(length(MAF[[1]]  %>%  str_subset(pattern = "AF_raw"))>0){
           for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_raw")}
@@ -175,7 +175,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       if(length(MAF[[1]]  %>%  str_subset(pattern = "ALL"))>0){
           for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "ALL")}
       }
-      
+
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -194,8 +194,8 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       if(length(MAF[[1]]  %>%  str_subset(pattern = "AFR"))>0){
           for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AFR")}
       }
-      
-      
+
+
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -208,7 +208,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       MAF_list=vector()
       database_file <-fread(list_of_disease_individuals[j], skip = "#CHROM")
       MAF=strsplit(database_file$INFO,";",fixed=TRUE)
-     
+
            # if annotated from ANNOVAR
       if(length(MAF[[1]]  %>%  str_subset(pattern = "AF_nfe"))>0){
           for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AF_nfe")}
@@ -216,7 +216,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       if(length(MAF[[1]]  %>%  str_subset(pattern = "EUR"))>0){
           for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "EUR")}
       }
-      
+
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -239,7 +239,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
           for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "AMR")}
       }
 
-      
+
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -261,8 +261,8 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
           for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "EAS")}
       }
 
-      
-      
+
+
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -284,7 +284,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
           for(ii in 1:length(lengths(MAF))){MAF_list[ii]=MAF[[ii]]  %>%  str_subset(pattern = "SAS")}
       }
 
-      
+
       MAF=MAF_list
       MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[",2)
 
@@ -390,9 +390,9 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
 
         test_individual=unlist(strsplit(colnames(final_file)[5], ":",fixed=TRUE))
         test_individual=test_individual[1]
-        
+
     Final_IBD_score=paste0("test","\t",test_name,"\t",frequency_type,"\t",minor_allele_cutoff,"\t",r2,"\t",DCV,"\t",disease_individual,"\t",test_individual,"\t",Final_IBD_score)
-   
+
         return(Final_IBD_score)
       }
     }
@@ -462,7 +462,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
 
         test_individual=unlist(strsplit(colnames(final_file)[5], ":",fixed=TRUE))
         test_individual=test_individual[1]
-        
+
     Final_IBD_score=paste0("controls","\t",test_name,"\t",frequency_type,"\t",minor_allele_cutoff,"\t",r2,"\t",DCV,"\t",disease_individual,"\t",test_individual,"\t",Final_IBD_score)
         return(Final_IBD_score)
       }
@@ -478,36 +478,36 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
       run_test=seq(11,ncol(test_total_1),2)
 
       results=lapply(run_test,save_IBD_report_test)
-      
+
       final_file=data.frame(do.call("rbind",results))
       dim(final_file)
-     
+
       Final_IBD_score_name=paste("test",test_name,frequency_type,minor_allele_cutoff,r2,DCV,disease_individual,sapply(strsplit(test_list,"/"),"[[",str_count(test_list,"/")+1),sep=".",collapse=NULL)
 
-      
+
       path1<-paste0(dir_to_save_report,"/",Final_IBD_score_name)
-      
+
       #final_file=dplyr::distinct(final_file,V7,V8, .keep_all= TRUE)
-      
+
       write.table(final_file,path1,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-      
-      
+
+
     }
     if(data_type=="controls")
     {
       run_controls=seq(11,ncol(controls_file_total_1),2)
-      
+
       results=lapply(run_controls,save_IBD_report_controls)
-      
+
       final_file=data.frame(do.call("rbind",results))
       dim(final_file)
-      
+
       Final_IBD_score_name=paste("controls",test_name,frequency_type,minor_allele_cutoff,r2,DCV,disease_individual,sapply(strsplit(test_list,"/"),"[[",str_count(test_list,"/")+1),sep=".",collapse=NULL)
-      
+
       path1<-paste0(dir_to_save_report,"/",Final_IBD_score_name)
-      
+
       # final_file=dplyr::distinct(final_file,V7,V8, .keep_all= TRUE)
-      
+
       write.table(final_file,path1,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
     }
 
