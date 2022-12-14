@@ -12,11 +12,15 @@ FoundHaplo_PATH=$1
 echo "1000 Genomes sample names by super populations are already in /FoundHaplo/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt, EUR.txt, AMR.txt, EAS.txt, SAS.txt and AFR.txt."
 echo "Hapmap recombination files in hg19 to calculate the recombination rates are in FoundHaplo/input_files."
 
-echo "Downloading 1000 Genomes phased 3 bed/bim/fam files to FoundHaplo/input_files/public_data/1000G_plink."
+echo "Creating results and temp directories"
 
 mkdir -p $FoundHaplo_PATH/results # to save final IBD report in .txt file
+mkdir -p $FoundHaplo_PATH/temp # to save temporary files
 
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_plink
+
+
+echo "Downloading 1000 Genomes phased 3 bed/bim/fam files to FoundHaplo/input_files/public_data/1000G_plink."
 
 cd $FoundHaplo_PATH/input_files/public_data/1000G_plink
 wget https://ndownloader.figshare.com/files/17838962 --output-document "1000G_plink.zip"
