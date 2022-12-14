@@ -61,5 +61,5 @@ mkdir -p $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes
 
 Rscript $FoundHaplo_PATH/scripts/prepare_inputs/Run_Phasing_by_pedigree.R $FoundHaplo_PATH/temp/ready.to.phase.vcf $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes $SAMPLE_INFO_FILE
 
-echo "bgzipping all the VCF files with disease haplotypes and saving to" "$FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes."
+echo "bgzipping all the VCF files with disease haplotypes and saving to $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes."
 ls $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes/*.vcf | xargs -n1 bgzip
