@@ -16,7 +16,8 @@ Generate_FH_score(
   test_list,
   data_type,
   dir_controls_file,
-  dir_to_save_report
+  dir_to_save_report,
+  dir_TEMP
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ Generate_FH_score(
 \item{dir_controls_file}{Directory where the 1000genome control files are stored  (type \code{"character"})}
 
 \item{dir_to_save_report}{Directory path to save the required details of the IBD sharing to analyze later  (type \code{"character"})}
+
+\item{dir_TEMP}{Directory path to save the temporary files  (type \code{"character"})}
 }
 \value{
 All details of IBD sharing for each test/control sample will be saved in a seperate tab delimitted text file in dir_to_save_report location, with below columns :

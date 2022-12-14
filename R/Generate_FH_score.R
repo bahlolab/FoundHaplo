@@ -18,6 +18,7 @@
 #' @param data_type "test" or "control (type \code{"character"})
 #' @param dir_controls_file Directory where the 1000genome control files are stored  (type \code{"character"})
 #' @param dir_to_save_report Directory path to save the required details of the IBD sharing to analyze later  (type \code{"character"})
+#' @param dir_TEMP Directory path to save the temporary files  (type \code{"character"}) 
 #' @return All details of IBD sharing for each test/control sample will be saved in a seperate tab delimitted text file in dir_to_save_report location, with below columns :
 #' name of each text file will be data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt
 #'
