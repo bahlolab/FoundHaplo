@@ -27,6 +27,8 @@ module load htslib
 module unload R
 module load R/4.2.0 # edit this line accordingly. load the R version with FoundHaplo [MB: --> this doesn't belong in your script because this is only certain specific HPC setups, people should manage modules themselves outside running any scripts you provide (and people who don't use module system or have different version numbers will get errors)]
 
+echo "Finding start and end base pair positions to trip the VCF file."
+
 Rscript $FoundHaplo_PATH/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37 $FoundHaplo_PATH/temp/DCV_bp.txt
 START_BP=$(cut -f2 $FoundHaplo_PATH/temp/DCV_bp.txt)
 END_BP=$(cut -f3 $FoundHaplo_PATH/temp/DCV_bp.txt)
@@ -36,6 +38,8 @@ vcftools --gzvcf $INPUT_VCF_PATH --chr $CHROMOSOME --remove-indels --min-alleles
 ANNOVAR_SCRIPT=$ANNOVAR_PATH/table_annovar.pl
 
 ANNOVAR_OUTPUT_FILENAME_BASE=$FoundHaplo_PATH/temp/$INPUT_VCF_BASE_NAME.imputed.trimmed # name of the annotated file
+
+echo "Annotating gnomAD population allele frequencies."
 
 # annotate population frequencies form gnomAD
 perl $ANNOVAR_SCRIPT $ANNOVAR_OUTPUT_FILENAME_BASE.vcf.gz \
@@ -49,13 +53,13 @@ bcftools annotate -x ^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/A
 
 
 # phase by pedigrees
-
-
 # Rscript will create seperate VCF files with known disease haplotypes
+
+echo "Phasing disease haplotypes by pedigree information."
 
 mkdir -p $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes
 
 Rscript $FoundHaplo_PATH/scripts/prepare_inputs/Run_Phasing_by_pedigree.R $FoundHaplo_PATH/temp/ready.to.phase.vcf $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes $SAMPLE_INFO_FILE
 
-
+echo "bgzipping all the VCF files with disease haplotypes and saving to" "$FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes."
 ls $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes/*.vcf | xargs -n1 bgzip
