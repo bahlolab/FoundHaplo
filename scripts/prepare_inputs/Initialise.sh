@@ -5,23 +5,28 @@ FoundHaplo_PATH=$1
 
 #Publicly available reference files required to run FoundHaplo
 
+# This script downloads,
 # 1) 1000 Genomes phased 3 bed/bim/fam files to harmonize input VCF data.
 # 2) 1000 Genomes phase 3 haplotypes are used as the control cohort when running FoundHaplo.
-# 3) 1000G sample names by super populations
-# 4) Hapmap recombination files in hg19 to calculate the recombination rates (in /input_files).
 
-# download 1000 Genomes phased 3 bed/bim/fam files
+echo "1000 Genomes sample names by super populations are already in $FoundHaplo_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt, EUR.txt, AMR.txt, EAS.txt, SAS.txt and AFR.txt."
+echo "Hapmap recombination files in hg19 to calculate the recombination rates are in $FoundHaplo_PATH/input_files."
+
+echo "Creating results and temp directories"
 
 mkdir -p $FoundHaplo_PATH/results # to save final IBD report in .txt file
+mkdir -p $FoundHaplo_PATH/temp # to save temporary files
 
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_plink
+
+
+echo "Downloading 1000 Genomes phased 3 bed/bim/fam files to $FoundHaplo_PATH/input_files/public_data/1000G_plink."
 
 cd $FoundHaplo_PATH/input_files/public_data/1000G_plink
 wget https://ndownloader.figshare.com/files/17838962 --output-document "1000G_plink.zip"
 unzip 1000G_plink.zip
 
-# download 1000 Genomes phase 3 haplotypes
-
+echo "Downloading 1000 Genomes phase 3 haplotypes to $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original."
 
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
 cd $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
@@ -32,9 +37,7 @@ mv $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplo
 
 rm -r $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu
 
-# 1000 Genomes sample names are in /FoundHaplo/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt, EUR.txt, AMR.txt, EAS.txt, SAS.txt and AFR.txt.
-
-# create control cohorts for the disease variant for all five super populations.
+echo "creating control cohorts for the disease variant for all five super populations in $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
 
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant
 
@@ -45,9 +48,9 @@ mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EAS
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AFR
 
-# 1000Genome sample IDs are in $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population
+echo "Download all software tools listed : GenotypeHarmonizer,plink,ANNOVAR,vcftools and bcftools."
 
-# Downlaod all software tools listed
+# Download all software tools listed
 
 # 1) GenotypeHarmonizer tool is used to harmomize input VCF data to 1000Genomes.
 # 2) Plink is used to perform quality control steps on input VCF data.

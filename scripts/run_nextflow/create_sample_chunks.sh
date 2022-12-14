@@ -17,4 +17,5 @@ mkdir -p $CONTROL_SAMPLES_DIR/samples
 split -l $CHUNK_SIZE -d --additional-suffix=.txt $TEST_SAMPLES_FILE  $TEST_SAMPLES_DIR/samples/file
 split -l $CHUNK_SIZE -d --additional-suffix=.txt $CONTROL_SAMPLES_FILE  $CONTROL_SAMPLES_DIR/samples/file
 
-#
+echo "Sample IDs for the test cohort are in $TEST_SAMPLES_DIR/samples"
+echo "Sample IDs for the control cohort are in $CONTROL_SAMPLES_DIR/samples"

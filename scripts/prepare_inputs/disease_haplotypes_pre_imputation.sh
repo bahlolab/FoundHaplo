@@ -15,7 +15,7 @@ module unload htslib
 module load vcftools
 module load htslib # to bgzip ## check if you can give a path to vcftools
 
-#Harmonisation to 1000G
+echo "Harmonisation to 1000 Genomes data."
 
 java -jar $GENOTYPEHARMONIZER_PATH \
 --input $INPUT_PLINK_PATH/$INPUT_PLINK_BASE_NAME \
@@ -28,7 +28,7 @@ java -jar $GENOTYPEHARMONIZER_PATH \
 --outputType PLINK_BED
 
 
-# remove SNPs with overall callrate<98
+echo "Removing SNPs with overall callrate<98%."
 
 $PLINK_TOOL_PATH \
 --bfile $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME \
@@ -37,8 +37,8 @@ $PLINK_TOOL_PATH \
 --make-bed \
 --out $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98
 
+echo "Removing samples with callrate<98%."
 
-# remove samples with callrate<98%
 $PLINK_TOOL_PATH \
 --bfile $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98 \
 --allow-no-sex \
@@ -46,9 +46,13 @@ $PLINK_TOOL_PATH \
 --make-bed \
 --out $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98
 
+echo "Converting to a VCF file in $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98"
+
 $PLINK_TOOL_PATH --bfile $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98  --recode vcf --out $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98
 
+echo "Extracting chromsome $CHROMOSOME." 
+echo "Saving to " "$FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz"
 vcftools --vcf $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.vcf --chr $CHROMOSOME --recode --recode-INFO-all --stdout | bgzip -c > $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz
 
 
-echo "impute" $INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz "using Michigan server"
+echo "impute" $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz "using Michigan server"

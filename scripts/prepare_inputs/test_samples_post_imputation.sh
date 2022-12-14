@@ -21,6 +21,7 @@ module load samtools
 module unload R
 module load R/4.2.0 # edit this line accordingly. load the R version with FoundHaplo
 
+echo "Finding start and end base pair positions to trim the VCF file."
 
 Rscript $FoundHaplo_PATH/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37 $FoundHaplo_PATH/temp/DCV_bp.txt
 START_BP=$(cut -f2 $FoundHaplo_PATH/temp/DCV_bp.txt)
@@ -30,11 +31,15 @@ END_BP=$(cut -f3 $FoundHaplo_PATH/temp/DCV_bp.txt)
 mkdir -p $FoundHaplo_PATH/input_files/input_vcf_data
 mkdir -p $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort
 
+echo "Saving to $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz." 
+
 vcftools --gzvcf $INPUT_VCF_PATH --chr $CHROMOSOME --remove-indels --min-alleles 2 --max-alleles 2 --from-bp $START_BP --to-bp $END_BP --recode --recode-INFO-all --stdout | bgzip -c > $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz
 
 mkdir -p $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples
 
-bcftools query -l $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz > $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples/samples.txt
+echo "Saving sample IDs to $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples.txt"
+
+bcftools query -l $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz > $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples.txt
 
 rm -rf $FoundHaplo_PATH/temp/*
 
