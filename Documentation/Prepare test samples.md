@@ -29,7 +29,7 @@ FoundHaplo_PATH=
 INPUT_VCF_PATH= 
 INPUT_VCF_BASE_NAME=
 DCV= 
-$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_post_imputation.sh "$FoundHaplo_PATH" "$FoundHaplo_PATH//temp/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1.chr8.119379052." 
+$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_post_imputation.sh "$FoundHaplo_PATH" "$FoundHaplo_PATH/temp/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1.chr8.119379052." 
 ```
 Set the variables as below,
 
