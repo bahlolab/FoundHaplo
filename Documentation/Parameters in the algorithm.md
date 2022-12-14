@@ -3,7 +3,7 @@ Generate_FH_score is the main wrapper function that generates FH score values fo
 * Note: Generate_FH_score function only works on the command line as it uses system() function to query from VCFtools and BCFtools. Hence recomended to use a nextflow pipeline as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md).
 
 ```bash
-Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report)
+Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report,dir_TEMP)
 
 ```
 
@@ -21,6 +21,7 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
 10. **data_type** "test" or "controls"
 11. **dir_controls_file** directory where the 1000 Genomes gzipped VCF control files are stored i.e /mypath/1000G_controls_by_variant/EUR
 12. **dir_to_save_report** directory path to save the output of FoundHaplo IBD sharing for further analysis
+13. **dir_TEMP** directory path to save the temporary files
 
 The function returns all the details of IBD sharing for each test/control sample and will be saved in a seperate tab delimitted text file in dir_to_save_report location, with below columns:
 
