@@ -46,7 +46,7 @@ $PLINK_TOOL_PATH \
 --make-bed \
 --out $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98
 
-echo "Converting to a VCF file." "$FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98"
+echo "Converting to a VCF file in $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98"
 
 $PLINK_TOOL_PATH --bfile $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98  --recode vcf --out $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98
 
