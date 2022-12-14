@@ -3,7 +3,7 @@ Clone the repository
 ```bash
 git clone --depth=1 https://github.com/bahlolab/Foundhaplo.git
 ```
-Use [FoundHaplo/scripts/prepare_inputs/Initialise.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/Initialise.sh) as a guide to download the public data files into the relevant directories and software tools required by FoundHaplo
+Use [FoundHaplo/scripts/prepare_inputs/Initialise.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/Initialise.sh) as a guide to download the public reference data files into the relevant directories and software tools required by FoundHaplo
 
 ```bash
 FoundHaplo/scripts/prepare_inputs/Initialise.sh "$FoundHaplo_PATH"
@@ -13,7 +13,7 @@ Publicly available reference files required to run FoundHaplo
 * [1000 Genomes phased 3 bed/bim/fam files](https://figshare.com/articles/dataset/1000_genomes_phase_3_files_with_SNPs_in_common_with_HapMap3/9208979?file=17838962) to harmonize input VCF data. 
 * [1000 Genomes phase 3 haplotypes](http://hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/) are used as the control cohort when running FoundHaplo.
 * [1000 Genomes phase 3 sample names by super population](https://www.internationalgenome.org/data-portal/data-collection/phase-3) to subset the control cohort to specifc super populations when running FoundHaplo.
-* [Hapmap recombination files](https://github.com/bahlolab/FoundHaplo/tree/main/input_files/public_data/genetic_map_HapMapII_GRCh37) in hg19 to calculate the recombination rates.
+* [Hapmap recombination files](https://github.com/bahlolab/FoundHaplo/tree/main/input_files/public_data/genetic_map_HapMapII_GRCh37) in hg19 to calculate the recombination rates. Recombination files are included [here](https://github.com/bahlolab/FoundHaplo/tree/main/input_files/public_data/genetic_map_HapMapII_GRCh37).
 
 Publicly available software tools required to run FoundHaplo
 
