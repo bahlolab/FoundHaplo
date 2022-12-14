@@ -33,7 +33,7 @@ mv $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplo
 
 rm -r $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu
 
-echo "create control cohorts for the disease variant for all five super populations in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
+echo "creating control cohorts for the disease variant for all five super populations in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
 
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant
 
