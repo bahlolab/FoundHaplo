@@ -27,7 +27,7 @@ module load htslib
 module unload R
 module load R/4.2.0 # edit this line accordingly. load the R version with FoundHaplo [MB: --> this doesn't belong in your script because this is only certain specific HPC setups, people should manage modules themselves outside running any scripts you provide (and people who don't use module system or have different version numbers will get errors)]
 
-echo "Finding start and end base pair positions to trip the VCF file."
+echo "Finding start and end base pair positions to trim the VCF file."
 
 Rscript $FoundHaplo_PATH/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37 $FoundHaplo_PATH/temp/DCV_bp.txt
 START_BP=$(cut -f2 $FoundHaplo_PATH/temp/DCV_bp.txt)
