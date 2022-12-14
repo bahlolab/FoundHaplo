@@ -26,25 +26,25 @@
 
 Create_jobs=function(path_manifest,path_test_sample_chunks,path_control_sample_chunks,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,dir_controls_file,dir_to_save_report,dir_TEMP)
 {
-    
+
     #test
     test_list=list.files(path_test_sample_chunks,full.names = TRUE)
     #specify parameters that should be given to the function Generate_FH_score
-    test_cohort_entires=expand.grid(path_manifest,path_test_sample_chunks,path_control_sample_chunks,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,path_test_sample_chunks,"test",dir_controls_file,dir_to_save_report,dir_TEMP)
-    
-    
+    test_cohort_entires=expand.grid(DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,test_list,"test",dir_controls_file,dir_to_save_report,dir_TEMP)
+
+
     #controls
-    test_list=list.files(path_control_sample_chunks,full.names = TRUE)
+    controls_list=list.files(path_control_sample_chunks,full.names = TRUE)
     #specify parameters that should be given to the function Generate_FH_score
-    control_cohort_entires=expand.grid(path_manifest,path_test_sample_chunks,path_control_sample_chunks,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,path_control_sample_chunks,"controls",dir_controls_file,dir_to_save_report,dir_TEMP)
-    
+    control_cohort_entires=expand.grid(DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,controls_list,"controls",dir_controls_file,dir_to_save_report,dir_TEMP)
+
     manifest.txt_entries=rbind(test_cohort_entires,control_cohort_entires)
-    
+
     #specify path to save the manifest.txt file
     write.table(manifest.txt_entries,path_manifest,sep="\t",quote=FALSE,col.names = FALSE,row.names = FALSE)
-    
-    
-    
+
+
+
 }
 
 

@@ -3,8 +3,7 @@
 
 #' @export
 #' @examples
-
-
+##
 args = commandArgs(trailingOnly=TRUE)
 
 
@@ -20,6 +19,7 @@ test_list=args[9]
 data_type=args[10]
 dir_controls_file=args[11]
 dir_to_save_report=args[12]
+dir_TEMP=args[13]
 
 
 class(imputation_quality_score_cutoff_test)="numeric"
@@ -29,6 +29,5 @@ class(minor_allele_cutoff)="numeric"
 
 library(FoundHaplo)
 
-Generate_FH_score(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,test_list,data_type,dir_controls_file,dir_to_save_report)
-
+Generate_FH_score(DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,test_list,data_type,dir_controls_file,dir_to_save_report,dir_TEMP)
 
