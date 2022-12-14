@@ -17,15 +17,13 @@ Generate_FH_score=function(DCV,minor_allele_cutoff=0,imputation_quality_score_cu
 6. **dir_disease_files** directory path of the disease haplotype VCFs gzipped
 7. **test_file** path of the test cohort file gzipped
 8. **test_name** meaningful name for the test cohort 
-9. **test_list** path to a .txt file that includes set of <=100 test sample names from the test/control cohort 
+9. **test_list** path to a .txt file that includes a maximum of 1000 test sample names from the test/control cohort 
 10. **data_type** "test" or "controls"
 11. **dir_controls_file** directory where the 1000 Genomes gzipped VCF control files are stored i.e /mypath/1000G_controls_by_variant/EUR
 12. **dir_to_save_report** directory path to save the output of FoundHaplo IBD sharing for further analysis
 13. **dir_TEMP** directory path to save the temporary files
 
 The function returns all the details of IBD sharing for each test/control sample and will be saved in a seperate tab delimitted text file in dir_to_save_report location, with below columns:
-
-name of each text file will be data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt
 
 1. **data_type** "test" or "control" 
 2. **test_name** meaningful name for the test cohort 
@@ -48,7 +46,9 @@ name of each text file will be data_type.test_name.DCV.disease_individual.test_i
 19. **total_number_of_markers_in_data_file**
 20. **total_cM_span_of_data_file**
 
-Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis
+Name of each text file will correspond to a single job sumbitted by the pipeline explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md) i.e. data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt.
+
+Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis.
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
 
