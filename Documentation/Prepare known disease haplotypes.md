@@ -60,7 +60,7 @@ Set the variables as below,
 For the type "trio", affected-offspring,affected-parent,unaffected-parent trio  
 For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
 
-The post imputation script will create a seperate file with VCF columns for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/, additionaly it will remove multiallelic SNPs using gnomAD frequency files downlaoded with ANNOVAR. 
+The post imputation script will create a seperate file with VCF columns for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/, additionaly it will remove multiallelic SNPs using gnomAD frequency files downloaded with ANNOVAR. 
 
 
 Go back to the [documentaton](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
