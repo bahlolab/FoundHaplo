@@ -44,11 +44,12 @@ $PLINK_TOOL_PATH \
 --make-bed \
 --out $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98
 
-echo "Converting to a VCF file"
+echo "Converting to a VCF file in $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98"
 
 $PLINK_TOOL_PATH --bfile $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98  --recode vcf --out $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98
 
-echo "VCF file is $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz"
+echo "Extracting chromsome $CHROMOSOME."
+echo "Saving to $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz" 
 
 vcftools --vcf $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.vcf --chr $CHROMOSOME --recode --recode-INFO-all --stdout | bgzip -c > $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz
 
