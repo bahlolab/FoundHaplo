@@ -5,7 +5,6 @@
 .DS_Store
 ._.DS_Store
 ._*
-example
 input_files/input_vcf_data
 input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant
 input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
