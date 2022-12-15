@@ -86,3 +86,27 @@ detach(final_file) # final_file is ready to compare disease and the two test hap
 Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
 setwd( orig_dir )
 
+## -----------------------------------------------------------------------------
+orig_dir <- getwd()
+setwd(tempdir())
+file.remove(list.files())
+if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} #to save disease haplotypes
+if(!dir.exists(paste0(tempdir(), "/2"))){dir.create(paste0(tempdir(), "/2"))} #to save test_list of sample names in .txt files
+if(!dir.exists(paste0(tempdir(), "/3"))){dir.create(paste0(tempdir(), "/3"))}  # dir_controls_file
+if(!dir.exists(paste0(tempdir(), "/4"))){dir.create(paste0(tempdir(), "/4"))} # to save IBD results
+temp_dir <- tempdir() # To carryout the main workload
+library(vcfR)
+write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz")) # save FAME1_disease_cohort as a VCF file to read from
+sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
+write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save sample_info as a tab delimitted text file to read from
+Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
+dir_output = paste0(temp_dir,"/1"),
+sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
+write.vcf(FAME1_test_cohort,paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz")) # save FAME1_test_cohort as a VCF file to read from
+write.table(file00,paste0(temp_dir,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save file00 with maximum of 100 sample names of the FAME1_test_cohort as a text file to read from
+write.vcf(FAME1_control_cohort,paste0(temp_dir,"/3/","FAME1.chr8.vcf.gz")) # save FAME1_control_cohort as a VCF file to read from
+Generate_FH_score(DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_dir,"/2/","file00.txt"),data_type="test",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"))
+setwd(paste0(temp_dir,"/4"))
+read.delim(list.files(paste0(temp_dir,"/4"))[1],header=FALSE)
+setwd(orig_dir)
+
