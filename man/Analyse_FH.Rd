@@ -28,6 +28,7 @@ This function analyse the FoundHaplo scores and predict samples that carry the k
 \examples{
 orig_dir <- getwd()
 setwd(tempdir())
-Analyse_FH(path_results=FH_IBD_scores,path_to_save_FH_output=tempdir(),critical_percentile=0.99)
+write.table(FH_IBD_scores,paste0(tempdir(),"/results",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save FH_IBD_scores
+Analyse_FH(path_results=paste0(tempdir(),"/results",".txt"),path_to_save_FH_output=tempdir(),critical_percentile=0.99)
 setwd(orig_dir)
 }
