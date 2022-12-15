@@ -20,7 +20,6 @@
 #' @param dir_TEMP Directory path to save the temporary files  (type \code{"character"})
 #' @return Write a manifest.txt file that includes all the parameters required to run FoundHaplo. Each line of the manifest.txt file can be submitted as a seperate job parallely.
 #'
-#' @export
 #' @examples
 #' orig_dir <- getwd()
 #' setwd(tempdir())

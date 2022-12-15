@@ -6,6 +6,7 @@
 #' @param path_to_save_FH_output Path to save the analysis of the FH scores (type \code{"numeric"})
 #' @param critical_percentile Critical percentile of the control cohort to derive predictions. Recommend above 99.9 for large cohorts like UKBB. (type \code{"numeric"})
 #' @return A dataframe with predicted samples and graphical output will be saved in path_to_save_FH_output
+
 #' \enumerate{
 #' \item DCV, name of the disease-causing variant (type \code{"character"})
 #' \item test_name, name of the test cohort (type \code{"character"})
