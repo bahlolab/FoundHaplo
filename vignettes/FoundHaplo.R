@@ -98,6 +98,6 @@ setwd(orig_dir)
 orig_dir <- getwd()
 setwd(tempdir())
 # Analyse_FH lists the samples predicted by the FoundHaplo algorithm and also produce graphical results in a given directory
-Analyse_FH(path_results=FH_IBD_scores,path_to_save_FH_output=tempdir(),critical_percentile=0.99)
+write.table(FH_IBD_scores,paste0(tempdir(),"/results",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save FH_IBD_scores
+Analyse_FH(path_results=paste0(tempdir(),"/results",".txt"),path_to_save_FH_output=tempdir(),critical_percentile=0.99)
 setwd(orig_dir)
-
