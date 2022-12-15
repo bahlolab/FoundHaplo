@@ -14,7 +14,8 @@ echo "Hapmap recombination files in hg19 to calculate the recombination rates ar
 
 echo "Creating results and temp directories"
 
-mkdir -p $FoundHaplo_PATH/results # to save final IBD report in .txt file
+mkdir -p $FoundHaplo_PATH/results/FH_IBD_scores # to save the final IBD report in .txt file
+mkdir -p $FoundHaplo_PATH/results/FH_Analysis # to save results after analysing FH scores in the final IBD report
 mkdir -p $FoundHaplo_PATH/temp # to save temporary files
 
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_plink
