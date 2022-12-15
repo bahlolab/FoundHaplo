@@ -1,6 +1,12 @@
-## -----------------------------------------------------------------------------
+## All the functions are explained as a workflow below
+##-----------------------------------------------------------------------------
 # load FoundHaplo library
 library(FoundHaplo)
+library(vcfR)
+library(data.table)
+library(dplyr)
+
+file.remove(list.files())
 #lets look at an example Hapmap genetic map file
 str(genetic_map_GRCh37_chr8)
 orig_dir <- getwd()
@@ -8,57 +14,33 @@ temp_dir <- tempdir()
 setwd( temp_dir )
 #save the Hapmap genetic map file
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE) # save genetic_map_GRCh37_chr8 as a text file to read from
+#Find_bp_to_trim gives the corresponding base pair positions of +-10cM from a given disease locus
 Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),dir_geneticMap=temp_dir,output_file=paste0(temp_dir,"/DCV_bp.txt"))
-setwd( orig_dir )
-
 
 ## -----------------------------------------------------------------------------
 # FAME1_test_cohort is a VCF file
-haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
-
-
-## -----------------------------------------------------------------------------
-orig_dir <- getwd()
-temp_dir <- tempdir()
-setwd( temp_dir )
-write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE) # save genetic_map_GRCh37_chr8 as a text file to read from
-haplotype_file_cM=Convert_bp_cM(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)),DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
-setwd( orig_dir )
-
+#Create_hap_VCF seperates haplotypes into columns of a dataframe
+test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
 
 ## -----------------------------------------------------------------------------
-orig_dir <- getwd()
-temp_dir <- tempdir()
-setwd( temp_dir )
-library(vcfR)
+#Convert_bp_cM adds a new column with centiMorgan positions corresponding to the base pairs in haplotype data
+test_haplotype_file_cM=Convert_bp_cM(test_haplotype_info=haplotype_info,DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
+
+## -----------------------------------------------------------------------------
+if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} #to save disease haplotypes
+# FAME1_disease_cohort is a VCF file
 write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz")) # save FAME1_disease_cohort as a VCF file to read from
 sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
 sample_info # with three lines to generate three disease haplotypes in three seperate VCF files
 write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save sample_info as a tab delimitted text file to read from
+#Phasing_by_pedigree will create disease haplotypes in a given directory
 Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
-dir_output = temp_dir,
+dir_output = paste0(tempdir(), "/1"),
 sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
-# temp_dir will have disease haplotypes in VCF format. disease haplotype is named as "h1" with homozygous genotypes in every VCF file.
-setwd( orig_dir )
-
+# temp_dir/1 will have disease haplotypes in VCF format. disease haplotype is named as "h1" with homozygous genotypes in every VCF file.
 
 ## -----------------------------------------------------------------------------
-library(vcfR)
-library(data.table)
-library(dplyr)
-orig_dir <- getwd()
-temp_dir <- tempdir()
-setwd( temp_dir )
-write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz")) # save FAME1_disease_cohort as a VCF file to read from
-sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
-write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save sample_info as a tab delimitted text file to read from
-Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
-dir_output = temp_dir,
-sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
-disease_file <-fread(paste0(temp_dir,"/",paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
-write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE) # save genetic_map_GRCh37_chr8 as a text file to read from
-test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
-test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info,DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
+disease_file <-fread(paste0(paste0(tempdir(), "/1"),"/",paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
 MAF=sapply(strsplit(disease_file$INFO,";",fixed=TRUE),"[[", 9)
 MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[", 2)
 disease_file=as.data.frame(cbind(disease_file[,c("#CHROM","POS","REF","ALT")],MAF,disease_file[,"h1"]))
@@ -83,10 +65,13 @@ final_file=distinct(final_file,position_cM,.keep_all= TRUE)
 attach(final_file)
 final_file <- final_file[order(POS),]
 detach(final_file) # final_file is ready to compare disease and the two test haplotypes for IBD relateness
+#Calculate_IBD generates the IBD report and saves in a given directory as a text file
 Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
 setwd( orig_dir )
 
 ## -----------------------------------------------------------------------------
+## Run only the wrapper function Generate_FH_score
+file.remove(list.files())
 orig_dir <- getwd()
 setwd(tempdir())
 file.remove(list.files())
@@ -95,7 +80,6 @@ if(!dir.exists(paste0(tempdir(), "/2"))){dir.create(paste0(tempdir(), "/2"))} #t
 if(!dir.exists(paste0(tempdir(), "/3"))){dir.create(paste0(tempdir(), "/3"))}  # dir_controls_file
 if(!dir.exists(paste0(tempdir(), "/4"))){dir.create(paste0(tempdir(), "/4"))} # to save IBD results
 temp_dir <- tempdir() # To carryout the main workload
-library(vcfR)
 write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz")) # save FAME1_disease_cohort as a VCF file to read from
 sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
 write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save sample_info as a tab delimitted text file to read from
