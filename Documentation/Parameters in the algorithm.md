@@ -5,7 +5,6 @@ Generate_FH_score is the main wrapper function that generates FH score values fo
 ```R
 Generate_FH_score=function(DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap="FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37",dir_disease_files="FoundHaplo/input_files/input_vcf_data/disease_haplotypes",test_file="FoundHaplo/input_files/input_vcf_data/test_cohort",test_name="example_test",test_list="FoundHaplo/input_files/input_vcf_data/test_cohort/samples/samples.txt",data_type="test",dir_controls_file="FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
 ",dir_to_save_report="FoundHaplo/results",dir_TEMP="FoundHaplo/temp")
-
 ```
 
 # All the parameters that user has to specify are described below
@@ -49,7 +48,13 @@ The function returns all the details of IBD sharing for each test/control sample
 
 Name of each text file will correspond to a single job sumbitted by the pipeline explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md) i.e. data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt.
 
-Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis.
+Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis as below.
+
+```bash
+FoundHaplo_PATH=
+cat "$FoundHaplo_PATH/results/"*.txt > $FoundHaplo_PATH/results/FH_IBD_scores/results.txt 
+```
+FoundHaplo_PATH : Path to FoundHaplo directory i.e path/FoundHaplo
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
 
