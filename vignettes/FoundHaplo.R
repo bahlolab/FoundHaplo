@@ -7,14 +7,14 @@ library(data.table)
 library(dplyr)
 
 file.remove(list.files())
-#lets look at an example Hapmap genetic map file
+# lets look at an example Hapmap genetic map file
 str(genetic_map_GRCh37_chr8)
 orig_dir <- getwd()
 temp_dir <- tempdir()
 setwd( temp_dir )
-#save the Hapmap genetic map file
+# save the Hapmap genetic map file
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE) # save genetic_map_GRCh37_chr8 as a text file to read from
-#Find_bp_to_trim gives the corresponding base pair positions of +-10cM from a given disease locus
+# Find_bp_to_trim gives the corresponding base pair positions of +-10cM from a given disease locus
 Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),dir_geneticMap=temp_dir,output_file=paste0(temp_dir,"/DCV_bp.txt"))
 
 ## -----------------------------------------------------------------------------
@@ -23,7 +23,7 @@ Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),dir_geneticMap=temp_dir,
 test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
 
 ## -----------------------------------------------------------------------------
-#Convert_bp_cM adds a new column with centiMorgan positions corresponding to the base pairs in haplotype data
+# Convert_bp_cM adds a new column with centiMorgan positions corresponding to the base pairs in haplotype data
 test_haplotype_file_cM=Convert_bp_cM(test_haplotype_info=haplotype_info,DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
 
 ## -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz"
 sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
 sample_info # with three lines to generate three disease haplotypes in three seperate VCF files
 write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save sample_info as a tab delimitted text file to read from
-#Phasing_by_pedigree will create disease haplotypes in a given directory
+# Phasing_by_pedigree will create disease haplotypes in a given directory
 Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
 dir_output = paste0(tempdir(), "/1"),
 sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
@@ -92,5 +92,12 @@ write.vcf(FAME1_control_cohort,paste0(temp_dir,"/3/","FAME1.chr8.vcf.gz")) # sav
 Generate_FH_score(DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_dir,"/2/","file00.txt"),data_type="test",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"))
 setwd(paste0(temp_dir,"/4"))
 read.delim(list.files(paste0(temp_dir,"/4"))[1],header=FALSE)
+setwd(orig_dir)
+
+## -----------------------------------------------------------------------------
+orig_dir <- getwd()
+setwd(tempdir())
+# Analyse_FH lists the samples predicted by the FoundHaplo algorithm and also produce graphical results in a given directory
+Analyse_FH(path_results=FH_IBD_scores,path_to_save_FH_output=tempdir(),critical_percentile=0.99)
 setwd(orig_dir)
 
