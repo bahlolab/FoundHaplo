@@ -20,7 +20,8 @@
 #' @examples
 #' orig_dir <- getwd()
 #' setwd(tempdir())
-#' Analyse_FH(path_results=FH_IBD_scores,path_to_save_FH_output=tempdir(),critical_percentile=0.99)
+#' write.table(FH_IBD_scores,paste0(tempdir(),"/results",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save FH_IBD_scores
+#' Analyse_FH(path_results=paste0(tempdir(),"/results",".txt"),path_to_save_FH_output=tempdir(),critical_percentile=0.99)
 #' setwd(orig_dir)
 
 Analyse_FH=function(path_results,path_to_save_FH_output,critical_percentile)
@@ -63,17 +64,17 @@ for(ii in 1:length(unique(results_file$DCV)))
   CLLR=data.frame( x= 1:nrow(CLLR), y = CLLR$critical_quantile)
 
   set.seed(1)
-  p1[[DCV]]<- ggplot(file1)+
+  p1[[ii]]<- ggplot(file1)+
     aes(x=test_name,y=FH,color=data_type)+
     geom_violin(alpha=0.3,position="identity",size=1.5)+scale_color_manual(values=c("black", "salmon3"),labels = c("1000G controls", "Test cohort"))+geom_segment(data = CLLR, color = "black", aes(x = as.numeric(x) - 0.25,y = y,xend = as.numeric(x) + 0.25,yend = y))
 
-  p1[[DCV]]=  p1[[DCV]]+geom_jitter(height=0,width=0.2,alpha=0.5,data = subset(test_set,test_set$FH > CLLR$y),
+  p1[[ii]]=  p1[[ii]]+geom_jitter(height=0,width=0.2,alpha=0.5,data = subset(test_set,test_set$FH > CLLR$y),
                     aes(x=test_name, y=FH),
                     color = 'red',cex=4,shape=20)
 
-  p1[[DCV]]=  p1[[DCV]]+ ggtitle(paste0("FH score for ",unique(results_file$DCV)[x]))+theme(plot.title = element_text(color="black", size=14, face="bold"),legend.key.size = unit(0.1, 'cm'),legend.text=element_text(size=10),legend.position="bottom",legend.title=element_blank(),panel.background = element_rect(fill = "white", colour = "white"),axis.text.y=element_text(size=10))+scale_y_continuous(limits = c(0, 10), breaks = seq(0, 10, by = 2))+ylab("FH score")
+  p1[[ii]]=  p1[[ii]]+ ggtitle(paste0("FH score for ",unique(results_file$DCV)[ii]))+theme(plot.title = element_text(color="black", size=14, face="bold"),legend.key.size = unit(0.1, 'cm'),legend.text=element_text(size=10),legend.position="bottom",legend.title=element_blank(),panel.background = element_rect(fill = "white", colour = "white"),axis.text.y=element_text(size=10))+scale_y_continuous(limits = c(0, 10), breaks = seq(0, 10, by = 2))+ylab("FH score")
 
-  p1[[DCV]]=  p1[[DCV]]+annotate(geom="text", x=1.4, y=CLLR$y+0.1, label=paste0(critical_percentile," critical percentile"),color="black",size=3)
+  p1[[ii]]=  p1[[ii]]+annotate(geom="text", x=1.4, y=CLLR$y+0.1, label=paste0(critical_percentile," critical percentile"),color="black",size=3)
 
   test_set=subset(file1,file1$data_type=="test")
   test_set=test_set[,-4]
