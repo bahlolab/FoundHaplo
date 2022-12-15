@@ -24,7 +24,7 @@ test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_co
 
 ## -----------------------------------------------------------------------------
 # Convert_bp_cM adds a new column with centiMorgan positions corresponding to the base pairs in haplotype data
-test_haplotype_file_cM=Convert_bp_cM(test_haplotype_info=haplotype_info,DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
+test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info,DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
 
 ## -----------------------------------------------------------------------------
 if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} #to save disease haplotypes
@@ -89,7 +89,7 @@ sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
 write.vcf(FAME1_test_cohort,paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz")) # save FAME1_test_cohort as a VCF file to read from
 write.table(file00,paste0(temp_dir,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save file00 with maximum of 100 sample names of the FAME1_test_cohort as a text file to read from
 write.vcf(FAME1_control_cohort,paste0(temp_dir,"/3/","FAME1.chr8.vcf.gz")) # save FAME1_control_cohort as a VCF file to read from
-Generate_FH_score(DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_dir,"/2/","file00.txt"),data_type="test",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"))
+Generate_FH_score(DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_dir,"/2/","file00.txt"),data_type="test",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"),dir_TEMP=temp_dir)
 setwd(paste0(temp_dir,"/4"))
 read.delim(list.files(paste0(temp_dir,"/4"))[1],header=FALSE)
 setwd(orig_dir)
