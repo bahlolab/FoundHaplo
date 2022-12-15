@@ -19,7 +19,7 @@ Details of all the functions in FoundHaplo R package can be found [here](https:/
 9. Run [Analyse_FH.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Analyse_FH.R) to predict test samples likely to carry the tested disease-causing variants.
 
 ```R
-Analyse_FH(path_results,path_to_save_FH_output,critical_percentile)
+Analyse_FH(path_results="FoundHaplo/results/FH_IBD_scores/results.txt",path_to_save_FH_output="FoundHaplo/results/FH_Analysis",critical_percentile=0.99)
 ```
 
 All the parameters that user has to specify are described below
