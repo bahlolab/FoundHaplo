@@ -49,8 +49,18 @@ $ANNOVAR_HUMANDB_DIR_PATH -buildver hg19 \
 
 
 # $OUTPUT_FILENAME_BASE.hg19_multianno.vcf has annotated INFO based on gnomAD
-bcftools annotate -x ^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_PATH/temp/ready.to.phase.vcf
 
+# Note : Example 1000 Genomes WGS data does not have the R2 (Imputation quality) tag 
+
+n_lines_R2=$(cat "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf | tail -1 | grep "R2=" |wc -l)
+
+if [ $n_lines_R2 -eq 0 ] 
+
+then  
+    bcftools annotate -x ^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_PATH/temp/ready.to.phase.vcf
+else
+    bcftools annotate -x ^INFO/R2,^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_PATH/temp/ready.to.phase.vcf
+fi 
 
 # phase by pedigrees
 # Rscript will create seperate VCF files with known disease haplotypes
