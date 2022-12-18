@@ -57,7 +57,7 @@ if [ $n_lines_R2 -eq 0 ]
 then  
     bcftools annotate -x ^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_PATH/temp/ready.to.phase.vcf
 else
-    bcftools annotate -x ^INFO/AF_raw,^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_PATH/temp/ready.to.phase.vcf
+    bcftools annotate -x ^INFO/R2,^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_PATH/temp/ready.to.phase.vcf
 fi 
 
 # phase by pedigrees
