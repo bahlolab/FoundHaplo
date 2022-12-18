@@ -57,17 +57,17 @@
 #' @examples
 
 
-Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report)
+Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type,dir_geneticMap,test_file,test_name="test",test_list,data_type,dir_controls_file,dir_to_save_report,dir_TEMP)
 {
   db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_pwd,dbname=db_name,unix.socket=unix_socket)
 
   #select mutation_id
   q1=dbSendQuery(db, paste0("SELECT * FROM PathogenicMutations where disease_id=","\"",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),"\"",";"))
   PathogenicMutations <- dbFetch(q1,)
-  mutation_id=PathogenicMutations$mutation_id
+  mutation_num=PathogenicMutations$mutation_id
 
   # select individuals with the given mutation_id
-  q2=dbSendQuery(db, paste0("SELECT * FROM IndividualsWithKnownMutations where mutation_id=","\"",mutation_id,"\"",";"))
+  q2=dbSendQuery(db, paste0("SELECT * FROM IndividualsWithKnownMutations where mutation_id=","\"",mutation_num,"\"",";"))
   list_of_disease_individuals <- dbFetch(q2,)
   list_of_disease_individuals=list_of_disease_individuals$individual_id
 
@@ -76,7 +76,7 @@ Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,min
   c1=capture.output(cat(paste0("SELECT * FROM Samples where individual_id"," in ","("),paste0(list_of_disease_individuals[1:(length(list_of_disease_individuals)-1)],","),list_of_disease_individuals[length(list_of_disease_individuals)],paste0(")",";")))
   q3=dbSendQuery(db,c1)
   sample_id=dbFetch(q3,)
-  sample_id=sample_id$sample_id
+  sample_num=sample_id$sample_id
 
   gen_allele_mismatch_rate = 0.01 # genotype/imputation allele_mismatch rate allowed
   g1=gen_allele_mismatch_rate
@@ -85,46 +85,44 @@ Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,min
 
   #add disease sample names in order
 
-
-
-
-  tmpfile <- tempfile('1', tempdir())
+  rand_string=system(paste0("echo $RANDOM | md5sum | head -c 32"),intern = TRUE)
+  rand_string
 
 
   if(data_type!="controls"  & !grepl(".gz", test_file, fixed = TRUE)) # if we are testing the test individuals of interest
   {
 
-    command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",tmpfile,".vcf")
+    command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",dir_TEMP,"/",rand_string,".vcf")
     system(command) # invoke a system command that will create a temporary vcf file only with the selected sample ids.
 
-    fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
+    fix_file_to_test <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
   }
   if(data_type!="controls"  & grepl(".gz", test_file, fixed = TRUE)) # if we are testing the test individuals of interest
   {
 
-    command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",tmpfile,".vcf")
+    command=paste0("module load bcftools ; bcftools view --samples-file ", test_list," ", test_file, " -Oz -o ",dir_TEMP,"/",rand_string,".vcf")
     system(command) # invoke a system command that will create a temporary vcf file only with the selected sample ids.
 
-    fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
+    fix_file_to_test <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = c(1:9)) # load the first 9 fixed columns of the vcf file once
   }
 
   if(data_type=="controls" & !grepl(".gz", test_file, fixed = TRUE)) # if the test file is not gzipped
   {
 
-    command=paste0("cut -f1-9 ",test_file, " > " ,tmpfile,".vcf") # save the first 9 fixed columns of the vcf file in a temporary file
+    command=paste0("cut -f1-9 ",test_file, " > " ,dir_TEMP,"/",rand_string,".vcf")# save the first 9 fixed columns of the vcf file in a temporary file
     system(command)
 
-    fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
+    fix_file_to_test <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
 
   }
 
   if(data_type=="controls" & grepl(".gz", test_file, fixed = TRUE)) # if the test file is gzipped
   {
 
-    command=paste0("zcat ",test_file," | ","cut -f1-9 ", " > " ,tmpfile,".vcf") # save the first 9 fixed columns of the vcf file in a temporary file
+    command=paste0("zcat ",test_file," | ","cut -f1-9 ", " > " ,dir_TEMP,"/",rand_string,".vcf") # save the first 9 fixed columns of the vcf file in a temporary file
     system(command)
 
-    fix_file_to_test <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
+    fix_file_to_test <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = c(1:9)) # load the temporary file
 
   }
 
@@ -155,11 +153,11 @@ Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,min
 
 
 
-  for(j in sample_id)
+  for(j in sample_num)
   {
 
 
-    q4=dbSendQuery(db, paste0("SELECT * FROM Genotypes where sample_id=","\"",sample_id,"\"",";"))
+    q4=dbSendQuery(db, paste0("SELECT * FROM Genotypes where sample_id=","\"",j,"\"",";"))
     Genotypes <- dbFetch(q4,)
 
 
@@ -252,8 +250,8 @@ Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,min
       test_samples=read.delim(test_list,header=FALSE)
       test_samples=as.character(test_samples$V1)
 
-      test_fix <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = c(1:9))
-      test_main <-fread(paste0(tmpfile,".vcf"),skip = "#CHROM",select = test_samples)
+      test_fix <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = c(1:9))
+      test_main <-fread(paste0(dir_TEMP,"/",rand_string,".vcf"),skip = "#CHROM",select = test_samples)
 
       test_total=as.data.frame(cbind(test_fix,test_main))
 
@@ -313,11 +311,7 @@ Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,min
 
         Final_IBD_score=paste0("test","\t",test_name,"\t",frequency_type,"\t",minor_allele_cutoff,"\t",r2,"\t",DCV,"\t",disease_individual,"\t",test_individual,"\t",Final_IBD_score)
 
-        dir_to_save_report=paste0(dir_to_save_report,"/",Final_IBD_score_name,".txt")
-
-
-        write.table(Final_IBD_score,dir_to_save_report,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-        rm(final_file)
+     return(Final_IBD_score)
 
 
       }
@@ -393,11 +387,8 @@ Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,min
         Final_IBD_score_name=paste("controls",test_name,frequency_type,minor_allele_cutoff,r2,DCV,disease_individual,test_individual,sep=".",collapse=NULL)
 
         Final_IBD_score=paste0("controls","\t",test_name,"\t",frequency_type,"\t",minor_allele_cutoff,"\t",r2,"\t",DCV,"\t",disease_individual,"\t",test_individual,"\t",Final_IBD_score)
-
-        dir_to_save_report=paste0(dir_to_save_report,"/",Final_IBD_score_name,".txt")
-        write.table(Final_IBD_score,dir_to_save_report,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-
-        rm(final_file)
+        
+     return(Final_IBD_score)
 
       }
 
@@ -409,22 +400,44 @@ Generate_FH_score_DB=function(db_port,db_host,db_pwd,db_name,unix_socket,DCV,min
 
     if(data_type=="test")
     {
-      run_test=seq(11,ncol(test_total_1),2)
-
-      sapply(run_test,save_IBD_report_test)
-    }
+        run_test=seq(11,ncol(test_total_1),2)
+        
+        results=lapply(run_test,save_IBD_report_test)
+        
+        final_file=data.frame(do.call("rbind",results))
+        dim(final_file)
+        
+        Final_IBD_score_name=paste("test",test_name,frequency_type,minor_allele_cutoff,r2,DCV,disease_individual,sapply(strsplit(test_list,"/"),"[[",str_count(test_list,"/")+1),sep=".",collapse=NULL)
+        
+        
+        path1<-paste0(dir_to_save_report,"/",Final_IBD_score_name)
+        
+        #final_file=dplyr::distinct(final_file,V7,V8, .keep_all= TRUE)
+        
+        write.table(final_file,path1,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)    }
     if(data_type=="controls")
     {
-      run_controls=seq(11,ncol(controls_file_total_1),2)
-
-      sapply(run_controls,save_IBD_report_controls)
+        run_controls=seq(11,ncol(controls_file_total_1),2)
+        
+        results=lapply(run_controls,save_IBD_report_controls)
+        
+        final_file=data.frame(do.call("rbind",results))
+        dim(final_file)
+        
+        Final_IBD_score_name=paste("controls",test_name,frequency_type,minor_allele_cutoff,r2,DCV,disease_individual,sapply(strsplit(test_list,"/"),"[[",str_count(test_list,"/")+1),sep=".",collapse=NULL)
+        
+        path1<-paste0(dir_to_save_report,"/",Final_IBD_score_name)
+        
+        # final_file=dplyr::distinct(final_file,V7,V8, .keep_all= TRUE)
+        
+        write.table(final_file,path1,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
     }
 
 
 
   }
 
-  system(paste0("rm -rf ",tmpfile,".vcf")) # delete the temporary vcf file created
+  system(paste0("rm -rf ",dir_TEMP,"/",rand_string,".vcf"))  # delete the temporary vcf file created
   dbHasCompleted(q1,q2,q3,q4,q5,q6)
   dbClearResult(q1,q2,q3,q4,q5,q6)
   #close the connection once everythings done
