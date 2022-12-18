@@ -50,6 +50,8 @@ $ANNOVAR_HUMANDB_DIR_PATH -buildver hg19 \
 
 # $OUTPUT_FILENAME_BASE.hg19_multianno.vcf has annotated INFO based on gnomAD
 
+# Note : Example 1000 Genomes WGS data does not have the R2 (Imputation quality) tag 
+
 n_lines_R2=$(cat "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf | tail -1 | grep "R2=" |wc -l)
 
 if [ $n_lines_R2 -eq 0 ] 
