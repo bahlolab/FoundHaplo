@@ -10,7 +10,6 @@
 ### Run FoundHaplo
 
 Details of all the functions in FoundHaplo R package can be found [here](https://github.com/bahlolab/FoundHaplo/blob/main/vignettes).
-Parameters that must be specified by the user to generate the IBD report for a given disease-causing variant are explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md).
 
 5. [Run FoundHaplo parallely using Nextflow pipeline](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md)
 
