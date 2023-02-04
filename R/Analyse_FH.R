@@ -90,8 +90,8 @@ for(ii in 1:length(lengths(p1)))
   print(grid.arrange(p1[[ii]],nrow = 1,ncol=1))
 }
 dev.off()
-
-return(predictions)
 print(paste0("Graphical output is saved in ",path_to_save_FH_output))
+return(predictions)
+
 }
 
