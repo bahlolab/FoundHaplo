@@ -92,6 +92,6 @@ for(ii in 1:length(lengths(p1)))
 dev.off()
 
 return(predictions)
-print(paste0("Graphical output is saved in",path_to_save_FH_output))
+print(paste0("Graphical output is saved in ",path_to_save_FH_output))
 }
 
