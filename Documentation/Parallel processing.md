@@ -39,8 +39,8 @@ Set the variables as below,
 (iii) path_control_sample_chunks : Path of the .txt files with chunks of control sample IDs
 
 ```R
-Create_jobs(path_manifest="FoundHaplo/scripts/run_nextflow/manifest.txt",path_test_sample_chunks="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples",path_control_sample_chunks="FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/samples",DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap="FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37",dir_disease_files="FoundHaplo/input_files/input_vcf_data/disease_haplotypes",test_file="FoundHaplo/input_files/input_vcf_data/test_cohort",test_name="example_test",dir_controls_file="FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
-",dir_to_save_report="FoundHaplo/results",dir_TEMP="FoundHaplo/temp")
+Create_jobs(path_manifest="FoundHaplo_PATH/scripts/run_nextflow/manifest.txt",path_test_sample_chunks="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples",path_control_sample_chunks="FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/samples",DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap="FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37",dir_disease_files="FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes",test_file="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort",test_name="example_test",dir_controls_file="FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
+",dir_to_save_report="FoundHaplo_PATH/results",dir_TEMP="FoundHaplo_PATH/temp")
 ```
 
 * [Args_Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Args_Generate_FH_score.R) to submit parameters as arguments to the main R script, [Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score.R). 
