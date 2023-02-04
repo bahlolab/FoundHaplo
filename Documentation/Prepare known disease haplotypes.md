@@ -58,7 +58,8 @@ Set the variables as below,
 * ANNOVAR_HUMANDB_DIR_PATH : Path to ANNOVAR database
 * SAMPLE_INFO_FILE : Path to a tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the VCF file in mentioned order.   
 For the type "trio", affected-offspring,affected-parent,unaffected-parent trio  
-For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
+For the type "duo", affected-offspring,affected-parent duo
+For the type "related", affected-sample-1,affected-sample2 related
 
 The post imputation script will create a seperate file with VCF columns for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/, additionaly it will remove multiallelic SNPs using gnomAD frequency files downloaded with ANNOVAR. 
 
