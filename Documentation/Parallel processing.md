@@ -51,6 +51,14 @@ Create_jobs(path_manifest="FoundHaplo_PATH/scripts/run_nextflow/manifest.txt",pa
 module load nextflow
 ./run_nextflow.nf
 ```
+
 Results will be saved in the path given in "dir_to_save_report" in the script [Create_jobs.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Create_jobs.R).
+
+6. Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis as below.
+
+```bash
+FoundHaplo_PATH=
+cat "$FoundHaplo_PATH/results/"*.txt > $FoundHaplo_PATH/results/FH_IBD_scores/results.txt 
+```bash
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
