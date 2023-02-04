@@ -1,5 +1,5 @@
 
-1. Run [FoundHaplo/scripts/prepare_inputs/test_samples_pre_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/test_samples_pre_imputation.sh)
+1. Run [FoundHaplo/scripts/prepare_inputs/test_samples_pre_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/test_samples_pre_imputation.sh) to prepare the test cohort of SNP genotyping data.
 
 ```bash
 FoundHaplo_PATH= 
