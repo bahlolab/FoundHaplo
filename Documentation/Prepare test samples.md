@@ -1,4 +1,3 @@
-## If you have SNP chip data
 
 1. Run [FoundHaplo/scripts/prepare_inputs/test_samples_pre_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/test_samples_pre_imputation.sh)
 
@@ -39,9 +38,5 @@ Set the variables as below,
 * DCV : Name the disease variant of interest in the format of disease.chr.position. i.e FAME1.chr8.119379052.
 
 The test_samples_post_imputation.sh will create a VCF file with test individuals in FoundHaplo/input_files/input_vcf_data/
-
-## If you have WGS data
-
-This is still a work in progress
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
