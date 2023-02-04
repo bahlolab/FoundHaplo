@@ -24,8 +24,8 @@ Analyse_FH(path_results="FoundHaplo/results/FH_IBD_scores/results.txt",path_to_s
 
 All the parameters that user has to specify are described below
 
-1. **path_results** Path to a single .txt file with all the FH scores
-2. **path_to_save_FH_output** Path to save the graphical output of the FH scores 
-3. **critical_percentile** Critical percentile of the control cohort to derive predictions. Recommend above 0.999 for large cohorts like UKBB
+* path_results Path to a single .txt file with all the FH scores
+* path_to_save_FH_output Path to save the graphical output of the FH scores 
+* critical_percentile Critical percentile of the control cohort to derive predictions. Recommend above 0.999 for large cohorts like UKBB
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
