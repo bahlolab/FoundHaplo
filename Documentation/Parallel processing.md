@@ -49,6 +49,7 @@ Create_jobs(path_manifest="FoundHaplo_PATH/scripts/run_nextflow/manifest.txt",pa
 
 5. Run all nextflow jobs in the [manifest.txt](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/manifest.txt) file as below. Each line in the manifest.txt file will be a single independant job that is run parallely.
 ```bash
+module load nextflow
 ./run_nextflow.nf
 ```
 Results will be saved in the path given in "dir_to_save_report" in the script [Create_jobs.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Create_jobs.R).
