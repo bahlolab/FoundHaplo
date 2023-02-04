@@ -59,6 +59,6 @@ Results will be saved in the path given in "dir_to_save_report" in the script [C
 ```bash
 FoundHaplo_PATH=
 cat "$FoundHaplo_PATH/results/"*.txt > $FoundHaplo_PATH/results/FH_IBD_scores/results.txt 
-```bash
+```
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
