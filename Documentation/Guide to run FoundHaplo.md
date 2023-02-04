@@ -10,15 +10,15 @@
 ### Run FoundHaplo
 
 Details of all the functions in FoundHaplo R package can be found [here](https://github.com/bahlolab/FoundHaplo/blob/main/vignettes).
+Parameters that must be specified by the user to generate the IBD report for a given disease-causing variant are explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md).
 
-5. [Parameters that must be specified by the user to generate the IBD report for a given disease-causing variant](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md)
-6. [Run FoundHaplo parallely using Nextflow pipeline](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md)
+5. [Run FoundHaplo parallely using Nextflow pipeline](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md)
 
     If you do not have the Nextflow pipeline, run the main R function Generate_FH_score sequentially as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md)
 
 ### Analyse FoundHaplo results
 
-7. Run [Analyse_FH.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Analyse_FH.R) to predict test samples likely to carry the tested disease-causing variants.
+6. Run [Analyse_FH.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Analyse_FH.R) to predict test samples likely to carry the tested disease-causing variants.
 
 ```R
 Analyse_FH(path_results="FoundHaplo/results/FH_IBD_scores/results.txt",path_to_save_FH_output="FoundHaplo/results/FH_Analysis",critical_percentile=0.99)
