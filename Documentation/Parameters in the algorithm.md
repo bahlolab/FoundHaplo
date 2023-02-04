@@ -1,6 +1,6 @@
 Generate_FH_score is the main wrapper function that generates FH score values for each test/control - disease pair by taking user input shown below.
 
-* Note: Generate_FH_score function only works on the command line as it uses system() function to query from VCFtools and BCFtools. Hence recomended to use a nextflow pipeline as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md).
+* Note: Generate_FH_score function easily works on the command line as it uses system() function to query from VCFtools and BCFtools. Hence recomended to use a nextflow pipeline as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md).
 
 ```R
 Generate_FH_score=function(DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap="FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37",dir_disease_files="FoundHaplo/input_files/input_vcf_data/disease_haplotypes",test_file="FoundHaplo/input_files/input_vcf_data/test_cohort",test_name="example_test",test_list="FoundHaplo/input_files/input_vcf_data/test_cohort/samples/samples.txt",data_type="test",dir_controls_file="FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
