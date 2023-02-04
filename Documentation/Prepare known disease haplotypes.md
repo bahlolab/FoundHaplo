@@ -1,4 +1,4 @@
-Follow below steps to create disease haplotypes from known affected samples using SNP chip data.
+Follow below steps to create disease haplotypes from known affected samples using SNP genotyping data.
 
 FH model is sensitive to phasing errors on the disease samples, hence it requires accurately formed disease haplotypes. This can be achieved by phasing the affected individuals by trio , duo or any type of pedigree phasing to derive the disease haplotypes shared among affected individuals instead of using traditional phasing tools. 
 
