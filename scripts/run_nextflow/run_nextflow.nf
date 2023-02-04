@@ -26,7 +26,7 @@ stdout result
 """
 
 
-Rscript /PATH/FoundHaplo/scripts/Args_Generate_FH_score.R $x // edit
+Rscript /PATH/FoundHaplo/scripts/run_nextflow/Args_Generate_FH_score.R $x // edit
 
 
 """
