@@ -22,7 +22,7 @@ OUTPUT_NAME="$(echo $DCV | cut -d'.' -f1-2)"
 module load vcftools
 module load htslib
 
-echo "creating control cohorts for the disease variant for all five super populations in $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
+echo "creating control cohorts for the disease variant" $DCV "for all five super populations in $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
 
 vcftools --gzvcf $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/ALL.chr$CHROMOSOME.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz --chr $CHROMOSOME --keep $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/EUR.txt --remove-indels --min-alleles 2 --max-alleles 2 --from-bp $START_BP --to-bp $END_BP --recode --recode-INFO-all --stdout | bgzip -c > $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR/$OUTPUT_NAME.vcf.gz
 
