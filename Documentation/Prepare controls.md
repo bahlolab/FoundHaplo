@@ -1,11 +1,11 @@
 1000 Genomes phase 3 haplotypes are used as controls. For every disease haplotype, control cohort should be run the same way a test cohort is run. 
 Make sure you have downloaded and prepared 1000 Genomes phase 3 haplotypes and the sample IDs using [FoundHaplo/scripts/prepare_inputs/Initialise.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/Initialise.sh) .
 
-1. Run [FoundHaplo/scripts/prepare_inputs/create_1000G_control_haplotypes.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/create_1000G_control_haplotypes.sh)
+1. Run [FoundHaplo/scripts/prepare_inputs/create_1000G_control_haplotypes.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/create_1000G_control_haplotypes.sh) once for one disease-causing variant.
 ```bash
 FoundHaplo_PATH=
 DCV=
-$FoundHaplo_PATH/scripts/prepare_inputs/create_1000G_control_haplotypes.sh "$FoundHaplo_PATH" "$DCV"
+$FoundHaplo_PATH/scripts/prepare_inputs/create_1000G_control_haplotypes.sh "$FoundHaplo_PATH" "FAME1.chr8.119379052"
 ```
 
 Set the variables as below,,

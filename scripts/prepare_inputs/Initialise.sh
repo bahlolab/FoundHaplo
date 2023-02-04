@@ -49,7 +49,9 @@ mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EAS
 mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AFR
 
-echo "Download all software tools listed : GenotypeHarmonizer,plink,ANNOVAR,vcftools and bcftools."
+echo "Download complete for all required input data to run FoundHaplo"
+
+echo "Make sure you have all software tools listed in modules or please download them : List of software tools required are GenotypeHarmonizer,plink,ANNOVAR,vcftools and bcftools."
 
 # Download all software tools listed
 

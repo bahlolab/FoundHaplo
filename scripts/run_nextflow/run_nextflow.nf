@@ -25,8 +25,8 @@ stdout result
 
 """
 
-
-Rscript /PATH/FoundHaplo/scripts/Args_Generate_FH_score.R $x // edit
+echo "edit below line with the correct path"
+Rscript /PATH/FoundHaplo/scripts/run_nextflow/Args_Generate_FH_score.R $x
 
 
 """
