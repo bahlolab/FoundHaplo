@@ -15,6 +15,7 @@ see [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentati
 
 ```R
 devtools::install_github("bahlolab/FoundHaplo")
+library(FoundHaplo)
 ```
 
 ## Clone the repository
