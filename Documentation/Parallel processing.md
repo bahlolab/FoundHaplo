@@ -26,8 +26,6 @@ Set the variables as below,
 
 3. Nextflow pipeline requires below scripts and files which are in /FoundHaplo/scripts/run_nextflow/.
 
-* The nextflow configuration file, [Nextflow.config](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/nextflow.config).
-* The main script to run FoundHaplo jobs in parallel, [run_nextflow.nf](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/run_nextflow.nf).
 * Tab delimitted [manifest.txt](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/manifest.txt) to read the parameters from.
 
   manifest.txt file can be easily generated using the script [Create_jobs.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Create_jobs.R), which requires all the parameters (except test_list and data_type) in the main R script [Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score.R) as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md), and three additional parameters which are,
@@ -43,6 +41,9 @@ Create_jobs(path_manifest="FoundHaplo_PATH/scripts/run_nextflow/manifest.txt",pa
 ```
 
 * [Args_Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Args_Generate_FH_score.R) to submit parameters as arguments to the main R script, [Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score.R). 
+
+* The nextflow configuration file, [Nextflow.config](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/nextflow.config).
+* The main script to run FoundHaplo jobs in parallel, [run_nextflow.nf](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/run_nextflow.nf).
 
 4. Re-write the [run_nextflow.nf](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/run_nextflow.nf) as necessary.
 
