@@ -8,7 +8,7 @@ devtools::install_github("bahlolab/FoundHaplo")
 
 We recommend using a nextflow pipeline to run the main function [Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score.R) in FoundHaplo. Refer https://www.nextflow.io/docs/latest/process.html for more details
 
-2. Use [create_sample_chunks.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/create_sample_chunks.sh) script to split test and control samples into chunks of sample IDs to parallely run chunks of samples in one nextflow job. The script will create a folder named "samples" in the directory where the sample ID files already are.
+2. Use [create_sample_chunks.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/create_sample_chunks.sh) script to split test and control samples into chunks of sample IDs to parallely run chunks of samples in one nextflow job. The script will create a folder named "samples" in the directory where the sample ID files already are. We recommend a CHUNK_SIZE of 1000 sample names if the test cohort has more than 50,000 samples and CHUNK_SIZE of 100 otherwise.
 
 ```bash
 FoundHaplo_PATH=
