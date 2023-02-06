@@ -17,7 +17,7 @@ Generate_FH_score(DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,imputation_qu
 6. **dir_disease_files** directory path of the disease haplotype VCFs gzipped
 7. **test_file** path of the test cohort file gzipped
 8. **test_name** meaningful name for the test cohort 
-9. **test_list** path to a .txt file that includes sample names from the test/control cohort. Recommend a maximum of 1000 sample names if running in parallel
+9. **test_list** path to a .txt file that includes sample names from the test/control cohort. Recommend a list of 100 sample names if running in parallel, or a list of 1000 sample names if the test cohort has more than 50,000 samples and running in parallel 
 10. **data_type** "test" or "controls"
 11. **dir_controls_file** directory where the 1000 Genomes gzipped VCF control files are stored. Select the control population cohort the same as the test cohort i.e /mypath/1000G_controls_by_variant/EUR
 12. **dir_to_save_report** directory path to save the output of FoundHaplo IBD sharing for further analysis

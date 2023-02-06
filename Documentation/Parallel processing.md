@@ -22,7 +22,7 @@ Set the variables as below,
 * FoundHaplo_PATH : Path to FoundHaplo directory i.e path/FoundHaplo
 * TEST_SAMPLES_FILE : Path to .txt file with test sample IDs 
 * CONTROL_SAMPLES_FILE :  Path to .txt file with control sample IDs 
-* CHUNK_SIZE: Number of samples in one chunk, recomended a max of 1000
+* CHUNK_SIZE: Number of samples in one chunk, recomended running in chunks of 1000 samples if the test cohort has more than 50,000 samples
 
 3. Nextflow pipeline requires below scripts and files which are in /FoundHaplo/scripts/run_nextflow/.
 
@@ -30,7 +30,7 @@ Set the variables as below,
 * The main script to run FoundHaplo jobs in parallel, [run_nextflow.nf](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/run_nextflow.nf).
 * Tab delimitted [manifest.txt](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/manifest.txt) to read the parameters from.
 
-  manifest.txt file can be easily generated using the script [Create_jobs.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Create_jobs.R), which requires all the parameters (except test_list and data_type) in the main R script [Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score.R) as explained [here](https://github.com/bahlolab/FoundHaplo/edit/main/Documentation/Parameters%20in%20the%20algorithm.md), and three additional parameters which are,
+  manifest.txt file can be easily generated using the script [Create_jobs.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Create_jobs.R), which requires all the parameters (except test_list and data_type) in the main R script [Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score.R) as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md), and three additional parameters which are,
 
 (i) path_manifest : Path to save the manifest.txt file
 
