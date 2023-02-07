@@ -1,3 +1,4 @@
+Follow below steps everytime you either have a new test cohort to run or you need to test the same test cohort for a new disease-causing variant. You can skip step 1 if the new disease-causing variant is on a chromsome that is already being imputed.
 
 1. Run [FoundHaplo/scripts/prepare_inputs/test_samples_pre_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/test_samples_pre_imputation.sh) to prepare the test cohort of SNP genotyping data.
 
