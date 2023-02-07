@@ -1,3 +1,4 @@
+Follow below steps if yopu are using FoundHaplo for the first time.
 
 Clone the repository if you have not already
 ```bash
