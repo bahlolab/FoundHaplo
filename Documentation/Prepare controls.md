@@ -5,7 +5,7 @@ Make sure you have downloaded and prepared 1000 Genomes phase 3 haplotypes and t
 ```bash
 FoundHaplo_PATH=
 DCV=
-$FoundHaplo_PATH/scripts/prepare_inputs/create_1000G_control_haplotypes.sh "$FoundHaplo_PATH" "FAME1.chr8.119379052"
+$FoundHaplo_PATH/scripts/prepare_inputs/create_1000G_control_haplotypes.sh $FoundHaplo_PATH FAME1.chr8.119379052
 ```
 
 Set the variables as below,,
