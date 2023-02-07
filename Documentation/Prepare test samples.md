@@ -1,3 +1,4 @@
+Follow below steps everytime you either have a new test cohort to run or you need to test the same test cohort for a new disease-causing variant. You can skip steps 1 and 2 if the new disease-causing variant is on a chromsome that is already being imputed.
 
 1. Run [FoundHaplo/scripts/prepare_inputs/test_samples_pre_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/test_samples_pre_imputation.sh) to prepare the test cohort of SNP genotyping data.
 
@@ -8,7 +9,7 @@ INPUT_PLINK_BASE_NAME=
 CHROMOSOME=
 GENOTYPEHARMONIZER_PATH=
 PLINK_TOOL_PATH= 
-$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_pre_imputation.sh "$FoundHaplo_PATH" "$FoundHaplo_PATH/example" "FAME1_test_cohort" "8" "$GENOTYPEHARMONIZER_PATH" "$PLINK_TOOL_PATH"
+$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_pre_imputation.sh $FoundHaplo_PATH $FoundHaplo_PATH/example FAME1_test_cohort 8 $GENOTYPEHARMONIZER_PATH $PLINK_TOOL_PATH
 ```
 Set the variables as below,
 
@@ -28,7 +29,7 @@ FoundHaplo_PATH=
 INPUT_VCF_PATH= 
 INPUT_VCF_BASE_NAME=
 DCV= 
-$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_post_imputation.sh "$FoundHaplo_PATH" "$FoundHaplo_PATH/temp/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1.chr8.119379052." 
+$FoundHaplo_PATH/scripts/prepare_inputs/test_samples_post_imputation.sh $FoundHaplo_PATH $FoundHaplo_PATH/temp/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052.
 ```
 Set the variables as below,
 

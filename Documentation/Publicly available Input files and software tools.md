@@ -1,3 +1,4 @@
+Follow below steps if yopu are using FoundHaplo for the first time.
 
 Clone the repository if you have not already
 ```bash
@@ -7,7 +8,7 @@ Use [FoundHaplo/scripts/prepare_inputs/Initialise.sh](https://github.com/bahlola
 
 ```bash
 FoundHaplo_PATH=
-$FoundHaplo_PATH/scripts/prepare_inputs/Initialise.sh "$FoundHaplo_PATH"
+$FoundHaplo_PATH/scripts/prepare_inputs/Initialise.sh $FoundHaplo_PATH
 ```
 Publicly available reference files required to run FoundHaplo
 

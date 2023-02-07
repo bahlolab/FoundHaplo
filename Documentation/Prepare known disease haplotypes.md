@@ -1,4 +1,4 @@
-Follow below steps to create disease haplotypes from known affected samples using SNP genotyping data.
+Follow below steps eveytime when new disease haplotypes are available to create disease haplotypes from known affected samples using SNP genotyping data.
 
 FH model is sensitive to phasing errors on the disease samples, hence it requires accurately formed disease haplotypes. This can be achieved by phasing the affected individuals by trio , duo or any type of pedigree phasing to derive the disease haplotypes shared among affected individuals instead of using traditional phasing tools. 
 
@@ -19,7 +19,7 @@ CHROMOSOME=
 GENOTYPEHARMONIZER_PATH=
 PLINK_TOOL_PATH= 
 
-$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh "$FoundHaplo_PATH" "$FoundHaplo_PATH/example" "FAME1_disease_cohort" "8" "$GENOTYPEHARMONIZER_PATH" "$PLINK_TOOL_PATH"
+$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh $FoundHaplo_PATH $FoundHaplo_PATH/example FAME1_disease_cohort 8 $GENOTYPEHARMONIZER_PATH $PLINK_TOOL_PATH
 
 ```
 
@@ -44,7 +44,7 @@ ANNOVAR_PATH=
 ANNOVAR_HUMANDB_DIR_PATH= 
 SAMPLE_INFO_FILE=
 
-$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh "$FoundHaplo_PATH" "$FoundHaplo_PATH/temp/FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz" "FAME1.chr8.119379052." "$ANNOVAR_PATH" "$ANNOVAR_HUMANDB_DIR_PATH" "$FoundHaplo_PATH/example/sample_info.txt"
+$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh $FoundHaplo_PATH $FoundHaplo_PATH/temp/FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052. $ANNOVAR_PATH $ANNOVAR_HUMANDB_DIR_PATH $FoundHaplo_PATH/example/sample_info.txt
 
 ```
 
