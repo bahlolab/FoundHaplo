@@ -15,7 +15,7 @@ FoundHaplo_PATH=
 TEST_SAMPLES_FILE=
 CONTROL_SAMPLES_FILE=
 CHUNK_SIZE=
-$FoundHaplo_PATH/scripts/run_nextflow/create_sample_chunks.sh "$FoundHaplo_PATH" "$FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples.txt" "$FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/EUR.txt" "100"
+$FoundHaplo_PATH/scripts/run_nextflow/create_sample_chunks.sh $FoundHaplo_PATH $FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples.txt $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/EUR.txt 100
 ```
 Set the variables as below,
 
@@ -59,7 +59,7 @@ Results will be saved in the path given in "dir_to_save_report" in the script [C
 
 ```bash
 FoundHaplo_PATH=
-cat "$FoundHaplo_PATH/results/"*.txt > $FoundHaplo_PATH/results/FH_IBD_scores/results.txt 
+cat $FoundHaplo_PATH/results/*.txt > $FoundHaplo_PATH/results/FH_IBD_scores/results.txt 
 ```
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
