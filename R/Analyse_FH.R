@@ -90,7 +90,7 @@ Analyse_FH=function(path_results,path_to_save_FH_output,critical_percentile)
     test_set$sample_index=1:nrow(test_set)
     p2[[ii]]=ggplot(test_set)+
       aes(x=sample_index,y=FH)+
-      geom_point(color="black")+labs(x="sample index",y="FH score",title="FH score of the test cohort in descending order",subtitle="Alternatively samples with the disease haplotypes can be identified if they are seprated as a cluster from the rest")+theme(plot.title = element_text(color="black", size=14, face="bold"),legend.key.size = unit(0.1, 'cm'),legend.text=element_text(size=10),legend.position="bottom",legend.title=element_blank(),panel.background = element_rect(fill = "white", colour = "white"),axis.text.y=element_text(size=10))
+      geom_point(color="black")+labs(x="sample index",y="FH score",title="FH score of the test cohort in descending order",subtitle="Alternatively samples sharing the disease haplotypes can be identified if they are seprated as a cluster from the rest")+theme(plot.title = element_text(color="black", size=14, face="bold"),legend.key.size = unit(0.1, 'cm'),legend.text=element_text(size=10),legend.position="bottom",legend.title=element_blank(),panel.background = element_rect(fill = "white", colour = "white"),axis.text.y=element_text(size=10))
     
   }
   
