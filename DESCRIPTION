@@ -22,7 +22,6 @@ Imports:
     pryr,
     stringi,
     stringr,
-    identity,
     tibble,
     vcfR,
     dplyr,
