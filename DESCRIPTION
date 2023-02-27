@@ -1,12 +1,33 @@
 Package: FoundHaplo
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Detect individuals with disease-cuaisng variants using Identity-by-Descent segments
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Erandee Robertson
+Maintainer: The package maintainer <robertson.e@wehi.edu.au>
+Depends:
+    R (>= 4.2.0)
+Description: Locus specific Identity-by-Descent (IBD) inference between a cohort of individuals and known disease-causing haplotypes.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Imports:
+    R.utils,
+    data.table,
+    doParallel,
+    dplyr,
+    foreach,
+    ggplot2 (>= 2.1.0),
+    gridExtra,
+    parallel,
+    pryr,
+    stringi,
+    stringr,
+    identity,
+    tibble,
+    vcfR,
+    dplyr,
+    plyr
 RoxygenNote: 7.2.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
