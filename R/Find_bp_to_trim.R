@@ -29,7 +29,7 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
         DCV_adjusted=as.vector(unlist(DCV_adjusted,recursive = FALSE))
         chr=DCV_adjusted[2]
 
-        path=paste0(dir_geneticMap,"/genetic_map_GRCh37_",chr,".txt") # Edit this line depending on how "dir_geneticMap Path" is given
+        path=paste0(dir_geneticMap,"/genetic_map_GRCh37_",chr,".txt") # geneticMap files are in input_files/public_data/genetic_map_HapMapII_GRCh37
         recombination_map=read.delim(path)
         colnames(recombination_map)=c("Chromosome","position_bp","Rate.cM.Mb.","position_cM")
 
