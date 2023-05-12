@@ -6,7 +6,8 @@
 #' @param input_vector A vector with the variants (type \code{"character"})
 #' @param dir_geneticMap Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
 #' @param output_file Path to save the resutls (type \code{"character"})
-#' @return Return a data frame with three columns 1.Original variant 2. base pair value of 20cM to the left of the variant 3. base pair value of 20cM to the right of the variant
+#' @param size_to_trim_cM Size of the region allowed around the disease variant, default is 10cM either side (type \code{"numeric"})
+#' @return Return a data frame with three columns 1.Original variant 2. base pair value of 10cM to the left of the variant 3. base pair value of 10cM to the right of the variant
 #' @export
 #' @examples
 #' orig_dir <- getwd()
@@ -18,28 +19,27 @@
 
 
 
-Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
+Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file,size_to_trim_cM=10)
 {
-    DCV_list=input_vector
 
     positions=list()
-    for(j in 1:length(DCV_list))
+    for(j in 1:length(input_vector))
     {
 
-        DCV_adjusted=strsplit(DCV_list[j], ".",fixed=TRUE)
+        DCV_adjusted=strsplit(input_vector[j], ".",fixed=TRUE)
         DCV_adjusted=as.vector(unlist(DCV_adjusted,recursive = FALSE))
         chr=DCV_adjusted[2]
 
-        path=paste0(dir_geneticMap,"/genetic_map_GRCh37_",chr,".txt") # Edit this line depending on how "dir_geneticMap Path" is given
+        path=paste0(dir_geneticMap,"/genetic_map_GRCh37_",chr,".txt") # geneticMap files are in input_files/public_data/genetic_map_HapMapII_GRCh37
         recombination_map=read.delim(path)
         colnames(recombination_map)=c("Chromosome","position_bp","Rate.cM.Mb.","position_cM")
 
-        fun <- approxfun(recombination_map$position_bp,recombination_map$position_cM,ties=mean)
-        DCV_cM=fun(DCV_adjusted[3])
+        fun_to_cM <- approxfun(recombination_map$position_bp,recombination_map$position_cM,ties=mean)
+        DCV_cM=fun_to_cM(DCV_adjusted[3])
 
 
-        DCV_cM_left=DCV_cM-10
-        DCV_cM_right=DCV_cM+10
+        DCV_cM_left=DCV_cM-size_to_trim_cM
+        DCV_cM_right=DCV_cM+size_to_trim_cM
 
 
         temp=(recombination_map$position_cM>as.numeric(DCV_cM_left))
@@ -55,15 +55,15 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
         if(is.na(a1))
         {
             a1=min(recombination_map$position_bp)
-            left_length=DCV_cM-fun(a1)
-            print("warning : Chromosome ends before +10cM to the left")
+            left_length=DCV_cM-fun_to_cM(a1)
+            print(paste0("warning : Chromosome ends before +",size_to_trim_cM,"cM to the left"))
             print(paste0("allowing only ",left_length,"cM to the left"))
         }
         if(is.na(a2))
         {
             a2=max(recombination_map$position_bp)
-           right_length=fun(a2)-DCV_cM
-            print("warning : Chromosome ends before +10cM to the right")
+           right_length=fun_to_cM(a2)-DCV_cM
+            print(paste0("warning : Chromosome ends before +",size_to_trim_cM,"cM to the right"))
             print(paste0("allowing only ",right_length,"cM to the right"))
         }
 
@@ -73,8 +73,8 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
     positions_start=sapply(positions, "[[", 1)
     positions_end=sapply(positions, "[[",2)
 
-    final_file=as.data.frame(cbind(DCV_list,positions_start,positions_end))
+    final_file=as.data.frame(cbind(input_vector,positions_start,positions_end))
 
     write.table(final_file,output_file,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-  return(final_file)
+    return(final_file)
 }
