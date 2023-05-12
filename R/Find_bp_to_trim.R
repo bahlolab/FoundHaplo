@@ -6,6 +6,7 @@
 #' @param input_vector A vector with the variants (type \code{"character"})
 #' @param dir_geneticMap Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
 #' @param output_file Path to save the resutls (type \code{"character"})
+#' @param size_to_trim_cM Size of the region allowed around the disease variant, default is 10cM either side (type \code{"numeric"})
 #' @return Return a data frame with three columns 1.Original variant 2. base pair value of 10cM to the left of the variant 3. base pair value of 10cM to the right of the variant
 #' @export
 #' @examples
@@ -18,7 +19,7 @@
 
 
 
-Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
+Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file,size_to_trim_cM=10)
 {
 
     positions=list()
@@ -37,8 +38,8 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
         DCV_cM=fun_to_cM(DCV_adjusted[3])
 
 
-        DCV_cM_left=DCV_cM-10
-        DCV_cM_right=DCV_cM+10
+        DCV_cM_left=DCV_cM-size_to_trim_cM
+        DCV_cM_right=DCV_cM+size_to_trim_cM
 
 
         temp=(recombination_map$position_cM>as.numeric(DCV_cM_left))
@@ -55,14 +56,14 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
         {
             a1=min(recombination_map$position_bp)
             left_length=DCV_cM-fun_to_cM(a1)
-            print("warning : Chromosome ends before +10cM to the left")
+            print(paste0("warning : Chromosome ends before +",size_to_trim_cM,"cM to the left"))
             print(paste0("allowing only ",left_length,"cM to the left"))
         }
         if(is.na(a2))
         {
             a2=max(recombination_map$position_bp)
            right_length=fun_to_cM(a2)-DCV_cM
-            print("warning : Chromosome ends before +10cM to the right")
+            print(paste0("warning : Chromosome ends before +",size_to_trim_cM,"cM to the right"))
             print(paste0("allowing only ",right_length,"cM to the right"))
         }
 
