@@ -20,13 +20,12 @@
 
 Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
 {
-    DCV_list=input_vector
 
     positions=list()
-    for(j in 1:length(DCV_list))
+    for(j in 1:length(input_vector))
     {
 
-        DCV_adjusted=strsplit(DCV_list[j], ".",fixed=TRUE)
+        DCV_adjusted=strsplit(input_vector[j], ".",fixed=TRUE)
         DCV_adjusted=as.vector(unlist(DCV_adjusted,recursive = FALSE))
         chr=DCV_adjusted[2]
 
@@ -73,7 +72,7 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
     positions_start=sapply(positions, "[[", 1)
     positions_end=sapply(positions, "[[",2)
 
-    final_file=as.data.frame(cbind(DCV_list,positions_start,positions_end))
+    final_file=as.data.frame(cbind(input_vector,positions_start,positions_end))
 
     write.table(final_file,output_file,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
   return(final_file)
