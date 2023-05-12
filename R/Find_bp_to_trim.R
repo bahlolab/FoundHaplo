@@ -6,7 +6,7 @@
 #' @param input_vector A vector with the variants (type \code{"character"})
 #' @param dir_geneticMap Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
 #' @param output_file Path to save the resutls (type \code{"character"})
-#' @return Return a data frame with three columns 1.Original variant 2. base pair value of 20cM to the left of the variant 3. base pair value of 20cM to the right of the variant
+#' @return Return a data frame with three columns 1.Original variant 2. base pair value of 10cM to the left of the variant 3. base pair value of 10cM to the right of the variant
 #' @export
 #' @examples
 #' orig_dir <- getwd()
