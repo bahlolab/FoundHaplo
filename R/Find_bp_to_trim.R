@@ -76,5 +76,5 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file,size_to_trim_cM
     final_file=as.data.frame(cbind(input_vector,positions_start,positions_end))
 
     write.table(final_file,output_file,sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-  return(final_file)
+    return(final_file)
 }
