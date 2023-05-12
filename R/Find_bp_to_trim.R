@@ -33,8 +33,8 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
         recombination_map=read.delim(path)
         colnames(recombination_map)=c("Chromosome","position_bp","Rate.cM.Mb.","position_cM")
 
-        fun <- approxfun(recombination_map$position_bp,recombination_map$position_cM,ties=mean)
-        DCV_cM=fun(DCV_adjusted[3])
+        fun_to_cM <- approxfun(recombination_map$position_bp,recombination_map$position_cM,ties=mean)
+        DCV_cM=fun_to_cM(DCV_adjusted[3])
 
 
         DCV_cM_left=DCV_cM-10
@@ -54,14 +54,14 @@ Find_bp_to_trim=function(input_vector,dir_geneticMap,output_file)
         if(is.na(a1))
         {
             a1=min(recombination_map$position_bp)
-            left_length=DCV_cM-fun(a1)
+            left_length=DCV_cM-fun_to_cM(a1)
             print("warning : Chromosome ends before +10cM to the left")
             print(paste0("allowing only ",left_length,"cM to the left"))
         }
         if(is.na(a2))
         {
             a2=max(recombination_map$position_bp)
-           right_length=fun(a2)-DCV_cM
+           right_length=fun_to_cM(a2)-DCV_cM
             print("warning : Chromosome ends before +10cM to the right")
             print(paste0("allowing only ",right_length,"cM to the right"))
         }
