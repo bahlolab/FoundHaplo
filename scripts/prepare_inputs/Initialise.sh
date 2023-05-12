@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euxo pipefail
 
 # Make sure you have installed FoundHaplo in R
 FoundHaplo_PATH=$1
@@ -53,10 +54,11 @@ echo "Download complete for all required input data to run FoundHaplo"
 
 echo "Make sure you have all software tools listed in modules or please download them : List of software tools required are GenotypeHarmonizer,plink,ANNOVAR,vcftools and bcftools."
 
-# Download all software tools listed
+# Download all software tools listed below
 
 # 1) GenotypeHarmonizer tool is used to harmomize input VCF data to 1000Genomes.
-# 2) Plink is used to perform quality control steps on input VCF data.
+# 2) Plink 1.9 is used to perform quality control steps on input VCF data.
 # 3) ANNOVAR tool is used to annotate population frequencies form gnomAD data.
-# 4) vcftools and bcftools to perform queries on VCF files
+# 4) VCFtools version v0.1.13 and BCFtools version 1.16 to perform queries on VCF files
+# 5) Install Nextflow to parallely run FoundHaplo (Optional)
 
