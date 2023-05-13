@@ -59,11 +59,11 @@ ANNOVAR_PATH=/mypath/annovar
 ANNOVAR_HUMANDB_DIR_PATH=/mypath/annovar/humandb 
 SAMPLE_INFO_FILE=/mypath/sample_info.txt 
 
-$INPUT_VCF_PATH $INPUT_VCF_BASE_NAME $DCV $ANNOVAR_PATH $ANNOVAR_HUMANDB_DIR_PATH $SAMPLE_INFO_FILE
+$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh $FoundHaplo_PATH $INPUT_VCF_PATH $INPUT_VCF_BASE_NAME $DCV $ANNOVAR_PATH $ANNOVAR_HUMANDB_DIR_PATH $SAMPLE_INFO_FILE
 ```
 Run example below,
 ```bash
-$FoundHaplo_PATH/temp/imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052. $ANNOVAR_PATH $ANNOVAR_HUMANDB_DIR_PATH $FoundHaplo_PATH/example/sample_info.txt
+$FoundHaplo_PATH/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh $FoundHaplo_PATH $FoundHaplo_PATH/temp/imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052. $ANNOVAR_PATH $ANNOVAR_HUMANDB_DIR_PATH $FoundHaplo_PATH/example/sample_info.txt
 ```
 
 Set the variables as below,
