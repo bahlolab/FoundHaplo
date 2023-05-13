@@ -2,10 +2,10 @@
 #'
 #' @description
 #' This function analyse the FoundHaplo scores and predict samples that carry the known disease haplotypes for each of the disease-causing variants.
-#' @param path_results  Path to a single .txt file with FH scores (type \code{"character"})
-#' @param path_to_save_FH_output Path to save the analysis of the FH scores (type \code{"numeric"})
+#' @param results_FILE  Path to a single .txt file with FH scores (type \code{"character"})
+#' @param save_FH_output_DIR Path to save the analysis of the FH scores (type \code{"numeric"})
 #' @param critical_percentile Critical percentile of the control cohort to derive predictions. Recommend above 99.9 for large cohorts like UKBB. (type \code{"numeric"})
-#' @return A dataframe with predicted samples and graphical output will be saved in path_to_save_FH_output
+#' @return A dataframe with predicted samples and graphical output will be saved in save_FH_output_DIR
 
 #' \enumerate{
 #' \item DCV, name of the disease-causing variant (type \code{"character"})
@@ -21,13 +21,13 @@
 #' orig_dir <- getwd()
 #' setwd(tempdir())
 #' write.table(FH_IBD_scores,paste0(tempdir(),"/results",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save FH_IBD_scores
-#' Analyse_FH(path_results=paste0(tempdir(),"/results",".txt"),path_to_save_FH_output=tempdir(),critical_percentile=0.99)
+#' Analyse_FH(results_FILE=paste0(tempdir(),"/results",".txt"),save_FH_output_DIR=tempdir(),critical_percentile=0.99)
 #' setwd(orig_dir)
 
-Analyse_FH=function(path_results,path_to_save_FH_output,critical_percentile)
+Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile)
 {
   
-  results_file=read.delim(path_results,header = FALSE)
+  results_file=read.delim(results_FILE,header = FALSE)
   
   colnames(results_file)=c("data_type","test_name","frequency_type","minor_allele_cutoff","imputation_quality_score_cutoff_test",'DCV',"disease_haplotype","test_control_individual","FH_score","left_LLR","right_LLR","total_cM_sharing","total_left_cM_sharing","total_right_cM_sharing","number_of_allele_mismatches_in_the_markov_chain","number_of_markers_in_the_markov_chain","numer_of_haplotype_switches_in_the_markov_chain","snp_density_in_data_file","total_number_of_markers_in_data_file","total_cM_span_of_data_file")
   
@@ -86,7 +86,7 @@ Analyse_FH=function(path_results,path_to_save_FH_output,critical_percentile)
     predicted_samples=subset(test_set,test_set$FH>CLLR$y)
     predictions=data.frame(rbind(predictions,predicted_samples))
     colnames(predictions)=c("DCV","test_name","test_sample_name","FH")
-  
+    
     test_set$sample_index=1:nrow(test_set)
     p2[[ii]]=ggplot(test_set)+
       aes(x=sample_index,y=FH)+
@@ -94,7 +94,7 @@ Analyse_FH=function(path_results,path_to_save_FH_output,critical_percentile)
     
   }
   
-  pdf(paste0(path_to_save_FH_output,"/FH_results.pdf"), height=8, width=14)
+  pdf(paste0(save_FH_output_DIR,"/FH_results.pdf"), height=8, width=14)
   for(ii in 1:length(lengths(p1)))
   {
     print(grid.arrange(p1[[ii]],nrow = 1,ncol=1))
@@ -102,10 +102,10 @@ Analyse_FH=function(path_results,path_to_save_FH_output,critical_percentile)
     
   }
   dev.off()
-  print(paste0("Graphical output is saved in ",path_to_save_FH_output))
+  print(paste0("Graphical output is saved in ",save_FH_output_DIR))
   
   print(paste0("Test samples that gave FH score values above the ",critical_percentile*100,"th critical percentile are below"))
   return(predictions)
-
+  
 }
 
