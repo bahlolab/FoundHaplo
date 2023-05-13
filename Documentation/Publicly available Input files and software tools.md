@@ -7,8 +7,8 @@ git clone --depth=1 https://github.com/bahlolab/Foundhaplo.git
 Use [FoundHaplo/scripts/prepare_inputs/Initialise.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/Initialise.sh) as a guide to download the public reference data files into the relevant directories and software tools required by FoundHaplo
 
 ```bash
-FoundHaplo_PATH=/mypath/FoundHaplo
-$FoundHaplo_PATH/scripts/prepare_inputs/Initialise.sh $FoundHaplo_PATH
+FoundHaplo_DIR=/mypath/FoundHaplo
+$FoundHaplo_DIR/scripts/prepare_inputs/Initialise.sh $FoundHaplo_DIR
 ```
 Publicly available reference files required to run FoundHaplo
 
