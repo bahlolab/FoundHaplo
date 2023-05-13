@@ -11,10 +11,10 @@ We recommend using a nextflow pipeline to run the main function [Generate_FH_sco
 2. Use [create_sample_chunks.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/create_sample_chunks.sh) script to split test and control samples into chunks of sample IDs to parallely run chunks of samples in one nextflow job. The script will create a folder named "samples" in the directory where the sample ID files already are. 
 
 ```bash
-FoundHaplo_DIR=
-TEST_SAMPLES_FILE=
-CONTROL_SAMPLES_FILE=
-CHUNK_SIZE=
+FoundHaplo_DIR=/mypath/FoundHaplo
+TEST_SAMPLES_FILE=/mypath/FoundHaplo/samples.txt
+CONTROL_SAMPLES_FILE=/mypath/FoundHaplo/ethnicity.txt
+CHUNK_SIZE=CHUNK_SIZE
 
 $FoundHaplo_DIR/scripts/run_nextflow/create_sample_chunks.sh $FoundHaplo_DIR $TEST_SAMPLES_FILE $CONTROL_SAMPLES_FILE $CHUNK_SIZE
 ```
@@ -55,6 +55,7 @@ Create_jobs(path_manifest="FoundHaplo_PATH/scripts/run_nextflow/manifest.txt",pa
 4. Run all nextflow jobs in the [manifest.txt](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/manifest.txt) file as below. Each line in the manifest.txt file will be a single independant job that is run parallely.
 ```bash
 module load nextflow
+FoundHaplo_DIR=/mypath/FoundHaplo
 cd $FoundHaplo_DIR/scripts/run_nextflow
 nohup ./run_nextflow.nf
 ```
@@ -64,7 +65,7 @@ Results will be saved in the path given in "dir_to_save_report" in the script [C
 5. Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis as below.
 
 ```bash
-FoundHaplo_DIR=
+FoundHaplo_DIR=/mypath/FoundHaplo
 cat $FoundHaplo_DIR/results/*.txt > $FoundHaplo_DIR/results/FH_IBD_scores/results.txt 
 ```
 
