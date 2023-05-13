@@ -103,6 +103,8 @@ Analyse_FH=function(path_results,path_to_save_FH_output,critical_percentile)
   }
   dev.off()
   print(paste0("Graphical output is saved in ",path_to_save_FH_output))
+  
+  print(paste0("Test samples that gave FH score values above the ",critical_percentile*100,"th critical percentile are below"))
   return(predictions)
 
 }
