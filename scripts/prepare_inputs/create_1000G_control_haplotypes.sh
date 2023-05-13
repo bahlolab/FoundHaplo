@@ -1,6 +1,6 @@
 #!/bin/bash
 # * Run this once for one DCV* 
-set -eu
+set -euxo pipefail
 FoundHaplo_DIR=$1
 DCV=$2
 
