@@ -45,7 +45,7 @@
 #' sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
 #' write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 #' Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
-#'                    dir_output = temp_DIR,
+#'                    output_DIR = temp_DIR,
 #'                    sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
 #' disease_file <-fread(paste0(temp_DIR,"/",paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
 #' write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
@@ -78,7 +78,7 @@
 #' Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
 #' setwd( orig_DIR )
 
-Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.01,MA_cutof=-0.4,meiosis=1)
+Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1)
 {
   # data_file is the main file with input genotype data
   
@@ -264,7 +264,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
     {
     IBD_difference[k-1]=cumulative_IBD[k]-cumulative_IBD[k-1]
     
-      if(frollmean(IBD_difference[(k-100):(k-1)],100)<=MA_cutoff)    # 100 point moving average of IBD_difference
+      if(frollmean(IBD_difference[(k-100):(k-1)],100)[length(frollmean(IBD_difference[(k-100):(k-1)],100))]<=MA_cutoff)    # 100 point moving average of IBD_difference
       {break}      #break the loop and stop if froll<=MA_cutoff
  
     }
@@ -417,7 +417,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
     {
       IBD_difference[k-1]=cumulative_IBD[k]-cumulative_IBD[k-1]
       
-      if(frollmean(IBD_difference[(k-100):(k-1)],100)<=MA_cutoff)    # 100 point moving average of IBD_difference
+      if(frollmean(IBD_difference[(k-100):(k-1)],100)[length(frollmean(IBD_difference[(k-100):(k-1)],100))]<=MA_cutoff)    # 100 point moving average of IBD_difference
       {break}      #break the loop and stop if froll<=MA_cutoff
       
     }
@@ -430,6 +430,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
   
   Max_right_cM=data_file[xR+ which(cumulative_IBD==max(cumulative_IBD))[length(which(cumulative_IBD==max(cumulative_IBD)))] -1,"position_cM"]-DCV_cM # the cM location at which the chain gave the highest IBD to the right
   
+  Max_total_cM=Max_left_cM+Max_right_cM
   
   number_of_allele_mismatches_in_the_right_markov_chain=sum(allele_mismatch[1:which(cumulative_IBD==max(cumulative_IBD))]) # total number of allele mismatches to the right
   number_of_markers_in_the_right_markov_chain=which(cumulative_IBD==max(cumulative_IBD)) # total number of markers traversed until end of right sharing
@@ -448,25 +449,13 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
   total_number_of_markers_in_data_file=nrow(data_file)
   total_cM_span_of_data_file=max(data_file$position_cM)-min(data_file$position_cM)
 
-  IBD_report=paste(Final_FH_score,Max_left_IBD,Max_right_IBD,(Max_left_cM+Max_right_cM),Max_left_cM,Max_right_cM,number_of_allele_mismatches_in_the_markov_chain,number_of_markers_in_the_markov_chain,numer_of_haplotype_switches_in_the_markov_chain,snp_density_in_data_file,total_number_of_markers_in_data_file,total_cM_span_of_data_file,sep='\t')
+ # IBD_report=paste(Final_FH_score,Max_left_IBD,Max_right_IBD,(Max_left_cM+Max_right_cM),Max_left_cM,Max_right_cM,number_of_allele_mismatches_in_the_markov_chain,number_of_markers_in_the_markov_chain,numer_of_haplotype_switches_in_the_markov_chain,snp_density_in_data_file,total_number_of_markers_in_data_file,total_cM_span_of_data_file,sep='\t')
   
-  print("IBD results for the disease-test pair is")
-  print(c(Final_FH_score,Max_left_IBD,Max_right_IBD,(Max_left_cM+Max_right_cM),Max_left_cM,Max_right_cM,number_of_allele_mismatches_in_the_markov_chain,number_of_markers_in_the_markov_chain,numer_of_haplotype_switches_in_the_markov_chain,snp_density_in_data_file,total_number_of_markers_in_data_file,total_cM_span_of_data_file))
-  #return all the required details of the IBD sharing to analyze later
+  print("Returning all the IBD information")
+  
+  IBD_report=data.frame(Final_FH_score,Max_left_IBD,Max_right_IBD,Max_total_cM,Max_left_cM,Max_right_cM,number_of_allele_mismatches_in_the_markov_chain,number_of_markers_in_the_markov_chain,numer_of_haplotype_switches_in_the_markov_chain,snp_density_in_data_file,total_number_of_markers_in_data_file,total_cM_span_of_data_file)
+  
   
   return(IBD_report)
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
