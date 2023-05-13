@@ -72,6 +72,8 @@ Create_jobs=function(path_manifest,path_test_sample_chunks,path_control_sample_c
 
     #specify path to save the manifest.txt file
     write.table(manifest.txt_entries,path_manifest,sep="\t",quote=FALSE,col.names = FALSE,row.names = FALSE)
+    
+    print(paste0("writing manifest.txt file to ",path_manifest))
 
 
 
