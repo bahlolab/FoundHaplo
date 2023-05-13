@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Takes all the input parameters required to run FoundHaplo and create manifest.txt file to parallelise the process
-#' @param path_manifest Path of the manifest.txt file
+#' @param manifest_FILE Path of the manifest.txt file
 #' @param path_test_sample_chunks Path to the .txt files with chunks of test sample IDs
 #' @param path_control_sample_chunks Path to the .txt files with chunks of control sample IDs
 #' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052 (type \code{"character"})
@@ -50,30 +50,30 @@
 #' {
 #' write.table(control_sample_names_chunk[[chunk]],paste0(temp_dir,"/2.controls/","file",chunk,".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 #' }
-#' Create_jobs(path_manifest=paste0(temp_dir,"/4/manifest.txt"),path_test_sample_chunks=paste0(temp_dir,"/2.test"),path_control_sample_chunks=paste0(temp_dir,"/2.controls"),DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"),dir_TEMP=temp_dir)
+#' Create_jobs(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),control_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"),dir_TEMP=temp_dir)
 #' print("Example content of a manifest.txt file is below")
 #' read.delim(paste0(temp_dir,"/4/manifest.txt"),header=FALSE)
 
-Create_jobs=function(path_manifest,path_test_sample_chunks,path_control_sample_chunks,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,dir_controls_file,dir_to_save_report,dir_TEMP)
+Create_jobs=function(manifest_FILE,control_sample_chunks_DIR,control_sample_chunks_DIR,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,dir_controls_file,dir_to_save_report,dir_TEMP)
 {
 
     #test
-    test_list=list.files(path_test_sample_chunks,full.names = TRUE)
+    test_list=list.files(control_sample_chunks_DIR,full.names = TRUE)
     #specify parameters that should be given to the function Generate_FH_score
     test_cohort_entires=expand.grid(DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,test_list,"test",dir_controls_file,dir_to_save_report,dir_TEMP)
 
 
     #controls
-    controls_list=list.files(path_control_sample_chunks,full.names = TRUE)
+    controls_list=list.files(control_sample_chunks_DIR,full.names = TRUE)
     #specify parameters that should be given to the function Generate_FH_score
     control_cohort_entires=expand.grid(DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,dir_geneticMap,dir_disease_files,test_file,test_name,controls_list,"controls",dir_controls_file,dir_to_save_report,dir_TEMP)
 
     manifest.txt_entries=rbind(test_cohort_entires,control_cohort_entires)
 
     #specify path to save the manifest.txt file
-    write.table(manifest.txt_entries,path_manifest,sep="\t",quote=FALSE,col.names = FALSE,row.names = FALSE)
+    write.table(manifest.txt_entries,manifest_FILE,sep="\t",quote=FALSE,col.names = FALSE,row.names = FALSE)
     
-    print(paste0("writing manifest.txt file to ",path_manifest))
+    print(paste0("writing manifest.txt file to ",manifest_FILE))
 
 
 
