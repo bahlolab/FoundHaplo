@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FoundHaplo_PATH=$1
+FoundHaplo_DIR=$1
 TEST_SAMPLES_FILE=$2  # .txt file with test sample IDs # example: FoundHaplo/input_files/input_vcf_data/test_cohort/samples.txt
 CONTROL_SAMPLES_FILE=$3 # .txt file with control sample IDs # example: FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population/EUR.txt
 
