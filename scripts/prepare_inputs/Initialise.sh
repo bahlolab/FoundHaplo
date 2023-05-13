@@ -2,52 +2,52 @@
 set -euxo pipefail
 
 echo "Make sure you have installed FoundHaplo in R"
-FoundHaplo_PATH=$1
+FoundHaplo_DIR=$1
 
 #Publicly available reference files required to run FoundHaplo
 
 echo "This script downloads, 1) 1000 Genomes phased 3 bed/bim/fam files to harmonize input VCF data and 2) 1000 Genomes phase 3 haplotypes are used as the control cohort when running FoundHaplo."
-echo "1000 Genomes sample names by super populations are already in $FoundHaplo_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt, EUR.txt, AMR.txt, EAS.txt, SAS.txt and AFR.txt."
-echo "Hapmap recombination files in hg19 to calculate the recombination rates are in $FoundHaplo_PATH/input_files."
+echo "1000 Genomes sample names by super populations are already in $FoundHaplo_DIR/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt, EUR.txt, AMR.txt, EAS.txt, SAS.txt and AFR.txt."
+echo "Hapmap recombination files in hg19 to calculate the recombination rates are in $FoundHaplo_DIR/input_files."
 
 echo "Creating results and temp directories"
 
-mkdir -p $FoundHaplo_PATH/results/FH_IBD_scores # to save the final IBD report in .txt file
-mkdir -p $FoundHaplo_PATH/results/FH_Analysis # to save results after analysing FH scores in the final IBD report
-mkdir -p $FoundHaplo_PATH/temp # to save temporary files
+mkdir -p $FoundHaplo_DIR/results/FH_IBD_scores # to save the final IBD report in .txt file
+mkdir -p $FoundHaplo_DIR/results/FH_Analysis # to save results after analysing FH scores in the final IBD report
+mkdir -p $FoundHaplo_DIR/temp # to save temporary files
 
-mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_plink
+mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_plink
 
 
-echo "Downloading 1000 Genomes phased 3 bed/bim/fam files to $FoundHaplo_PATH/input_files/public_data/1000G_plink."
+echo "Downloading 1000 Genomes phased 3 bed/bim/fam files to $FoundHaplo_DIR/input_files/public_data/1000G_plink."
 
-cd $FoundHaplo_PATH/input_files/public_data/1000G_plink
+cd $FoundHaplo_DIR/input_files/public_data/1000G_plink
 wget https://ndownloader.figshare.com/files/17838962 --output-document "1000G_plink.zip"
 unzip 1000G_plink.zip
 
-echo "Downloading 1000 Genomes phase 3 haplotypes to $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original."
+echo "Downloading 1000 Genomes phase 3 haplotypes to $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original."
 
-mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
-cd $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
+mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
+cd $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
 
 wget --recursive --no-parent http://hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/
 
 echo "main files are downloaded"
 
-mv $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/* $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
+mv $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/* $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
 
-rm -r $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu
+rm -r $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu
 
-echo "creating control cohorts for the disease variant for all five super populations in $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
+echo "creating control cohorts for the disease variant for all five super populations in $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
 
-mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant
+mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant
 
-mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/ALL
-mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
-mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AMR
-mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/SAS
-mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EAS
-mkdir -p $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AFR
+mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/ALL
+mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
+mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AMR
+mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/SAS
+mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EAS
+mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/AFR
 
 echo "Download complete for all required input data to run FoundHaplo"
 

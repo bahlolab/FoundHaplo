@@ -1,14 +1,14 @@
 #!/bin/bash
-set -eu
+set -euxo pipefail
 
-FoundHaplo_PATH=$1 # path of FoundHaplo directory
-INPUT_VCF_PATH=$2 # imputed vcf file path # example: FoundHaplo/temp/FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz
+FoundHaplo_DIR=$1 # FoundHaplo directory
+INPUT_VCF_FILE=$2 # Imputed vcf file path # example: FoundHaplo/temp/FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz
 INPUT_VCF_BASE_NAME=$3 # example : FAME1_disease_cohort.snp.0.98.sample.0.98.chr8
 DCV=$4 # example : "FAME1.chr8.119379052."
-ANNOVAR_PATH=$5 # path o ANNOVAR directory
-ANNOVAR_HUMANDB_DIR_PATH=$6 # path to ANNOVAR databases
+ANNOVAR_DIR=$5 # ANNOVAR directory
+ANNOVAR_HUMANDB_DIR=$6 # ANNOVAR database directory
 
-SAMPLE_INFO_FILE=$7 # Path to a tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the VCF file in mentioned order. # example : FoundHaplo/example/sample_info.txt
+SAMPLE_INFO_FILE=$7 # Tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the VCF file in mentioned order. # example : FoundHaplo/example/sample_info.txt
 
 #' For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
 #' For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
@@ -29,21 +29,21 @@ module load R/4.2.0 # edit this line accordingly. load the R version with FoundH
 
 echo "Finding start and end base pair positions to trim the VCF file."
 
-Rscript $FoundHaplo_PATH/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37 $FoundHaplo_PATH/temp/DCV_bp.txt
-START_BP=$(cut -f2 $FoundHaplo_PATH/temp/DCV_bp.txt)
-END_BP=$(cut -f3 $FoundHaplo_PATH/temp/DCV_bp.txt)
+Rscript $FoundHaplo_DIR/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $FoundHaplo_DIR/input_files/public_data/genetic_map_HapMapII_GRCh37 $FoundHaplo_DIR/temp/DCV_bp.txt
+START_BP=$(cut -f2 $FoundHaplo_DIR/temp/DCV_bp.txt)
+END_BP=$(cut -f3 $FoundHaplo_DIR/temp/DCV_bp.txt)
 
-vcftools --gzvcf $INPUT_VCF_PATH --chr $CHROMOSOME --remove-indels --min-alleles 2 --max-alleles 2 --from-bp $START_BP --to-bp $END_BP --recode --recode-INFO-all --stdout | bgzip -c > $FoundHaplo_PATH/temp/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz
+vcftools --gzvcf $INPUT_VCF_FILE --chr $CHROMOSOME --remove-indels --min-alleles 2 --max-alleles 2 --from-bp $START_BP --to-bp $END_BP --recode --recode-INFO-all --stdout | bgzip -c > $FoundHaplo_DIR/temp/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz
 
-ANNOVAR_SCRIPT=$ANNOVAR_PATH/table_annovar.pl
+ANNOVAR_SCRIPT=$ANNOVAR_DIR/table_annovar.pl
 
-ANNOVAR_OUTPUT_FILENAME_BASE=$FoundHaplo_PATH/temp/$INPUT_VCF_BASE_NAME.imputed.trimmed # name of the annotated file
+ANNOVAR_OUTPUT_FILENAME_BASE=$FoundHaplo_DIR/temp/$INPUT_VCF_BASE_NAME.imputed.trimmed # name of the annotated file
 
 echo "Annotating gnomAD population allele frequencies."
 
 # annotate population frequencies form gnomAD
 perl $ANNOVAR_SCRIPT $ANNOVAR_OUTPUT_FILENAME_BASE.vcf.gz \
-$ANNOVAR_HUMANDB_DIR_PATH -buildver hg19 \
+$ANNOVAR_HUMANDB_DIR -buildver hg19 \
 -vcfinput -out $ANNOVAR_OUTPUT_FILENAME_BASE -remove \
 -protocol gnomad211_genome -operation f -nastring .
 
@@ -57,9 +57,9 @@ n_lines_R2=$(cat "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf | tail -1 | 
 if [ $n_lines_R2 -eq 0 ] 
 
 then  
-    bcftools annotate -x ^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_PATH/temp/ready.to.phase.vcf
+    bcftools annotate -x ^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_DIR/temp/ready.to.phase.vcf
 else
-    bcftools annotate -x ^INFO/R2,^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_PATH/temp/ready.to.phase.vcf
+    bcftools annotate -x ^INFO/R2,^INFO/AF_raw,^INFO/AF_afr,^INFO/AF_sas,^INFO/AF_amr,^INFO/AF_eas,^INFO/AF_nfe,^INFO/AF_fin "$ANNOVAR_OUTPUT_FILENAME_BASE".hg19_multianno.vcf > $FoundHaplo_DIR/temp/ready.to.phase.vcf
 fi 
 
 # phase by pedigrees
@@ -67,9 +67,9 @@ fi
 
 echo "Phasing disease haplotypes by pedigree information."
 
-mkdir -p $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes
+mkdir -p $FoundHaplo_DIR/input_files/input_vcf_data/disease_haplotypes
 
-Rscript $FoundHaplo_PATH/scripts/prepare_inputs/Run_Phasing_by_pedigree.R $FoundHaplo_PATH/temp/ready.to.phase.vcf $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes $SAMPLE_INFO_FILE
+Rscript $FoundHaplo_DIR/scripts/prepare_inputs/Run_Phasing_by_pedigree.R $FoundHaplo_DIR/temp/ready.to.phase.vcf $FoundHapFoundHaplo_DIRlo_PATH/input_files/input_vcf_data/disease_haplotypes $SAMPLE_INFO_FILE
 
-echo "bgzipping all the VCF files with disease haplotypes and saving to $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes."
-ls $FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes/*.vcf | xargs -n1 bgzip
+echo "bgzipping all the VCF files with disease haplotypes and saving to $FoundHaplo_DIR/input_files/input_vcf_data/disease_haplotypes."
+ls $FoundHaplo_DIR/input_files/input_vcf_data/disease_haplotypes/*.vcf | xargs -n1 bgzip

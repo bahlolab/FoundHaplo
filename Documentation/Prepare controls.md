@@ -5,14 +5,20 @@ Follow below steps everytime you test a new disease-causing variant using FoundH
 
 1. Run [FoundHaplo/scripts/prepare_inputs/create_1000G_control_haplotypes.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/create_1000G_control_haplotypes.sh) once for one disease-causing variant.
 ```bash
-FoundHaplo_PATH=
-DCV=
-$FoundHaplo_PATH/scripts/prepare_inputs/create_1000G_control_haplotypes.sh $FoundHaplo_PATH FAME1.chr8.119379052
+FoundHaplo_DIR=/mypath/FoundHaplo
+DCV=DCV
+
+$FoundHaplo_DIR/scripts/prepare_inputs/create_1000G_control_haplotypes.sh $FoundHaplo_DIR $DCV
+```
+Run example below,
+
+```bash
+$FoundHaplo_DIR/scripts/prepare_inputs/create_1000G_control_haplotypes.sh $FoundHaplo_DIR FAME1.chr8.119379052
 ```
 
 Set the variables as below,,
 
-* FoundHaplo_PATH : Path to FoundHaplo directory i.e path/FoundHaplo
+* FoundHaplo_DIR : FoundHaplo directory i.e /mypath/FoundHaplo
 * DCV : Name the disease variant of interest in the format of disease.chr.position. i.e FAME1.chr8.119379052.
 
 The create_1000G_control_haplotypes.sh will create separate VCF files for each disease variant that you want to test inside five sub folders in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant corresponding to five super populations.   
