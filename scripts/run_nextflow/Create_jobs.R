@@ -3,8 +3,8 @@
 #' @description
 #' Takes all the input parameters required to run FoundHaplo and create manifest.txt file to parallelise the process
 #' @param manifest_FILE Path of the manifest.txt file
-#' @param path_test_sample_chunks Path to the .txt files with chunks of test sample IDs
-#' @param path_control_sample_chunks Path to the .txt files with chunks of control sample IDs
+#' @param test_sample_chunks_DIR Directory to the .txt files with chunks of test sample IDs
+#' @param control_sample_chunks_DIR Directory to the .txt files with chunks of control sample IDs
 #' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052 (type \code{"character"})
 #' @param minor_allele_cutoff The minimum minor allele frequncy of SNPs allowed, we recommend this to be 0 (type \code{"numeric"})
 #' @param imputation_quality_score_cutoff_test Minimum allowed imputation quality which is R-squared. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise (type \code{"numeric"})
