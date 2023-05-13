@@ -46,12 +46,12 @@ $PLINK_TOOL_EXECUTABLE \
 
 echo "Converting to a VCF file in $FoundHaplo_DIR/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98"
 
-$PLINK_TOOL_EXECUTABLE --bfile $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98  --recode vcf --out $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98
+$PLINK_TOOL_EXECUTABLE --bfile $FoundHaplo_DIR/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98  --recode vcf --out $FoundHaplo_DIR/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98
 
 echo "Extracting chromsome $CHROMOSOME."
-echo "Saving to $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz" 
+echo "Saving to $FoundHaplo_DIR/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz" 
 
-vcftools --vcf $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.vcf --chr $CHROMOSOME --recode --recode-INFO-all --stdout | bgzip -c > $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz
+vcftools --vcf $FoundHaplo_DIR/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.vcf --chr $CHROMOSOME --recode --recode-INFO-all --stdout | bgzip -c > $FoundHaplo_DIR/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz
 
 
-echo "impute" $FoundHaplo_PATH/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz "using Michigan server"
+echo "impute" $FoundHaplo_DIR/temp/$INPUT_PLINK_BASE_NAME.snp.0.98.sample.0.98.chr$CHROMOSOME.vcf.gz "using Michigan server"
