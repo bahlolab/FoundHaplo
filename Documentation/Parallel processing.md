@@ -64,8 +64,8 @@ Results will be saved in the path given in "dir_to_save_report" in the script [C
 5. Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis as below.
 
 ```bash
-FoundHaplo_PATH=
-cat $FoundHaplo_PATH/results/*.txt > $FoundHaplo_PATH/results/FH_IBD_scores/results.txt 
+FoundHaplo_DIR=
+cat $FoundHaplo_DIR/results/*.txt > $FoundHaplo_DIR/results/FH_IBD_scores/results.txt 
 ```
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
