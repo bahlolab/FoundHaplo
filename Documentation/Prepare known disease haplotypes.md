@@ -46,6 +46,8 @@ Phase using Eagle v2.4
 
 Mode "Quality Control and Phasing Only"
 
+Rename and save the resulting imputed and phased file with the "imputed_phased_" prefix, and its original file name.
+
 3. Create disease haplotypes using the imputed VCF file generated in step 2 and [FoundHaplo/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh) 
 
 ```bash
@@ -61,7 +63,7 @@ $INPUT_VCF_PATH $INPUT_VCF_BASE_NAME $DCV $ANNOVAR_PATH $ANNOVAR_HUMANDB_DIR_PAT
 ```
 Run example below,
 ```bash
-$FoundHaplo_PATH/temp/FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052. $ANNOVAR_PATH $ANNOVAR_HUMANDB_DIR_PATH $FoundHaplo_PATH/example/sample_info.txt
+$FoundHaplo_PATH/temp/imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052. $ANNOVAR_PATH $ANNOVAR_HUMANDB_DIR_PATH $FoundHaplo_PATH/example/sample_info.txt
 ```
 
 Set the variables as below,
