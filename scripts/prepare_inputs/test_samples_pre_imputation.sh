@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -euxo pipefail
 
 FoundHaplo_DIR=$1 # path of FoundHaplo directory
 INPUT_PLINK_FILE=$2 # examples: FoundHaplo/example
