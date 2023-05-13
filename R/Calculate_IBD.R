@@ -78,7 +78,7 @@
 #' Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
 #' setwd( orig_DIR )
 
-Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.01,MA_cutof-0.4,meiosis=1)
+Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.01,MA_cutof=-0.4,meiosis=1)
 {
   # data_file is the main file with input genotype data
   
