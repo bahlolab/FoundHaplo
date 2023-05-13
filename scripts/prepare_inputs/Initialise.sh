@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-# Make sure you have installed FoundHaplo in R
+echo "Make sure you have installed FoundHaplo in R"
 FoundHaplo_PATH=$1
 
 #Publicly available reference files required to run FoundHaplo
 
-# This script downloads,
-# 1) 1000 Genomes phased 3 bed/bim/fam files to harmonize input VCF data.
-# 2) 1000 Genomes phase 3 haplotypes are used as the control cohort when running FoundHaplo.
-
+echo "This script downloads, 1) 1000 Genomes phased 3 bed/bim/fam files to harmonize input VCF data and 2) 1000 Genomes phase 3 haplotypes are used as the control cohort when running FoundHaplo."
 echo "1000 Genomes sample names by super populations are already in $FoundHaplo_PATH/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt, EUR.txt, AMR.txt, EAS.txt, SAS.txt and AFR.txt."
 echo "Hapmap recombination files in hg19 to calculate the recombination rates are in $FoundHaplo_PATH/input_files."
 
@@ -35,6 +32,8 @@ cd $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplo
 
 wget --recursive --no-parent http://hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/
 
+echo "main files are downloaded"
+
 mv $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/* $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original
 
 rm -r $FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu
@@ -54,11 +53,11 @@ echo "Download complete for all required input data to run FoundHaplo"
 
 echo "Make sure you have all software tools listed in modules or please download them : List of software tools required are GenotypeHarmonizer,plink,ANNOVAR,vcftools and bcftools."
 
-# Download all software tools listed below
+echo "Download all software tools listed below"
 
-# 1) GenotypeHarmonizer tool is used to harmomize input VCF data to 1000Genomes.
-# 2) Plink 1.9 is used to perform quality control steps on input VCF data.
-# 3) ANNOVAR tool is used to annotate population frequencies form gnomAD data.
-# 4) VCFtools version v0.1.13 and BCFtools version 1.16 to perform queries on VCF files
-# 5) Install Nextflow to parallely run FoundHaplo (Optional)
+echo "1) GenotypeHarmonizer tool is used to harmomize input VCF data to 1000Genomes."
+echo "2) Plink 1.9 is used to perform quality control steps on input VCF data."
+echo "3) ANNOVAR tool is used to annotate population frequencies form gnomAD data."
+echo "4) VCFtools version v0.1.13 and BCFtools version 1.16 to perform queries on VCF files."
+echo "5) Install Nextflow to parallely run FoundHaplo (Optional)."
 
