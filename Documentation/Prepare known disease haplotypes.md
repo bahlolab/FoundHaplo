@@ -46,7 +46,7 @@ Phase using Eagle v2.4
 
 Mode "Quality Control and Phasing Only"
 
-Rename and save the resulting imputed and phased file with the "imputed_phased_" prefix, and its original file name.
+Rename and save the resulting imputed and phased file with the "imputed_phased_" prefix, and its original file name in the same location.
 
 3. Create disease haplotypes using the imputed VCF file generated in step 2 and [FoundHaplo/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh) 
 
