@@ -63,7 +63,7 @@ $FoundHaplo_DIR/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh $Fo
 ```
 Run example below,
 ```bash
-$FoundHaplo_DIR/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh $FoundHaplo_DIR $FoundHaplo_DIR/temp/imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052. $ANNOVAR_DIR $ANNOVAR_HUMANDB_DIR $FoundHaplo_PATH/example/sample_info.txt
+$FoundHaplo_DIR/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh $FoundHaplo_DIR $FoundHaplo_DIR/temp/imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052. $ANNOVAR_DIR $ANNOVAR_HUMANDB_DIR $FoundHaplo_DIR/example/sample_info.txt
 ```
 
 Set the variables as below,
