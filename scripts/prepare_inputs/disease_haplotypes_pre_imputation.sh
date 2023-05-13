@@ -1,13 +1,13 @@
 #!/bin/bash
 set -euxo pipefail
 
-FoundHaplo_DIR=$1 # path of FoundHaplo directory
+FoundHaplo_DIR=$1 # FoundHaplo directory
 INPUT_PLINK_FILE=$2 # example: FoundHaplo/example
 INPUT_PLINK_BASE_NAME=$3 # example: FAME1_disease_cohort
 CHROMOSOME=$4 # no "chr" prefix # example: 8
 
-GENOTYPEHARMONIZER_JAR=$5
-PLINK_TOOL_EXECUTABLE=$6
+GENOTYPEHARMONIZER_JAR=$5 # GENOTYPEHARMONIZER_JAR file
+PLINK_TOOL_EXECUTABLE=$6 # /mypath/plink2
 
 
 module unload vcftools
