@@ -29,4 +29,4 @@ All the parameters that user has to specify are described below
 * path_to_save_FH_output Path to save the graphical output of the FH scores 
 * critical_percentile Critical percentile of the control cohort to derive predictions. Recommend above 0.999 for large cohorts like UKBB
 
-Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
+Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
