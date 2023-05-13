@@ -163,19 +163,20 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
     g0=1-g1 # g0 = Probability of no genotype/imputation error at the marker
     f0=1-f1 # f0 = Probability of major allele at the marker
     
-    IBD0=IBD0+log(P_no_IBD)
-    
-    IBD1=IBD1+log(P_IBD)
-    
-    allele_mismatch[k]=0
-    test_haplotype[k]=a
-    distance_from_the_DCV_cM[k]=DCV_cM-data_file[j,"position_cM"]
-    
     if(data_file[j,a]==data_file[j,i] && data_file[j,i]==0)
     {
       P_no_IBD= (g1*f1 + g0*f0)^2 # Probability of no IBD between disease haplotype and the test haplotype
       
       P_IBD=g1*r0*f1*g1 + g0*r0*f0*g0 + f1*g1*r1*f1*g1 + f1*g1*r1*f0*g0 + f0*g0*g1*f1*r1 + f0*g0*f0*g0*r1 # Probability of IBD between disease haplotype and the test haplotype
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=DCV_cM-data_file[j,"position_cM"]
+    
     }
     
     else if(data_file[j,a]==data_file[j,i] && data_file[j,i]==1)
@@ -183,6 +184,14 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       P_no_IBD= (g0*f1 + g1*f0)^2
       
       P_IBD=g0*r0*f1*g0 + g1*r0*f0*g1 + g0*g0*f1*f1*r1 + f1*g0*r1*f0*g1 + f0*g1*g0*f1*r1 + g1*f0*g1*f0*r1
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=DCV_cM-data_file[j,"position_cM"]
     }
     
     else if(data_file[j,A[!A %in% a]]==data_file[j,i] && data_file[j,i]==0)
@@ -192,6 +201,14 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       P_no_IBD= (g1*f1 + g0*f0)^2
       
       P_IBD=g1*r0*f1*g1 + g0*r0*f0*g0 + f1*g1*r1*f1*g1 + f1*g1*r1*f0*g0 + f0*g0*g1*f1*r1 + f0*g0*f0*g0*r1
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=DCV_cM-data_file[j,"position_cM"]
     }
     
     else if(data_file[j,A[!A %in% a]]==data_file[j,i] && data_file[j,i]==1)
@@ -201,6 +218,14 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       P_no_IBD= (g0*f1 + g1*f0)^2
       
       P_IBD=g0*r0*f1*g0 + g1*r0*f0*g1 + g0*g0*f1*f1*r1 + f1*g0*r1*f0*g1 + f0*g1*g0*f1*r1 + g1*f0*g1*f0*r1
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=DCV_cM-data_file[j,"position_cM"]
     }
     
     else if(data_file[j,a]==1 && data_file[j,i]==0)
@@ -208,6 +233,14 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       P_no_IBD= (g1*f1 + g0*f0) * (g0*f1 + g1*f0)
       
       P_IBD=g0*g1*f1*r0 + g0*g1*f0*r0 + g1*f1*g0*f1*r1 + g1*f1*g1*f0*r1 + g0*f0*g0*f1*r1 + g0*f0*g1*f0*r1
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=DCV_cM-data_file[j,"position_cM"]
     }
     
     else if(data_file[j,a]==0 && data_file[j,i]==1)
@@ -215,6 +248,14 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       P_no_IBD= (g0*f1 + g1*f0) * (g1*f1 + g0*f0)
       
       P_IBD=g0*r0*f1*g1 + g0*r0*f0*g1 + g0*g1*f1*f1*r1 + g0*f1*g0*f0*r1 + g1*f0*g1*f1*r1 + g1*f0*g0*f0*r1
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=DCV_cM-data_file[j,"position_cM"]
     }
     
     cumulative_IBD[k]=-2*(IBD0 - IBD1)
@@ -281,24 +322,32 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
     g0=1-g1 # g0 = Probability of no genotype/imputation error at the marker
     f0=1-f1 # f0 = Probability of major allele at the marker
     
-    IBD0=IBD0+log(P_no_IBD)
-    
-    IBD1=IBD1+log(P_IBD)
-    
-    allele_mismatch[k]=0
-    test_haplotype[k]=a
-    distance_from_the_DCV_cM[k]=data_file[j,"position_cM"]-DCV_cM
-    
     if(data_file[j,a]==data_file[j,i] && data_file[j,i]==0){
       P_no_IBD= (g1*f1 + g0*f0)^2
       
       P_IBD=g1*r0*f1*g1 + g0*r0*f0*g0 + f1*g1*r1*f1*g1 + f1*g1*r1*f0*g0 + f0*g0*g1*f1*r1 + f0*g0*f0*g0*r1 #Probability of IBD
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=data_file[j,"position_cM"]-DCV_cM
       
     }else if(data_file[j,a]==data_file[j,i] && data_file[j,i]==1){
       
       P_no_IBD= (g0*f1 + g1*f0)^2
       
       P_IBD=g0*r0*f1*g0 + g1*r0*f0*g1 + g0*g0*f1*f1*r1 + f1*g0*r1*f0*g1 + f0*g1*g0*f1*r1 + g1*f0*g1*f0*r1
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=data_file[j,"position_cM"]-DCV_cM
       
     }else if(data_file[j,A[!A %in% a]]==data_file[j,i] && data_file[j,i]==0){
       
@@ -308,6 +357,14 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       
       P_IBD=g1*r0*f1*g1 + g0*r0*f0*g0 + f1*g1*r1*f1*g1 + f1*g1*r1*f0*g0 + f0*g0*g1*f1*r1 + f0*g0*f0*g0*r1
       
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=data_file[j,"position_cM"]-DCV_cM
+      
     }else if(data_file[j,A[!A %in% a]]==data_file[j,i] && data_file[j,i]==1){
       
       a=A[!A %in% a]
@@ -315,6 +372,14 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       P_no_IBD= (g0*f1 + g1*f0)^2
       
       P_IBD=g0*r0*f1*g0 + g1*r0*f0*g1 + g0*g0*f1*f1*r1 + f1*g0*r1*f0*g1 + f0*g1*g0*f1*r1 + g1*f0*g1*f0*r1
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=data_file[j,"position_cM"]-DCV_cM
 
     }else if(data_file[j,a]==1 && data_file[j,i]==0){
 
@@ -322,11 +387,27 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       
       P_IBD=g0*g1*f1*r0 + g0*g1*f0*r0 + g1*f1*g0*f1*r1 + g1*f1*g1*f0*r1 + g0*f0*g0*f1*r1 + g0*f0*g1*f0*r1
       
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=data_file[j,"position_cM"]-DCV_cM
+      
     }else if(data_file[j,a]==0 && data_file[j,i]==1){
 
       P_no_IBD= (g0*f1 + g1*f0) * (g1*f1 + g0*f0)
       
       P_IBD=g0*r0*f1*g1 + g0*r0*f0*g1 + g0*g1*f1*f1*r1 + g0*f1*g0*f0*r1 + g1*f0*g1*f1*r1 + g1*f0*g0*f0*r1
+      
+      IBD0=IBD0+log(P_no_IBD)
+      
+      IBD1=IBD1+log(P_IBD)
+      
+      allele_mismatch[k]=0
+      test_haplotype[k]=a
+      distance_from_the_DCV_cM[k]=data_file[j,"position_cM"]-DCV_cM
       
     }
     
