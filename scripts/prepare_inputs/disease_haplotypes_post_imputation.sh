@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euxo pipefail
+
 
 FoundHaplo_DIR=$1 # FoundHaplo directory
 INPUT_VCF_FILE=$2 # Imputed vcf file path # example: FoundHaplo/temp/FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz
