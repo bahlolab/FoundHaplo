@@ -35,7 +35,7 @@ Set the variables as below,
 
 * Tab delimitted [manifest.txt](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/manifest.txt) to read the parameters from.
 
-Generate the manifest.txt file using the script [Create_jobs.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Create_jobs.R), which requires all the parameters (except test_list and data_type) in the main R script [Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score.R) as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md), and three additional parameters which are,
+Generate the manifest.txt file using the script [Create_jobs.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Create_jobs.R), which requires all the parameters in the main R script [Generate_FH_score.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score.R) as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md), and three additional parameters which are,
 
 (i) manifest_FILE : Path to save the manifest.txt file (/FoundHaplo/scripts/run_nextflow/manifest.txt)
 
