@@ -10,11 +10,11 @@ echo "This script downloads, 1) 1000 Genomes phased 3 bed/bim/fam files to harmo
 echo "1000 Genomes sample names by super populations are already in $FoundHaplo_DIR/input_files/public_data/1000G_haplotypes/1000G_haplotypes_samples_by_population/ALL.txt, EUR.txt, AMR.txt, EAS.txt, SAS.txt and AFR.txt."
 echo "Hapmap recombination files in hg19 to calculate the recombination rates are in $FoundHaplo_DIR/input_files."
 
-echo "Creating results and temp directories"
+echo "Creating results directory and temp directories"
 
 mkdir -p $FoundHaplo_DIR/results/output # to save the IBD results for each disease-test pair
 mkdir -p $FoundHaplo_DIR/results/FH_IBD_scores # to save the final IBD report in .txt file
-mkdir -p $FoundHaplo_DIR/results/FH_Analysis # to save results after analysing FH scores in the final IBD report
+mkdir -p $FoundHaplo_DIR/results/FH_Analysis # to save graphical results after analysing FH scores in the final IBD report
 mkdir -p $FoundHaplo_DIR/temp # to save temporary files
 
 mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_plink
@@ -39,7 +39,7 @@ mv $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplot
 
 rm -r $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_original/hgdownload.cse.ucsc.edu
 
-echo "creating control cohorts for the disease variant for all five super populations in $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
+echo "creating control cohorts for disease variants for all five super populations in $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
 
 mkdir -p $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant
 
