@@ -1,29 +1,3 @@
-#' Analysing FoundHaplo results
-#'
-#' @description
-#' This function analyse the FoundHaplo scores and predict samples that carry the known disease haplotypes for each of the disease-causing variants.
-#' @param results_FILE  Path to a single .txt file with FH scores (type \code{"character"})
-#' @param save_FH_output_DIR Path to save the analysis of the FH scores (type \code{"numeric"})
-#' @param critical_percentile Critical percentile of the control cohort to derive predictions. Recommend above 99.9 for large cohorts like UKBB. (type \code{"numeric"})
-#' @return A dataframe with predicted samples and graphical output will be saved in save_FH_output_DIR
-
-#' \enumerate{
-#' \item DCV, name of the disease-causing variant (type \code{"character"})
-#' \item test_name, name of the test cohort (type \code{"character"})
-#' \item test_sample_name, test sample ID (type \code{"character"})
-#' \item FH, corresponding FH score(type \code{"numeric"})
-#' }
-#' @import dplyr
-#' @import ggplot2
-#' @import gridExtra
-#' @export
-#' @examples
-#' orig_dir <- getwd()
-#' setwd(tempdir())
-#' write.table(FH_IBD_scores,paste0(tempdir(),"/results",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save FH_IBD_scores
-#' Analyse_FH(results_FILE=paste0(tempdir(),"/results",".txt"),save_FH_output_DIR=tempdir(),critical_percentile=0.99)
-#' setwd(orig_dir)
-
 Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile)
 {
   
@@ -31,23 +5,22 @@ Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile)
   
   colnames(results_file)=c("data_type","test_name","frequency_type","minor_allele_cutoff","imputation_quality_score_cutoff_test",'DCV',"disease_haplotype","test_control_individual","FH_score","left_LLR","right_LLR","total_cM_sharing","total_left_cM_sharing","total_right_cM_sharing","number_of_allele_mismatches_in_the_markov_chain","number_of_markers_in_the_markov_chain","numer_of_haplotype_switches_in_the_markov_chain","snp_density_in_data_file","total_number_of_markers_in_data_file","total_cM_span_of_data_file")
   
-  x1=interaction(results_file$DCV,results_file$data_type,results_file$test_name,results_file$disease_haplotype,results_file$test_control_individual)
-  results_file$interaction=x1
+  dummy=interaction(results_file$DCV,results_file$data_type,results_file$test_name,results_file$disease_haplotype,results_file$test_control_individual)
+  results_file$interaction=dummy
   
-  results_file=distinct(results_file,interaction, .keep_all= TRUE)
+  results_file=distinct(results_file,interaction, .keep_all= TRUE) # remove duplicate entries
   
+  p1=list() # save violin plots
+  p2=list() # save ECDF plots
   
-  p1=list()
-  p2=list()
   predictions= data.frame(matrix(ncol = 5, nrow = 0))
-  
   
   for(ii in 1:length(unique(results_file$DCV)))
   {
     file1=subset(results_file,results_file$DCV %in%  unique(results_file$DCV)[ii])
     file1=file1 %>%
-      group_by(DCV,test_name,test_control_individual,data_type) %>%
-      summarize(FH = max(FH_score))
+    group_by(DCV,test_name,test_control_individual,data_type) %>%
+    summarize(FH = max(FH_score))
     
     file1=as.data.frame(file1)
     file1=na.omit(file1)
@@ -58,7 +31,6 @@ Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile)
     
     controls=subset(file1,file1$data_type=="controls")
     test_set=subset(file1,file1$data_type=="test")
-    
     
     CLLR=controls %>%
       group_by(test_name) %>%
@@ -108,4 +80,3 @@ Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile)
   return(predictions)
   
 }
-
