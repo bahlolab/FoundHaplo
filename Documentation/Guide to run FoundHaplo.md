@@ -17,7 +17,7 @@ Details of all the functions in FoundHaplo R package can be found [here](https:/
 
 ### Analyse FoundHaplo results
 
-6. Run [Analyse_FH.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Analyse_FH.R) to predict test samples likely to carry the tested disease-causing variants.
+6. After running FoundHaplo, Run [Analyse_FH.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Analyse_FH.R) to predict and plot the test samples likely to carry the tested disease-causing variants, based on the output by FoundHaplo.
 
 ```R
 Analyse_FH(results_FILE="FoundHaplo/results/FH_IBD_scores/results.txt",save_FH_output_DIR="FoundHaplo/results/FH_Analysis",critical_percentile=0.99)
@@ -25,8 +25,8 @@ Analyse_FH(results_FILE="FoundHaplo/results/FH_IBD_scores/results.txt",save_FH_o
 
 All the parameters that user has to specify are described below
 
-* results_FILE Path to a single .txt file with all the FH scores
-* save_FH_output_DIR Directory to save the graphical output of the FH scores 
-* critical_percentile Critical percentile of the control cohort to derive predictions. Recommend above 0.999 for large cohorts like UKBB
+* results_FILE = Path to a single .txt file with all the FH scores
+* save_FH_output_DIR = Directory to save the graphical output of the FH scores 
+* critical_percentile = Critical percentile of the control cohort to derive predictions. Recommend above 0.9
 
 Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
