@@ -4,7 +4,14 @@
 \alias{Calculate_IBD}
 \title{Calculate the FH score and IBD details between a known disease haplotype and a test individual for a disease variant of interest}
 \usage{
-Calculate_IBD(data_file, DCV, dir_geneticMap)
+Calculate_IBD(
+  data_file,
+  DCV,
+  geneticMap_DIR,
+  gen_allele_mismatch_rate = 0.01,
+  MA_cutoff = -0.4,
+  meiosis = 1
+)
 }
 \arguments{
 \item{data_file}{A data frame with 6 columns containing genotype data of disease haplotype and test individual with
@@ -20,7 +27,13 @@ Make sure that data_file sample names do not have underscore}
 
 \item{DCV}{Name of the disease causing variant of interest i.e FAME1.chr8.119379052}
 
-\item{dir_geneticMap}{Directory path to genetic_map_HapMapII_GRCh37 location}
+\item{geneticMap_DIR}{Directory path to genetic_map_HapMapII_GRCh37 location}
+
+\item{gen_allele_mismatch_rate}{Genotype and imputation error rate allowed, default is 0.1}
+
+\item{meiosis}{Estimated number of meiosis between disease-test pair, default is 1}
+
+\item{MA_cutof}{Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4}
 }
 \value{
 A vector with all the details of the IBD sharing to analyze later :
@@ -41,25 +54,25 @@ A vector with all the details of the IBD sharing to analyze later :
 }
 \description{
 Calculate the FH score and IBD details between a known disease haplotype and a test individual for a disease variant of interest.
-Genome built should be GRCh37 and genetic map in "dir_geneticMap" must have chromosomes named with "chr" prefix, add the prefix if needed
+Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
 }
 \examples{
 library(vcfR)
 library(data.table)
 library(dplyr)
-orig_dir <- getwd()
-temp_dir <- tempdir()
-setwd( temp_dir )
-write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz"))
+orig_DIR <- getwd()
+temp_DIR <- tempdir()
+setwd( temp_DIR )
+write.vcf(FAME1_disease_cohort,paste0(temp_DIR,"/","FAME1_disease_cohort.vcf.gz"))
 sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
-write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
-                   dir_output = temp_dir,
-                   sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
-disease_file <-fread(paste0(temp_dir,"/",paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
+write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
+Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
+                   output_DIR = temp_DIR,
+                   sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
+disease_file <-fread(paste0(temp_DIR,"/",paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
 test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
-test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info,DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
+test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info,DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
 MAF=sapply(strsplit(disease_file$INFO,";",fixed=TRUE),"[[", 9)
 MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[", 2)
 disease_file=as.data.frame(cbind(disease_file[,c("#CHROM","POS","REF","ALT")],MAF,disease_file[,"h1"]))
@@ -74,7 +87,7 @@ common_markers=merge(disease_file, test_haplotype_info_cM, by=c("#CHROM","POS", 
 fix=common_markers[,c("#CHROM","POS","REF","ALT")]
 test_haplotype_info_cM=merge(test_haplotype_info_cM, fix, by=c("#CHROM","POS", "REF","ALT"))
 disease_file=merge(disease_file, fix, by=c("#CHROM","POS", "REF","ALT"))
-disease_file=Convert_bp_cM(haplotype_file=disease_file,DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
+disease_file=Convert_bp_cM(haplotype_file=disease_file,DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
 disease_file=disease_file[,which(!colnames(disease_file) \%in\% c("#CHROM","REF","ALT"))]
 final_file=as.data.frame(cbind(disease_file,test_haplotype_info_cM[,c(11,11+1)]))
 final_file=subset(final_file,final_file$MAF>0)
@@ -84,6 +97,6 @@ final_file=distinct(final_file,position_cM,.keep_all= TRUE)
 attach(final_file)
 final_file <- final_file[order(POS),]
 detach(final_file)
-Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
-setwd( orig_dir )
+Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+setwd( orig_DIR )
 }

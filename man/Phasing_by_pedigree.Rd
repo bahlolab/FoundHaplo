@@ -4,12 +4,12 @@
 \alias{Phasing_by_pedigree}
 \title{Phase samples with a disease variant by pedigrees}
 \usage{
-Phasing_by_pedigree(input_vcf, dir_output, sample_info_file)
+Phasing_by_pedigree(input_vcf, output_DIR, sample_info_file)
 }
 \arguments{
 \item{input_vcf}{Path to a VCF file  (type \code{"character"})}
 
-\item{dir_output}{Directory path to a directory to save the output VCF files (type \code{"character"})}
+\item{output_DIR}{Directory path to a directory to save the output VCF files (type \code{"character"})}
 
 \item{sample_info_file}{Path to a tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the VCF file in mentioned order.
 For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
@@ -17,7 +17,7 @@ For the type "duo" or "related", affected-offspring,affected-parent,unaffected-p
 "duo" and "related" works similarly (type \code{"character"})}
 }
 \value{
-Write a valid new VCF file in dir_output "h1" column contains the disease haplorype saved as homozygous genotypes.
+Write a valid new VCF file in output_DIR "h1" column contains the disease haplorype saved as homozygous genotypes.
 }
 \description{
 Takes a VCF file with at least two known disease individuals and create disease haplotypes based on trio/duo or related data.
@@ -27,15 +27,15 @@ Make sure the input_vcf chromosome column doesn't have the "chr" prefix.
 Loading ANNOVAR files to annotate population freqencies takes most of the time and advised to load them to R and run the rest of the code in the function to create disease haplotypes.
 }
 \examples{
-orig_dir <- getwd()
-temp_dir <- tempdir()
-setwd( temp_dir )
+orig_DIR <- getwd()
+temp_DIR <- tempdir()
+setwd(temp_DIR)
 library(vcfR)
-write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz"))
+write.vcf(FAME1_disease_cohort,paste0(temp_DIR,"/","FAME1_disease_cohort.vcf.gz"))
 sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
-write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
-                         dir_output = temp_dir,
-                         sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
-setwd( orig_dir )
+write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
+Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
+                         output_DIR = temp_DIR,
+                         sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
+setwd( orig_DIR )
 }

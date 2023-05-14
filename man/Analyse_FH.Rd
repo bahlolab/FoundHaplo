@@ -2,33 +2,29 @@
 % Please edit documentation in R/Analyse_FH.R
 \name{Analyse_FH}
 \alias{Analyse_FH}
-\title{Analysing FoundHaplo results}
+\title{Analyse FoundHaplo FH score values for predictions}
 \usage{
-Analyse_FH(path_results, path_to_save_FH_output, critical_percentile)
+Analyse_FH(results_FILE, save_FH_output_DIR, critical_percentile = 0.99)
 }
 \arguments{
-\item{path_results}{Path to a single .txt file with FH scores (type \code{"character"})}
+\item{results_FILE}{Path to a single .txt file with all the FH scores by FoundHaplo}
 
-\item{path_to_save_FH_output}{Path to save the analysis of the FH scores (type \code{"numeric"})}
+\item{save_FH_output_DIR}{Directory to save the graphical output of the FH scores}
 
-\item{critical_percentile}{Critical percentile of the control cohort to derive predictions. Recommend above 99.9 for large cohorts like UKBB. (type \code{"numeric"})}
+\item{critical_percentile}{Critical percentile of the control cohort to derive predictions}
 }
 \value{
-A dataframe with predicted samples and graphical output will be saved in path_to_save_FH_output
-\enumerate{
-\item DCV, name of the disease-causing variant (type \code{"character"})
-\item test_name, name of the test cohort (type \code{"character"})
-\item test_sample_name, test sample ID (type \code{"character"})
-\item FH, corresponding FH score(type \code{"numeric"})
-}
+A data frame predictions that gave FH scores greater than a selected critical percentile
 }
 \description{
-This function analyse the FoundHaplo scores and predict samples that carry the known disease haplotypes for each of the disease-causing variants.
+Predictions that gave FH scores greater than a selected critical percentile of the 1000 Genomes control cohort will be lislted.
+ECDF of the FH scores are plotted in save_FH_output_DIR for further analysis
 }
 \examples{
-orig_dir <- getwd()
-setwd(tempdir())
-write.table(FH_IBD_scores,paste0(tempdir(),"/results",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save FH_IBD_scores
-Analyse_FH(path_results=paste0(tempdir(),"/results",".txt"),path_to_save_FH_output=tempdir(),critical_percentile=0.99)
-setwd(orig_dir)
+orig_DIR <- getwd()
+temp_DIR <- tempdir()
+setwd( temp_DIR )
+write.table(FH_IBD_scores,"FH_IBD_scores.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
+Analyse_FH("FH_IBD_scores.txt",temp_DIR,0.99)
+setwd(orig_DIR)
 }

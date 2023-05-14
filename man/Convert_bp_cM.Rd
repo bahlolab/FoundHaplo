@@ -4,27 +4,27 @@
 \alias{Convert_bp_cM}
 \title{Adds a column with centiMorgan values to the input file}
 \usage{
-Convert_bp_cM(haplotype_file, DCV, dir_geneticMap)
+Convert_bp_cM(haplotype_file, DCV, geneticMap_DIR)
 }
 \arguments{
 \item{haplotype_file}{File in VCF format after removing meta data}
 
 \item{DCV}{Name of the disease causing variant of interest i.e FAME1.chr8.119379052}
 
-\item{dir_geneticMap}{Directory to genetic_map_HapMapII_GRCh37 location}
+\item{geneticMap_DIR}{Directory to genetic_map_HapMapII_GRCh37 location}
 }
 \value{
 A file with cM distance annotated
 }
 \description{
 "position_cM" column will be added after column "POS" in to file with VCF format
-Genome built should be GRCh37 and genetic map in "dir_geneticMap" must have chromosomes named with "chr" prefix, add the prefix if needed
+Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
 }
 \examples{
-orig_dir <- getwd()
-temp_dir <- tempdir()
-setwd( temp_dir )
+orig_DIR <- getwd()
+temp_DIR <- tempdir()
+setwd( temp_DIR )
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-haplotype_file_cM=Convert_bp_cM(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)),DCV="FAME1.chr8.119379052.",dir_geneticMap=temp_dir)
-setwd( orig_dir )
+haplotype_file_cM=Convert_bp_cM(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)),DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+setwd(orig_DIR)
 }

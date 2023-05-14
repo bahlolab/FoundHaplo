@@ -9,15 +9,15 @@ Generate_FH_score(
   minor_allele_cutoff = 0,
   imputation_quality_score_cutoff_test = 0,
   frequency_type,
-  dir_geneticMap,
-  dir_disease_files,
+  geneticMap_DIR,
+  disease_files_DIR,
   test_file,
   test_name = "test",
   test_list,
   data_type,
-  dir_controls_file,
-  dir_to_save_report,
-  dir_TEMP
+  controls_file_DIR,
+  save_report_DIR,
+  TEMP_DIR
 )
 }
 \arguments{
@@ -29,9 +29,9 @@ Generate_FH_score(
 
 \item{frequency_type}{Population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc (type \code{"character"})}
 
-\item{dir_geneticMap}{Directory path to genetic_map_HapMapII_GRCh37 location (type \code{"character"})}
+\item{geneticMap_DIR}{Directory path to genetic_map_HapMapII_GRCh37 location (type \code{"character"})}
 
-\item{dir_disease_files}{directory of the disease haplotype VCFs for a single disease variant(type \code{"character"})}
+\item{disease_files_DIR}{directory of the disease haplotype VCFs for a single disease variant(type \code{"character"})}
 
 \item{test_file}{path of the test cohort file (type \code{"character"})}
 
@@ -41,14 +41,14 @@ Generate_FH_score(
 
 \item{data_type}{"test" or "control (type \code{"character"})}
 
-\item{dir_controls_file}{Directory where the 1000genome control files are stored  (type \code{"character"})}
+\item{controls_file_DIR}{Directory where the 1000genome control files are stored  (type \code{"character"})}
 
-\item{dir_to_save_report}{Directory path to save the required details of the IBD sharing to analyze later  (type \code{"character"})}
+\item{save_report_DIR}{Directory path to save the required details of the IBD sharing to analyze later  (type \code{"character"})}
 
-\item{dir_TEMP}{Directory path to save the temporary files  (type \code{"character"})}
+\item{TEMP_DIR}{Directory path to save the temporary files  (type \code{"character"})}
 }
 \value{
-All details of IBD sharing for each test/control sample will be saved in a seperate tab delimitted text file in dir_to_save_report location, with below columns :
+All details of IBD sharing for each test/control sample will be saved in a seperate tab delimitted text file in save_report_DIR location, with below columns :
 name of each text file will be data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt
 
 \enumerate{
@@ -75,11 +75,11 @@ name of each text file will be data_type.test_name.DCV.disease_individual.test_i
 }
 }
 \description{
-This function save FH score and IBD details for each test/control - disease pair in a .txt file in "dir_to_save_report"
+This function save FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR"
 Run this function on R command line since system() command used in the function doesn't work on R studio.
 Ethnicity of the test cohort should be decided in advance EUR,AMR,SAS,EAS,AFR etc
 Make sure that imputation quality score R2 or R-squared is the third field of the INFO column of the test VCF file.
-Genome built should be GRCh37 and genetic map in "dir_geneticMap" must have chromosomes named with "chr" prefix, add the prefix if needed
+Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
 }
 \examples{
 orig_dir <- getwd()
@@ -87,7 +87,7 @@ setwd(tempdir())
 file.remove(list.files())
 if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} #to save disease haplotypes
 if(!dir.exists(paste0(tempdir(), "/2"))){dir.create(paste0(tempdir(), "/2"))} #to save test_list of sample names in .txt files
-if(!dir.exists(paste0(tempdir(), "/3"))){dir.create(paste0(tempdir(), "/3"))}  # dir_controls_file
+if(!dir.exists(paste0(tempdir(), "/3"))){dir.create(paste0(tempdir(), "/3"))}  # controls_file_DIR
 if(!dir.exists(paste0(tempdir(), "/4"))){dir.create(paste0(tempdir(), "/4"))} # to save IBD results
 temp_dir <- tempdir() # To carryout the main workload
 library(vcfR)
@@ -95,12 +95,12 @@ write.vcf(FAME1_disease_cohort,paste0(temp_dir,"/","FAME1_disease_cohort.vcf.gz"
 sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
 write.table(sample_info,paste0(temp_dir,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 Phasing_by_pedigree(input_vcf = paste0(temp_dir,"/FAME1_disease_cohort",".vcf.gz"),
-                  dir_output = paste0(temp_dir,"/1"),
+                  output_DIR = paste0(temp_dir,"/1"),
                   sample_info_file = paste0(temp_dir,"/","sample_info.txt"))
 write.vcf(FAME1_test_cohort,paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"))
 write.table(file00,paste0(temp_dir,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 write.vcf(FAME1_control_cohort,paste0(temp_dir,"/3/","FAME1.chr8.vcf.gz"))
-Generate_FH_score(DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",dir_geneticMap=temp_dir,dir_disease_files=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_dir,"/2/","file00.txt"),data_type="test",dir_controls_file=paste0(temp_dir,"/3"),dir_to_save_report=paste0(temp_dir,"/4"),temp_dir)
+Generate_FH_score(DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_dir,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),temp_dir)
 setwd(paste0(temp_dir,"/4"))
 read.delim(list.files(paste0(temp_dir,"/4"))[1],header=FALSE)
 setwd(orig_dir)
