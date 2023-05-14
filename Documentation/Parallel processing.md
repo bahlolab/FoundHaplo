@@ -62,7 +62,7 @@ nohup ./run_nextflow.nf
 
 Results will be saved in the path given in "save_report_DIR" (default: /mypath/FoundHaplo_DIR/results/output) in the script [Create_jobs.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/Create_jobs.R).
 
-5. Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis as below.
+5. Concatenate all the .txt files in save_report_DIR and generate a single text file for further analysis as below.
 
 ```bash
 FoundHaplo_DIR=/mypath/FoundHaplo
