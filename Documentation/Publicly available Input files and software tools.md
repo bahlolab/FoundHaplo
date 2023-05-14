@@ -25,4 +25,13 @@ Publicly available software tools required to run FoundHaplo
 * [VCFtools](https://vcftools.github.io/downloads.html) version v0.1.13 and [BCFtools](http://www.htslib.org/download/) version 1.16 to perform queries on VCF files 
 * [Nextflow](https://www.nextflow.io/) to parallely run FoundHaplo
 
+Once set up, load the required modules and the version of R with FoundHaplo installed.
+```bash
+module load vcftools
+module load htslib 
+module load bcftools
+module load samtools
+module load plink
+module load R
+```
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
