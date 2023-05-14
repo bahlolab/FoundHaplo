@@ -51,10 +51,9 @@ Name of each text file will correspond to a single job sumbitted by the pipeline
 Concatenate all the .txt files in dir_to_save_report and generate a single text file for further analysis as below.
 
 ```bash
-FoundHaplo_PATH=
-cat "$FoundHaplo_PATH/results/output/"*.txt > $FoundHaplo_PATH/results/FH_IBD_scores/results.txt 
+FoundHaplo_DIR=/mypath/FoundHaplo
+cat "$FoundHaplo_DIR/results/output/"*.txt > $FoundHaplo_DIR/results/FH_IBD_scores/results.txt 
 ```
-FoundHaplo_PATH : Path to FoundHaplo directory i.e path/FoundHaplo
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
 
