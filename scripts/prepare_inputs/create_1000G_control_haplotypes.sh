@@ -8,9 +8,6 @@ CHROMOSOME=$(echo "$DCV" | cut -d'.' -f2)
 prefix="chr"
 CHROMOSOME=${CHROMOSOME#"$prefix"}
 
-module unload R
-module load R/4.2.0 # edit this line accordingly. load the R version with FoundHaplo [--> this doesn't belong in your script because this is only certain specific HPC setups, people should manage modules themselves outside running any scripts you provide (and people who don't use module system or have different version numbers will get errors)]
-
 echo "Finding start and end base pair positions to trim the VCF files."
 
 Rscript $FoundHaplo_DIR/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $FoundHaplo_DIR/input_files/public_data/genetic_map_HapMapII_GRCh37 $FoundHaplo_DIR/temp/DCV_bp.txt
@@ -18,9 +15,6 @@ START_BP=$(cut -f2 $FoundHaplo_DIR/temp/DCV_bp.txt)
 END_BP=$(cut -f3 $FoundHaplo_DIR/temp/DCV_bp.txt)
 
 OUTPUT_NAME="$(echo $DCV | cut -d'.' -f1-2)"
-
-module load vcftools
-module load htslib
 
 echo "creating control cohorts for the disease variant" $DCV "for all five super populations in $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant."
 
