@@ -176,7 +176,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       allele_mismatch[k]=0
       test_haplotype[k]=a
       distance_from_the_DCV_cM[k]=DCV_cM-data_file[j,"position_cM"]
-    
+      
     }
     
     else if(data_file[j,a]==data_file[j,i] && data_file[j,i]==1)
@@ -197,7 +197,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
     else if(data_file[j,A[!A %in% a]]==data_file[j,i] && data_file[j,i]==0)
     {
       a=A[!A %in% a]
-
+      
       P_no_IBD= (g1*f1 + g0*f0)^2
       
       P_IBD=g1*r0*f1*g1 + g0*r0*f0*g0 + f1*g1*r1*f1*g1 + f1*g1*r1*f0*g0 + f0*g0*g1*f1*r1 + f0*g0*f0*g0*r1
@@ -259,14 +259,14 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
     }
     
     cumulative_IBD[k]=-2*(IBD0 - IBD1)
-
+    
     if(k>100)
     {
-    IBD_difference[k-1]=cumulative_IBD[k]-cumulative_IBD[k-1]
-    
+      IBD_difference[k-1]=cumulative_IBD[k]-cumulative_IBD[k-1]
+      
       if(frollmean(IBD_difference[(k-100):(k-1)],100)[length(frollmean(IBD_difference[(k-100):(k-1)],100))]<=MA_cutoff)    # 100 point moving average of IBD_difference
       {break}      #break the loop and stop if froll<=MA_cutoff
- 
+      
     }
     k=k+1
   }
@@ -278,7 +278,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
   Max_left_cM=DCV_cM-data_file[xL-(which(cumulative_IBD==max(cumulative_IBD))[length(which(cumulative_IBD==max(cumulative_IBD)))]-1),"position_cM"] # the cM location at which the chain gave the highest IBD to the left
   
   number_of_allele_mismatches_in_the_left_markov_chain=sum(allele_mismatch[1:which(cumulative_IBD==max(cumulative_IBD))]) # total number of allele mismatches to the left
-  number_of_markers_in_the_left_markov_chain=which(cumulative_IBD==max(cumulative_IBD)) # total number of markers traversed until end of left sharing
+  number_of_markers_in_the_left_markov_chain=which(cumulative_IBD==max(cumulative_IBD))[length(which(cumulative_IBD==max(cumulative_IBD)))] # total number of markers traversed until end of left sharing
   
   numer_of_haplotype_switches_in_the_left_markov_chain=length(which(c(FALSE, tail(test_haplotype[1:which(cumulative_IBD==max(cumulative_IBD))[1]],-1) != head(test_haplotype[1:which(cumulative_IBD==max(cumulative_IBD))[1]],-1))))# number of times the chain switches between the two test haplotypes
   
@@ -302,7 +302,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
   distance_from_the_DCV_cM=vector(mode = "numeric",length=nrow(data_file)-xL) # vector to save the distance markov chain has traversed in cM from the DCV
   
   #To the right of the DCV locus ;Traverse from xR to end of sharing
-
+  
   for(j in xR:(nrow(data_file)-1))
   {
     
@@ -315,7 +315,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
     
     Morgan_distance_between_adjacent_markers=(data_file[j,"position_cM"]-data_file[j-1,"position_cM"])/100
     d=Morgan_distance_between_adjacent_markers # replacing long variable name (d=Morgan_distance_between_adjacent_markers)
-
+    
     
     r1=1-exp(-m*d) # r1 = Probability of recombination at the marker
     r0=exp(-m*d) # r0 = Probability of no recombination at the marker
@@ -368,7 +368,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
     }else if(data_file[j,A[!A %in% a]]==data_file[j,i] && data_file[j,i]==1){
       
       a=A[!A %in% a]
-
+      
       P_no_IBD= (g0*f1 + g1*f0)^2
       
       P_IBD=g0*r0*f1*g0 + g1*r0*f0*g1 + g0*g0*f1*f1*r1 + f1*g0*r1*f0*g1 + f0*g1*g0*f1*r1 + g1*f0*g1*f0*r1
@@ -380,9 +380,9 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       allele_mismatch[k]=0
       test_haplotype[k]=a
       distance_from_the_DCV_cM[k]=data_file[j,"position_cM"]-DCV_cM
-
+      
     }else if(data_file[j,a]==1 && data_file[j,i]==0){
-
+      
       P_no_IBD= (g1*f1 + g0*f0) * (g0*f1 + g1*f0)
       
       P_IBD=g0*g1*f1*r0 + g0*g1*f0*r0 + g1*f1*g0*f1*r1 + g1*f1*g1*f0*r1 + g0*f0*g0*f1*r1 + g0*f0*g1*f0*r1
@@ -396,7 +396,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
       distance_from_the_DCV_cM[k]=data_file[j,"position_cM"]-DCV_cM
       
     }else if(data_file[j,a]==0 && data_file[j,i]==1){
-
+      
       P_no_IBD= (g0*f1 + g1*f0) * (g1*f1 + g0*f0)
       
       P_IBD=g0*r0*f1*g1 + g0*r0*f0*g1 + g0*g1*f1*f1*r1 + g0*f1*g0*f0*r1 + g1*f0*g1*f1*r1 + g1*f0*g0*f0*r1
@@ -433,7 +433,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
   Max_total_cM=Max_left_cM+Max_right_cM
   
   number_of_allele_mismatches_in_the_right_markov_chain=sum(allele_mismatch[1:which(cumulative_IBD==max(cumulative_IBD))]) # total number of allele mismatches to the right
-  number_of_markers_in_the_right_markov_chain=which(cumulative_IBD==max(cumulative_IBD)) # total number of markers traversed until end of right sharing
+  number_of_markers_in_the_right_markov_chain=which(cumulative_IBD==max(cumulative_IBD))[length(which(cumulative_IBD==max(cumulative_IBD)))] # total number of markers traversed until end of right sharing
   
   numer_of_haplotype_switches_in_the_right_markov_chain=length(which(c(FALSE, tail(test_haplotype[1:which(cumulative_IBD==max(cumulative_IBD))[1]],-1) != head(test_haplotype[1:which(cumulative_IBD==max(cumulative_IBD))[1]],-1)))) # number of times the chain switches between the two test haplotypes
   
@@ -444,12 +444,12 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
   number_of_markers_in_the_markov_chain=number_of_markers_in_the_left_markov_chain+number_of_markers_in_the_right_markov_chain #Total number of markers in the IBD sharing region
   
   numer_of_haplotype_switches_in_the_markov_chain <- numer_of_haplotype_switches_in_the_left_markov_chain+numer_of_haplotype_switches_in_the_right_markov_chain #Total number of haplotype switches
-
+  
   snp_density_in_data_file=nrow(data_file)/(max(data_file$position_cM)-min(data_file$position_cM)) # number of markers in 1cM
   total_number_of_markers_in_data_file=nrow(data_file)
   total_cM_span_of_data_file=max(data_file$position_cM)-min(data_file$position_cM)
-
- # IBD_report=paste(Final_FH_score,Max_left_IBD,Max_right_IBD,(Max_left_cM+Max_right_cM),Max_left_cM,Max_right_cM,number_of_allele_mismatches_in_the_markov_chain,number_of_markers_in_the_markov_chain,numer_of_haplotype_switches_in_the_markov_chain,snp_density_in_data_file,total_number_of_markers_in_data_file,total_cM_span_of_data_file,sep='\t')
+  
+  # IBD_report=paste(Final_FH_score,Max_left_IBD,Max_right_IBD,(Max_left_cM+Max_right_cM),Max_left_cM,Max_right_cM,number_of_allele_mismatches_in_the_markov_chain,number_of_markers_in_the_markov_chain,numer_of_haplotype_switches_in_the_markov_chain,snp_density_in_data_file,total_number_of_markers_in_data_file,total_cM_span_of_data_file,sep='\t')
   
   print("Returning all the IBD information")
   
