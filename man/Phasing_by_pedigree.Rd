@@ -7,11 +7,11 @@
 Phasing_by_pedigree(input_vcf, output_DIR, sample_info_file)
 }
 \arguments{
-\item{input_vcf}{Path to a VCF file  (type \code{"character"})}
+\item{input_vcf}{File path to a VCF file  (type \code{"character"})}
 
-\item{output_DIR}{Directory path to a directory to save the output VCF files (type \code{"character"})}
+\item{output_DIR}{Directory to save the output VCF files (type \code{"character"})}
 
-\item{sample_info_file}{Path to a tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the VCF file in mentioned order.
+\item{sample_info_file}{File path to a tab delimited .txt file with sample names and type of phasing to be used. Each phasing is included in a new line, include sample names as in the VCF file in mentioned order.
 For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
 For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
 "duo" and "related" works similarly (type \code{"character"})}
@@ -24,7 +24,6 @@ Takes a VCF file with at least two known disease individuals and create disease 
 }
 \details{
 Make sure the input_vcf chromosome column doesn't have the "chr" prefix.
-Loading ANNOVAR files to annotate population freqencies takes most of the time and advised to load them to R and run the rest of the code in the function to create disease haplotypes.
 }
 \examples{
 orig_DIR <- getwd()
@@ -32,7 +31,7 @@ temp_DIR <- tempdir()
 setwd(temp_DIR)
 library(vcfR)
 write.vcf(FAME1_disease_cohort,paste0(temp_DIR,"/","FAME1_disease_cohort.vcf.gz"))
-sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
+sample_info=data.frame(rbind(c("HG00362_1_HG00362_1,HG00362_2_HG00362_2","duo"),c("NA11920_NA11920,Affected_parent_NA11920_Affected_parent_NA11920,Unaffected_parent_NA11920_Unaffected_parent_NA11920","trio"),c("HG00313_1_HG00313_1,HG00313_2_HG00313_2","duo")))
 write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
                          output_DIR = temp_DIR,

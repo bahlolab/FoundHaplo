@@ -7,17 +7,17 @@
 Convert_bp_cM(haplotype_file, DCV, geneticMap_DIR)
 }
 \arguments{
-\item{haplotype_file}{File in VCF format after removing meta data}
+\item{haplotype_file}{A dataframe file in VCF format (including columns in a typical VCF file) after removing meta data}
 
-\item{DCV}{Name of the disease causing variant of interest i.e FAME1.chr8.119379052}
+\item{DCV}{Name of the disease causing variant of interest i.e FAME1.chr8.119379052.}
 
 \item{geneticMap_DIR}{Directory to genetic_map_HapMapII_GRCh37 location}
 }
 \value{
-A file with cM distance annotated
+A dataframe with cM distance annotated
 }
 \description{
-"position_cM" column will be added after column "POS" in to file with VCF format
+"position_cM" column will be added after column "POS" in to a data frame file with VCF format
 Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
 }
 \examples{

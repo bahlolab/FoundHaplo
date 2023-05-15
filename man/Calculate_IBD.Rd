@@ -17,7 +17,7 @@ Calculate_IBD(
 \item{data_file}{A data frame with 6 columns containing genotype data of disease haplotype and test individual with
 \enumerate{
 \item position_bp, position in base pairs (type \code{"numeric"})
-\item position_cM, position in centi Morgans (type \code{"numeric"})
+\item position_cM, position in centiMorgans (type \code{"numeric"})
 \item Minor_allele_frequency,Minor allele frequency (type \code{"numeric"})
 \item disease_haplotype, known disease haplotype (type \code{"numeric"})
 \item test_id:a, haplotype 1 of the test individual (type \code{"numeric"})
@@ -25,15 +25,15 @@ Calculate_IBD(
 }
 Make sure that data_file sample names do not have underscore}
 
-\item{DCV}{Name of the disease causing variant of interest i.e FAME1.chr8.119379052}
+\item{DCV}{Name of the disease causing variant of interest i.e FAME1.chr8.119379052.}
 
-\item{geneticMap_DIR}{Directory path to genetic_map_HapMapII_GRCh37 location}
+\item{geneticMap_DIR}{Directory to genetic_map_HapMapII_GRCh37 location}
 
 \item{gen_allele_mismatch_rate}{Genotype and imputation error rate allowed, default is 0.1}
 
-\item{meiosis}{Estimated number of meiosis between disease-test pair, default is 1}
+\item{MA_cutoff}{Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4}
 
-\item{MA_cutof}{Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4}
+\item{meiosis}{Estimated number of meiosis between disease-test pair, default is 1}
 }
 \value{
 A vector with all the details of the IBD sharing to analyze later :
@@ -64,16 +64,16 @@ orig_DIR <- getwd()
 temp_DIR <- tempdir()
 setwd( temp_DIR )
 write.vcf(FAME1_disease_cohort,paste0(temp_DIR,"/","FAME1_disease_cohort.vcf.gz"))
-sample_info=data.frame(rbind(c("HG00362_1,HG00362_2","duo"),c("NA11920,Affected_parent_NA11920,Unaffected_parent_NA11920","trio"),c("HG00313_1,HG00313_2","duo")))
+sample_info=data.frame(rbind(c("HG00362_1_HG00362_1,HG00362_2_HG00362_2","duo"),c("NA11920_NA11920,Affected_parent_NA11920_Affected_parent_NA11920,Unaffected_parent_NA11920_Unaffected_parent_NA11920","trio"),c("HG00313_1_HG00313_1,HG00313_2_HG00313_2","duo")))
 write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
                    output_DIR = temp_DIR,
                    sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
-disease_file <-fread(paste0(temp_DIR,"/",paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
+disease_file <-fread(paste0(temp_DIR,"/",paste(c("NA11920_NA11920","Affected_parent_NA11920_Affected_parent_NA11920","Unaffected_parent_NA11920_Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
 test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
 test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info,DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
-MAF=sapply(strsplit(disease_file$INFO,";",fixed=TRUE),"[[", 9)
+MAF=sapply(strsplit(disease_file$INFO,";",fixed=TRUE),"[[", 6)
 MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[", 2)
 disease_file=as.data.frame(cbind(disease_file[,c("#CHROM","POS","REF","ALT")],MAF,disease_file[,"h1"]))
 disease_file=disease_file[,c("#CHROM","POS","REF","ALT","MAF","h1")]

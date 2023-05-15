@@ -16,22 +16,22 @@ Find_bp_to_trim(
 
 \item{geneticMap_DIR}{Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})}
 
-\item{output_file}{Path to save the resutls (type \code{"character"})}
+\item{output_file}{File path to save the results (type \code{"character"})}
 
 \item{size_to_trim_cM}{Size of the region allowed around the disease variant, default is 10cM either side (type \code{"numeric"})}
 }
 \value{
-Return a data frame with three columns 1.Original variant 2. base pair value of 10cM to the left of the variant 3. base pair value of 10cM to the right of the variant
+Return a data frame with three columns 1.Original variant 2. base pair value of 10cM to the left of the variant 3. base pair value of 10cM to the right of the variant. The resulting dataframe is also written to the output_file location.
 }
 \description{
-Takes a text file with disease causing variants written in "FAME1.chr8.119379052." format, variants added in new line or a vector of variants in the same format and calculate base pair values corresponding to +-10cM from the disease variant locus
+Takes a vector with disease causing variants written in "FAME1.chr8.119379052." format, and calculate base pair values corresponding to +-10cM from the disease variant locus
 Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
 }
 \examples{
-orig_dir <- getwd()
-temp_dir <- tempdir()
-setwd( temp_dir )
+orig_DIR <- getwd()
+temp_DIR <- tempdir()
+setwd( temp_DIR )
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),geneticMap_DIR=temp_dir,output_file=paste0(temp_dir,"/DCV_bp.txt"))
-setwd( orig_dir )
+Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),geneticMap_DIR=temp_DIR,output_file=paste0(temp_DIR,"/DCV_bp.txt"))
+setwd( orig_DIR )
 }

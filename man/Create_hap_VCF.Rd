@@ -7,10 +7,10 @@
 Create_hap_VCF(haplotype_file)
 }
 \arguments{
-\item{haplotype_file}{File in VCF format after removing meta data}
+\item{haplotype_file}{A dataframe file in VCF format (including columns in a typical VCF file) after removing meta data}
 }
 \value{
-A file with haplotypes of test individuals in two columns
+A data frame with haplotypes of test individuals in two columns
 }
 \description{
 sample.A with alleles 0|1 will be split to two columns with sample.A:a=0 and sample.A:b=1
