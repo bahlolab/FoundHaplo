@@ -3,7 +3,7 @@ Generate_FH_score is the main wrapper function that generates FH score values fo
 * Note: Generate_FH_score function easily works on the command line as it uses system() function to query from VCFtools and BCFtools. Hence recomended to use a nextflow pipeline as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md).
 
 ```R
-Generate_FH_score(DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR="FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37",disease_files_DIR="FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes",test_file="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz.imputed.trimmed.vcf.gz",test_name="example_test",test_list="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples/samples.txt",data_type="test",controls_file_DIR="FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
+Generate_FH_score(DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR="FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37",disease_files_DIR="FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes",test_file="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz.imputed.trimmed.vcf.gz",test_name="example_test",test_list="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples/samples.txt",data_type="test",controls_file_DIR="FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
 ",save_report_DIR="FoundHaplo_PATH/results/output",TEMP_DIR="FoundHaplo_PATH/temp")
 ```
 
@@ -11,17 +11,20 @@ Generate_FH_score(DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,imputation_qu
 
 1. **DCV** Name of the disease causing variant of interest i.e FAME1.chr8.119379052 
 2. **minor_allele_cutoff** The minimum minor allele frequncy of SNPs allowed, we recommend this to be 0 
-3. **imputation_quality_score_cutoff_test** Minimum allowed imputation quality cut off, which is R-squared for the test cohort. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise 
-4. **frequency_type** population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc 
-5. **geneticMap_DIR** directory path to genetic_map_HapMapII_GRCh37 files, which are in FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37/
-6. **disease_files_DIR** directory path of the disease haplotype VCFs gzipped, which is FoundHaplo/input_files/input_vcf_data/disease_haplotypes.
-7. **test_file** path of the test cohort file gzipped, which is in FoundHaplo/input_files/input_vcf_data/test_cohort.
-8. **test_name** meaningful name for the test cohort 
-9. **test_list** path to a .txt file that includes sample names from the test/control cohort. If running in parallel, We recommend a list of 1000 sample names if the test cohort has more than 50,000 samples and a list of 100 sample names otherwise. List of sample names in a test/control cohort can be split into chunks of samples as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md). Sample names for the test cohort are in /wehisan/bioinf/lab_bahlo/users/robertson.e/FH_test_1/FoundHaplo/input_files/input_vcf_data/test_cohort and sample names for the control cohort are in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population.  
-10. **data_type** "test" or "controls"
-11. **controls_file_DIR** directory where the 1000 Genomes gzipped VCF control files are stored. Select the control population cohort the same as the test cohort i.e FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR.
-12. **save_report_DIR** directory path to save the output of FoundHaplo IBD sharing for further analysis
-13. **TEMP_DIR** directory path to save the temporary files
+3. **gen_allele_mismatch_rate** Genotype and imputation error rate allowed, default is 0.1
+4. **MA_cutoff** Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4
+5. **meiosis** Estimated number of meiosis between disease-test pair, default is 1
+6. **imputation_quality_score_cutoff_test** Minimum allowed imputation quality cut off, which is R-squared for the test cohort. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise 
+7. **frequency_type** population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc 
+8. **geneticMap_DIR** directory path to genetic_map_HapMapII_GRCh37 files, which are in FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37/
+9. **disease_files_DIR** directory path of the disease haplotype VCFs gzipped, which is FoundHaplo/input_files/input_vcf_data/disease_haplotypes.
+10. **test_file** path of the test cohort file gzipped, which is in FoundHaplo/input_files/input_vcf_data/test_cohort.
+11. **test_name** meaningful name for the test cohort 
+12. **test_list** path to a .txt file that includes sample names from the test/control cohort. If running in parallel, We recommend a list of 1000 sample names. List of sample names in a test/control cohort can be split into chunks of samples as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md). Sample names for the test cohort are in /wehisan/bioinf/lab_bahlo/users/robertson.e/FH_test_1/FoundHaplo/input_files/input_vcf_data/test_cohort and sample names for the control cohort are in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population.  
+13. **data_type** "test" or "controls"
+14. **controls_file_DIR** directory where the 1000 Genomes gzipped VCF control files are stored. Select the control population cohort the same as the test cohort i.e FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR.
+15. **save_report_DIR** directory path to save the output of FoundHaplo IBD sharing for further analysis
+16. **TEMP_DIR** directory path to save the temporary files
 
 The function returns all the details of IBD sharing for each test/control sample and will be saved in a seperate tab delimitted text file in dir_to_save_report location, with below columns:
 
