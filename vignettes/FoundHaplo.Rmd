@@ -63,7 +63,7 @@ gnomAD population frequencies to disease cort VCF files are annotated from ANNOV
 
 Function | Description
 ------------------ | --------------------------------------------------
-Find_bp_to_trim | Outputs the base pair positions corresponding to +-20cM from a given locus
+Find_bp_to_trim | Outputs the base pair positions corresponding to +-10cM from a given locus
 Create_hap_VCF | Takes a phased input data file with columns in VCF format and separate haplotypes into two columns
 Convert_bp_cM | Adds a column with centiMorgan values to the input file
 Phasing_by_pedigree | Phase samples with a disease variant by pedigrees
