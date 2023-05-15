@@ -75,7 +75,7 @@ Analyse_FH |  This function analyse the FoundHaplo scores and predict samples th
 
 Below is an IBD analysis performed on simulated data to demonstrate the steps involved in FoundHaplo. Change the parameters for each function to see how it affects the results.
 
-**NOTE: Generate_FH_score must not be run on R studio and only be run on command line as it uses system() function to invoke vcftools and bcftools queries whcih can only be accessed from commanline.**
+**NOTE: Run Generate_FH_score function on R command line since system() command used in the function to utilise vcfools/bcftools may not work on R studio..**
 
 ### Calculate the corresponding base pair positions
 
