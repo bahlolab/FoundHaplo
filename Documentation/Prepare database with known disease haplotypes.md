@@ -18,7 +18,7 @@ cd FoundHaplo_database_DIR
 
 Load the singularity module
 ```bash
-module load singularity/3.6.2
+module load singularity
 ```
 
 3. Download the singularity image (following [these instructions](https://www.hpc.iastate.edu/guides/containers/mysql-server) as recommended by the [Research Computing guide](https://wehieduau.sharepoint.com/sites/rc2/SitePages/Database-servers.aspx))
