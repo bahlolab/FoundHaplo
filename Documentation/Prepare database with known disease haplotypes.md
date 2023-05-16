@@ -42,7 +42,7 @@ setup/my.cnf file should now look like this:
 [mysqld]
 innodatabase_use_native_aio=0
 init-file=${HOME}/.mysqlrootpw
-port=56155
+port=port in the range 49152–65535
 bind-address = 0.0.0.0
 
 [client]
