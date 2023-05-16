@@ -97,7 +97,7 @@ You are now running MySQL server using singularity!
 10. Create the FoundHaplo database and tables in MySQL using schema as below.
 
 ```
-source /mypath/FoundHaplodatabase_create_mysql.sql;
+source /mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql;
 exit;
 ```
 11. Stop the MySQL instance once the work is completed 
@@ -135,4 +135,8 @@ mysql -h 'server_where_the_instance_is_running' -P 'port_number' -u remote_usr -
 ```bash
 singularity instance stop mysql
 ```
+
+## How to import disease haplotypes into the database
+
+1. Run /mypath/FoundHaplo/FoundHaplo_database/Create_SQL_script_to_import.R to import disease haplotypes into the database.
 
