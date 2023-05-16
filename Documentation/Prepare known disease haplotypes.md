@@ -81,6 +81,7 @@ For the type "related", affected-sample-1,affected-sample2 related
 
 The post imputation script will create a seperate file with VCF columns for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/, additionaly it will remove multiallelic SNPs using gnomAD frequency files downloaded with ANNOVAR. 
 
+The created disease haplotypes in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/ can be efficiently managed in a MySQL database system. How to create and manage the FoundHaplo database is explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md). 
 
 Go back to the [documentaton](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
 
