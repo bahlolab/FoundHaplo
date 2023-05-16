@@ -40,7 +40,7 @@ curl https://raw.githubusercontent.com/ISU-HPC/mysql/master/mysqlrootpw > setup/
 setup/my.cnf file should now look like this:
 ```
 [mysqld]
-innodatabase_use_native_aio=0
+innodb_use_native_aio=0
 init-file=${HOME}/.mysqlrootpw
 port=port in the range 49152–65535
 bind-address = 0.0.0.0
@@ -50,7 +50,7 @@ user=root
 password='my-secret-pw'
 ```
 
-setup/mysqlrootpw will look like this
+setup/mysqlrootpw will look like this:
 ```
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('my-secret-pw');
 ```
