@@ -18,7 +18,7 @@
 #' @param gen_allele_mismatch_rate Genotype and imputation error rate allowed, default is 0.1
 #' @param MA_cutoff Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4
 #' @param meiosis Estimated number of meiosis between disease-test pair, default is 1
-#' @return A vector with all the details of the IBD sharing to analyze later :
+#' @return A data frame with all the details of the IBD sharing to analyze later :
 #' \enumerate{
 #' \item FH_score (type \code{"numeric"})
 #' \item left_LLR (type \code{"numeric"})
