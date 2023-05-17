@@ -1,12 +1,13 @@
 [Generate_FH_score_DB](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score_DB.R) is the main wrapper function that generates FH score values for each test/control - disease pair using a database of disease haplotypes by taking user input shown below.
 
+Generate_FH_score_DB function works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
+
 * Note: Generate_FH_score_DB function easily works on the command line as it uses system() function to query from VCFtools and BCFtools. Hence recomended to use a nextflow pipeline as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md).
 
 ```R
 Generate_FH_score_DB(db_port=port_number,db_host=server_where_the_instance_is_running,db_password=pwd,db_name=FoundHaploDB,db_unix_socket=FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock,DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR="FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37",disease_files_DIR="FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes",test_file="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz.imputed.trimmed.vcf.gz",test_name="example_test",test_list="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples/samples.txt",data_type="test",controls_file_DIR="FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
 ",save_report_DIR="FoundHaplo_PATH/results/output",TEMP_DIR="FoundHaplo_PATH/temp")
 ```
-Note : The example code above works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
 
 # All the parameters that user has to specify are described below
 

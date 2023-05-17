@@ -5,6 +5,7 @@
 ```R
 devtools::install_github("bahlolab/FoundHaplo")
 ```
+Make sure have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
 
 We recommend using a nextflow pipeline to run the main function [Generate_FH_score_DB.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score_DB.R) in FoundHaplo. Refer https://www.nextflow.io/docs/latest/process.html for more details
 
