@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 Channel
-.fromPath('/mypath/manifest.txt') // edit
+.fromPath('/mypath/manifest_DB.txt') // edit
 .splitText(by: 1)
 .set{ chunks_ch }
 
@@ -26,7 +26,7 @@ stdout result
 """
 
 echo "edit below line with the correct path"
-Rscript /mypath/FoundHaplo/scripts/run_nextflow/Args_Generate_FH_score.R $x
+Rscript /mypath/FoundHaplo/scripts/run_nextflow_with_database/Args_Generate_FH_score_DB.R $x
 
 
 """
