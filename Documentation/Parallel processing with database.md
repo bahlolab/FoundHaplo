@@ -1,4 +1,4 @@
-## Run FoundHaplo parallelly using Nextflow, when you have FOundHaplo database installed
+## Run FoundHaplo parallelly using Nextflow, when you have FoundHaplo database installed
 
 1. Make sure you have installed the R package using devtools packages
 
