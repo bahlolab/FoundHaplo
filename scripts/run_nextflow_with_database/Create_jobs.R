@@ -5,6 +5,11 @@
 #' @param manifest_FILE Path of the manifest.txt file
 #' @param test_sample_chunks_DIR Directory to the .txt files with chunks of test sample IDs
 #' @param control_sample_chunks_DIR Directory to the .txt files with chunks of control sample IDs
+#' @param db_port Network port of the FoundHaplo database 
+#' @param db_host Server to the running FoundHaplo database instance
+#' @param db_password Password of the remote user
+#' @param db_name Name of the FoundHaplo database, default is FoundHaploDB
+#' @param db_unix_socket Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
 #' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052 (type \code{"character"})
 #' @param minor_allele_cutoff The minimum minor allele frequncy of SNPs allowed, we recommend this to be 0 (type \code{"numeric"})
 #' @param imputation_quality_score_cutoff_test Minimum allowed imputation quality which is R-squared. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise (type \code{"numeric"})
@@ -50,23 +55,23 @@
 #' {
 #' write.table(control_sample_names_chunk[[chunk]],paste0(temp_dir,"/2.controls/","file",chunk,".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 #' }
-#' Create_jobs(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),control_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),TEMP_DIR=temp_dir)
+#' Create_jobs_DB(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),control_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),db_port=50000,db_host="example_server.edu.au",db_password="pwd",db_name="FoundHaploDB",db_unix_socket="/mypath/mysqld.sock",DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),TEMP_DIR=temp_dir)
 #' print("Example content of a manifest.txt file is below")
 #' read.delim(paste0(temp_dir,"/4/manifest.txt"),header=FALSE)
 
-Create_jobs=function(manifest_FILE,control_sample_chunks_DIR,control_sample_chunks_DIR,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls_file_DIR,save_report_DIR,TEMP_DIR)
+Create_jobs_DB=function(manifest_FILE,control_sample_chunks_DIR,control_sample_chunks_DIR,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls_file_DIR,save_report_DIR,TEMP_DIR)
 {
   
   #test
   test_list=list.files(control_sample_chunks_DIR,full.names = TRUE)
   #specify parameters that should be given to the function Generate_FH_score
-  test_cohort_entires=expand.grid(DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,"test",controls_file_DIR,save_report_DIR,TEMP_DIR)
+  test_cohort_entires=expand.grid(db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,"test",controls_file_DIR,save_report_DIR,TEMP_DIR)
   
   
   #controls
   controls_list=list.files(control_sample_chunks_DIR,full.names = TRUE)
   #specify parameters that should be given to the function Generate_FH_score
-  control_cohort_entires=expand.grid(DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls_list,"controls",controls_file_DIR,save_report_DIR,TEMP_DIR)
+  control_cohort_entires=expand.grid(db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls_list,"controls",controls_file_DIR,save_report_DIR,TEMP_DIR)
   
   manifest.txt_entries=rbind(test_cohort_entires,control_cohort_entires)
   
@@ -78,6 +83,5 @@ Create_jobs=function(manifest_FILE,control_sample_chunks_DIR,control_sample_chun
   
   
 }
-
 
 
