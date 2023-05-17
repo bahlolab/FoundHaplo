@@ -1,6 +1,6 @@
 [Generate_FH_score_DB](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score_DB.R) is the main wrapper function that generates FH score values for each test/control - disease pair using a database of disease haplotypes by taking user input shown below.
 
-Note : Generate_FH_score_DB function works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
+Generate_FH_score_DB function works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
 
 * Note: Generate_FH_score_DB function easily works on the command line as it uses system() function to query from VCFtools and BCFtools. Hence recomended to use a nextflow pipeline as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md).
 
