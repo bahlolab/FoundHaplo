@@ -136,7 +136,7 @@ mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppas
 singularity instance stop mysql
 ```
 
-## How to acess database in R and import disease haplotypes using RMariadaDB
+## How to acess the database in R and import disease haplotypes using RMariadaDB
 
 1. Download the relevant connector using [link](https://mariadatabase.com/downloads/#connectors)
 SLURM : centos 7 , others : centos 6 
@@ -161,5 +161,8 @@ install.packages("RMariaDB")
 Create_SQL_script_to_import(disease_hap_file,save_SQL_file,port,host,password,dbname,unix.socket,family_id,individual_id,father_id,mother_id,sex,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene=inheritance_model,chr,start_hg19,end_hg19,start_hg38,end_hg38,start_cm,end_cm,genotype,validated,validation_method,validation_note,format_vcf)
 ```
 
-5. Connect to the database and source the resulting sql script into the FoundHaploDB
+5. Connect to the database and source the resulting sql script into the FoundHaploDB to import disease haplotypes
+
+Go back to the [documentaton](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
+
 
