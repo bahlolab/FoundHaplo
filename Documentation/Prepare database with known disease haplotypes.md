@@ -160,7 +160,7 @@ install.packages("RMariaDB")
 ```R
 Create_SQL_script_to_import(disease_hap_file=/mypath/disease_hap_file,save_SQL_file=/mypath/save_SQL_file,db_port=port_number,db_host=server_where_the_instance_is_running,db_password=pwd,db_name=FoundHaploDB,db_unix_socket=FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock,family_id,individual_id,father_id,mother_id,sex,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene=inheritance_model,chr,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
 ```
-Parameters starting from family_id must be specified based on the databse schema as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/FoundHaplo%20database%20schema.md)
+Parameters starting from family_id must be specified based on the databse schema as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/FoundHaplo_database/FoundHaplo_database_info.docx)
 
 5. Connect to the database and source the resulting sql script of the Create_SQL_script_to_import.R into the FoundHaploDB to import disease haplotypes
 
