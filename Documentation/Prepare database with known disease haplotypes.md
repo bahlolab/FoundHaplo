@@ -94,7 +94,7 @@ mysql -S $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
 ```
 You are now running MySQL server using singularity!
 
-10. Create the FoundHaplo database and tables in MySQL using schema as below.
+10. Create the FoundHaplo database (FoundHaploDB) and tables in MySQL using schema as below.
 
 ```
 source /mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql;
@@ -107,7 +107,7 @@ singularity instance stop mysql
 
 ## How to acess the database
 
-1. Run below
+1. Run singularity instance if its already stopped.
 ```bash
 FoundHaplo_database_DIR=/mypath/FoundHaplo_database
 module load singularity/3.6.2
@@ -128,7 +128,7 @@ singularity exec instance://mysql create_remote_admin_user.sh
 
 3. Now you can connect to the FoundHaplo database from different nodes using below command
 ```bash
-mysql -h 'server_where_the_instance_is_running' -P 'port_number' -u remote_usr -p'password' 
+mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword 
 ```
 
 4. Stop the MySQL instance once the work is completed 
@@ -136,7 +136,30 @@ mysql -h 'server_where_the_instance_is_running' -P 'port_number' -u remote_usr -
 singularity instance stop mysql
 ```
 
-## How to import disease haplotypes into the database
+## How to acess database in R and import disease haplotypes using RMariadaDB
 
-1. Run /mypath/FoundHaplo/FoundHaplo_database/Create_SQL_script_to_import.R to import disease haplotypes into the database.
+1. Download the relevant connector using [link](https://mariadatabase.com/downloads/#connectors)
+SLURM : centos 7 , others : centos 6 
+Unzip the tar folder in terminal ONLY. Do not unzip by right clicking
+
+2. Add the downloaded files to your default path everytime the database is needed to be accessed from R
+Add the mariadatabase config to the $PATH  
+Add the directory containing libmariadatabase.so.3 to your LD_LIBRARY_PATH. 
+
+```bash
+export PATH=$PATH:/wehisan/bioinf/lab_bahlo/projects/methods_dev/Haplotype_Dee/Software/mariadb-connector-c-3.1.11-centos7-amd64/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/wehisan/bioinf/lab_bahlo/projects/methods_dev/Haplotype_Dee/Software/mariadb-connector-c-3.1.11-centos7-amd64/lib/mariadb
+```
+
+3. install RMariaDB in R
+```R
+install.packages("RMariaDB") 
+```
+
+4. Run /mypath/FoundHaplo/FoundHaplo_database/Create_SQL_script_to_import.R to import each created disease haplotype into the database.
+```R
+Create_SQL_script_to_import(disease_hap_file,save_SQL_file,port,host,password,dbname,unix.socket,family_id,individual_id,father_id,mother_id,sex,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene=inheritance_model,chr,start_hg19,end_hg19,start_hg38,end_hg38,start_cm,end_cm,genotype,validated,validation_method,validation_note,format_vcf)
+```
+
+5. Connect to the database and source the resulting sql script into the FoundHaploDB
 
