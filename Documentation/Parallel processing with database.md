@@ -50,7 +50,7 @@ Create_jobs(manifest_FILE="FoundHaplo_DIR/scripts/run_nextflow/run_nextflow_with
 * [Args_Generate_FH_score_DB.R](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow_with_database/Args_Generate_FH_score_DB.R) to submit parameters as arguments to the main R script, [Generate_FH_score_DB.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Generate_FH_score_DB.R). 
 
 * The nextflow configuration file, [Nextflow.config](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/run_nextflow_with_database/nextflow.config).
-* The main script to run FoundHaplo jobs in parallel, [run_nextflow_DB.nf](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/run_nextflow_with_database/run_nextflow_DB.nf). Re-write the [run_nextflow_DB.nf](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow/run_nextflow_with_database/run_nextflow_DB.nf) as necessary.
+* The main script to run FoundHaplo jobs in parallel, [run_nextflow_DB.nf](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow_with_database/run_nextflow_DB.nf). Re-write the [run_nextflow_DB.nf](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow_with_database/run_nextflow_DB.nf) as necessary.
 
 4. Run all nextflow jobs in the [manifest_DB.txt](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/run_nextflow_with_database/manifest_DB.txt) file as below. Each line in the manifest_DB.txt file will be a single independant job that is run parallely.
 ```bash
