@@ -56,7 +56,7 @@ Create_jobs(manifest_FILE="FoundHaplo_DIR/scripts/run_nextflow/run_nextflow_with
 ```bash
 module load nextflow
 FoundHaplo_DIR=/mypath/FoundHaplo
-cd $FoundHaplo_DIR/scripts/run_nextflow
+cd $FoundHaplo_DIR/scripts/run_nextflow_without_database/run_nextflow
 nohup ./run_nextflow.nf
 ```
 
