@@ -11,9 +11,13 @@
 
 Details of all the functions in FoundHaplo R package can be found [here](https://github.com/bahlolab/FoundHaplo/blob/main/vignettes).
 
-5. [Run FoundHaplo parallely using Nextflow pipeline](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md)
+5. Run FoundHaplo 
 
-    If you do not have the Nextflow pipeline, run the main R function Generate_FH_score sequentially as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md)
+[Parallely using Nextflow pipeline](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md)
+
+[Parallely using Nextflow pipeline, with a database of disease haplotypes installed](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md)
+
+If you do not have the Nextflow pipeline, run the main R function Generate_FH_score sequentially as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md) or with a database of disease haplotypes installed, run the Generate_FH_score_DB.R sequentially as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parameters%20in%20the%20algorithm.md)
 
 ### Analyse FoundHaplo results
 
