@@ -35,12 +35,12 @@ CREATE TABLE `PathogenicMutations` (
     `gene` varchar(255),
     `inheritance_model` varchar(255),
     `chr` varchar(15) NOT NULL,
-    `start_hg19` int NOT NULL,
-    `end_hg19` int,
-    `start_hg38` int,
-    `end_hg38` int,
-    `start_cm` double,
-    `end_cm` double,
+    `start_position_hg19` int NOT NULL,
+    `end_position_hg19` int,
+    `start_position_hg38` int,
+    `end_hposition_g38` int,
+    `start_position_cM` double,
+    `end_position_cM` double,
     PRIMARY KEY (`mutation_id`)
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE `GeneticMarkers` (
     `chr` varchar(15) NOT NULL,
     `position_hg19` int NOT NULL,
     `position_hg38` int,
-    `position_cm` double,
+    `position_cM` double,
     `ref` varchar(255) NOT NULL,
     `alt` varchar(255) NOT NULL,
     `marker_type` varchar(255),
@@ -83,7 +83,6 @@ CREATE TABLE `Genotypes` (
     `genotype` tinyint NOT NULL,
     `imputed` BOOLEAN,
     `imputation_quality` FLOAT,
-    `format_vcf` varchar(255),
     PRIMARY KEY (`marker_id`, `sample_id`), 
     FOREIGN KEY (`marker_id`) 
         REFERENCES `GeneticMarkers`(`marker_id`),
@@ -92,7 +91,4 @@ CREATE TABLE `Genotypes` (
 );
 
 
-# select * from information_schema.columns where TABLE_NAME='Genotypes' limit 10; 
-
-#ALTER TABLE Genotypes MODIFY COLUMN imputation_quality FLOAT;
 
