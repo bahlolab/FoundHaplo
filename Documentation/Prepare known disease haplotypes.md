@@ -13,13 +13,13 @@ Can merge as many samples from different families into a single VCF file as long
 
 ```bash
 FoundHaplo_DIR=/mypath/FoundHaplo
-INPUT_PLINK_FILE=/mypath/PLINK_file
+INPUT_PLINK_DIR=/mypath/PLINK_file_DIR
 INPUT_PLINK_BASE_NAME=PLINK_file
 CHROMOSOME=CHROMOSOME
 GENOTYPEHARMONIZER_JAR=/mypath/GenotypeHarmonizer.jar
 PLINK_TOOL_EXECUTABLE=/mypath/PLINK_executable
 
-$FoundHaplo_DIR/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh $FoundHaplo_DIR $INPUT_PLINK_FILE $INPUT_PLINK_BASE_NAME $CHROMOSOME $GENOTYPEHARMONIZER_JAR $PLINK_TOOL_EXECUTABLE
+$FoundHaplo_DIR/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh $FoundHaplo_DIR $INPUT_PLINK_DIR $INPUT_PLINK_BASE_NAME $CHROMOSOME $GENOTYPEHARMONIZER_JAR $PLINK_TOOL_EXECUTABLE
 ```
 
 Run example below,
@@ -30,7 +30,7 @@ $FoundHaplo_DIR/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh $Fou
 Set the variables as below,
 
 * FoundHaplo_DIR : FoundHaplo directory i.e /mypath/FoundHaplo
-* INPUT_PLINK_FILE : PLINK file with individuals with known diease variants that can be pedigree phased.
+* INPUT_PLINK_DIR : Directory to the PLINK file that has individuals with known diease variants that can be pedigree phased.
 * INPUT_PLINK_BASE_NAME : File name of the PLINK file 
 * CHROMOSOME: Chromosome relevant to the interested disease variant without "chr" prefix
 * GENOTYPEHARMONIZER_JAR : Path to GenotypeHarmonizer.jar
