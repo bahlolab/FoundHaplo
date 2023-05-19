@@ -9,7 +9,7 @@ Generate_FH_score(source_of_disease_haplotypes="directory",db_port=NA,db_host=NA
 
 # All the parameters that user has to specify are described below
 
-1. **source_of_disease_haplotypes** Are the disease haplotypes are sourced from a "database" or from a "directory"?. "database" works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
+1. **source_of_disease_haplotypes** Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to NA. db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA. "database" works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
 2. **db_port** Network port of the FoundHaplo database 
 3. **db_host** Server to the running FoundHaplo database instance
 4. **db_password** Password of the remote user
