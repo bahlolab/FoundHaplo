@@ -38,13 +38,13 @@ Set the variables as below,
 
 2. Impute the generated VCF file in FoundHaplo/temp/ using Michigan imputation server (Genotype Imputaion Minimac 4) with 1000G phase 3 V5 (GRCh37/hg19) as reference panel with the hg19 human genome build. Use below parameters when using [Michigan imputation server](https://imputationserver.sph.umich.edu/). 
 
-Do not filter for imputation quality yet (keep rsq Filter off). 
-
 Array build GRCh37/hg19.
 
-Phase using Eagle v2.4
+Do not filter for imputation quality yet (keep rsq Filter off). 
 
-Mode "Quality Control and Phasing Only"
+Phase using Eagle v2.4.
+
+Mode "Quality Control and Phasing Only".
 
 Rename and save the resulting imputed and phased file with the "imputed_phased_" prefix, and its original file name in the same location.
 
