@@ -7,7 +7,7 @@ Database setup follows recommendations from [Research Computing guide to running
 
 ## How to initiate the database
 
-1. Create a folder for the FoundHaplo database
+1. Create a folder for the FoundHaplo database (i.e. a sub folder inside FoundHaplo directory)
 
 ```bash
 mkdir -p /mypath/FoundHaplo_database
