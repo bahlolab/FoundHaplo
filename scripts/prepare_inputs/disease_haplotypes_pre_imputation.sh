@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 FoundHaplo_DIR=$1 # FoundHaplo directory
-INPUT_PLINK_FILE=$2 # example: FoundHaplo/example
+INPUT_PLINK_DIR=$2 # example: FoundHaplo/example
 INPUT_PLINK_BASE_NAME=$3 # example: FAME1_disease_cohort
 CHROMOSOME=$4 # no "chr" prefix # example: 8
 
@@ -12,7 +12,7 @@ PLINK_TOOL_EXECUTABLE=$6 # /mypath/plink2
 echo "Harmonisation to 1000 Genomes data."
 
 java -jar $GENOTYPEHARMONIZER_JAR \
---input $INPUT_PLINK_FILE/$INPUT_PLINK_BASE_NAME \
+--input $INPUT_PLINK_DIR/$INPUT_PLINK_BASE_NAME \
 --inputType PLINK_BED \
 --ref $FoundHaplo_DIR/input_files/public_data/1000G_plink/1000G_phase3_common_norel \
 --refType PLINK_BED \
