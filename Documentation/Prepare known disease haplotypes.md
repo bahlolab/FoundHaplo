@@ -7,7 +7,7 @@ FH model is sensitive to phasing errors on the disease samples, hence it require
 * Genotype data of offsprings known to have a disease varaint and both parents, where you know which parent is affected.
 * Genotype data of any two related individuals who share a disease variant.
 
-Can merge as many samples from differnt families into a single VCF file as long as all are generated from the same SNPchip design.
+Can merge as many samples from different families into a single VCF file as long as all are generated from the same SNPchip design.
 
 1. Run [FoundHaplo/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/disease_haplotypes_pre_imputation.sh).
 
