@@ -36,7 +36,7 @@ Set the variables as below,
 * GENOTYPEHARMONIZER_JAR : Path to GenotypeHarmonizer.jar
 * PLINK_TOOL_EXECUTABLE : Path to Plink executable 
 
-2. Impute the generated VCF file in FoundHaplo/temp/ using Michigan imputation server with 1000G phase 3 V5 (GRCh37/hg19) as reference panel with the hg19 human genome build. Use below parameters when using [Michigan imputation server](https://imputationserver.sph.umich.edu/). 
+2. Impute the generated VCF file in FoundHaplo/temp/ using Michigan imputation server (Genotype Imputaion Minimac 4) with 1000G phase 3 V5 (GRCh37/hg19) as reference panel with the hg19 human genome build. Use below parameters when using [Michigan imputation server](https://imputationserver.sph.umich.edu/). 
 
 Do not filter for imputation quality yet (keep rsq Filter off). 
 
