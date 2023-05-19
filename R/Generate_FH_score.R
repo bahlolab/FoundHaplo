@@ -6,7 +6,7 @@
 #' Ethnicity of the test cohort should be decided in advance EUR,AMR,SAS,EAS,AFR etc
 #' Make sure that imputation quality score R2 or R-squared is the third field of the INFO column of the test VCF file.
 #' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
-#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"
+#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to NA. db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA
 #' @param db_port Network port of the FoundHaplo database 
 #' @param db_host Server to the running FoundHaplo database instance
 #' @param db_password Password of the remote user
@@ -102,6 +102,7 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   
   if(source_of_disease_haplotypes="database")
   {
+  if(!file.exists(db_unix_socket)){stop("db_unix_socket does not exist")}
   db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_password,dbname=db_name,unix.socket=db_unix_socket)
   
   #select mutation_id
@@ -126,6 +127,12 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   #add disease sample names in order
   if(source_of_disease_haplotypes="directory")
   {
+  if(!is.na(db_port)){stop("db_port must be NA when source_of_disease_haplotypes is a directory")}
+  if(!is.na(db_host)){stop("db_host must be NA when source_of_disease_haplotypes is a directory")}
+  if(!is.na(db_password)){stop("db_password must be NA when source_of_disease_haplotypes is a directory")}
+  if(!is.na(db_name)){stop("db_name must be NA when source_of_disease_haplotypes is a directory")}
+  if(!is.na(db_unix_socket)){stop("db_unix_socket must be NA when source_of_disease_haplotypes is a directory")}
+
   list_of_disease_individuals=list.files(disease_files_DIR,full.names = TRUE,pattern = ".vcf")
   loop_over_disease_haplotypes=1:length(list_of_disease_individuals)
   }
