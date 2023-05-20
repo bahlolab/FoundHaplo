@@ -2,7 +2,7 @@
 % Please edit documentation in R/Generate_FH_score.R
 \name{Generate_FH_score}
 \alias{Generate_FH_score}
-\title{A wrapper function to generate FH score and IBD details for each test/control - disease pair using a database of disease haplotypes}
+\title{A wrapper function to generate FH score and IBD details for each test/control - disease pair using known disease haplotypes sourced from a directory or from a database of disease haplotypes}
 \usage{
 Generate_FH_score(
   source_of_disease_haplotypes,
