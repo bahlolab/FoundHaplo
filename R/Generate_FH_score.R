@@ -129,11 +129,11 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   #add disease sample names in order
   if(source_of_disease_haplotypes=="directory")
   {
-    if(!is.na(db_port)){stop("db_port must be NA when source_of_disease_haplotypes is a directory")}
-    if(!is.na(db_host)){stop("db_host must be NA when source_of_disease_haplotypes is a directory")}
-    if(!is.na(db_password)){stop("db_password must be NA when source_of_disease_haplotypes is a directory")}
-    if(!is.na(db_name)){stop("db_name must be NA when source_of_disease_haplotypes is a directory")}
-    if(!is.na(db_unix_socket)){stop("db_unix_socket must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_port!="NA"){stop("db_port must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_host!="NA"){stop("db_host must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_password!="NA"){stop("db_password must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_name!="NA")){stop("db_name must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_unix_socket!="NA")){stop("db_unix_socket must be NA when source_of_disease_haplotypes is a directory")}
     
     list_of_disease_individuals=list.files(disease_files_DIR,full.names = TRUE,pattern = ".vcf")
     loop_over_disease_haplotypes=1:length(list_of_disease_individuals)
