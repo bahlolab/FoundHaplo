@@ -36,7 +36,7 @@ Make sure that data_file sample names do not have underscore}
 \item{meiosis}{Estimated number of meiosis between disease-test pair, default is 1}
 }
 \value{
-A vector with all the details of the IBD sharing to analyze later :
+A data frame with all the details of the IBD sharing to analyze later :
 \enumerate{
 \item FH_score (type \code{"numeric"})
 \item left_LLR (type \code{"numeric"})
