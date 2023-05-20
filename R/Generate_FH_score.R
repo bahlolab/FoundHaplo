@@ -6,7 +6,7 @@
 #' Ethnicity of the test cohort should be decided in advance EUR,AMR,SAS,EAS,AFR etc
 #' Make sure that imputation quality score R2 or R-squared is the third field of the INFO column of the test VCF file.
 #' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
-#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to NA. db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA
+#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"
 #' @param db_port Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory 
 #' @param db_host Server to the running FoundHaplo database instance, "invalid" if disease haplotypes are sourced from a directory
 #' @param db_password Password of the remote user, "invalid" if disease haplotypes are sourced from a directory
