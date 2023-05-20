@@ -60,7 +60,7 @@
 #' print("Example content of a manifest.txt file is below")
 #' read.delim(paste0(temp_dir,"/4/manifest.txt"),header=FALSE)
 
-Create_jobs=function(manifest_FILE,control_sample_chunks_DIR,control_sample_chunks_DIR,source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls_file_DIR,save_report_DIR,TEMP_DIR)
+Create_jobs=function(manifest_FILE,test_sample_chunks_DIR,control_sample_chunks_DIR,source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls_file_DIR,save_report_DIR,TEMP_DIR)
 {
   
   #test
@@ -84,5 +84,4 @@ Create_jobs=function(manifest_FILE,control_sample_chunks_DIR,control_sample_chun
   
   
 }
-
 
