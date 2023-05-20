@@ -72,7 +72,7 @@ test_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_
 #controls
 controls_list=list.files(control_sample_chunks_DIR,full.names = TRUE)
 #specify parameters that should be given to the function Generate_FH_score
-control_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,data_type="controls",controls_file_DIR,save_report_DIR,TEMP_DIR)
+control_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,"controls",controls_file_DIR,save_report_DIR,TEMP_DIR)
 
 
 manifest.txt_entries=rbind(test_cohort_entires,control_cohort_entires)
