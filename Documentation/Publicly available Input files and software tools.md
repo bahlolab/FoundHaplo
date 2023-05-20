@@ -2,7 +2,7 @@ Follow below steps if you are using FoundHaplo for the first time.
 
 Clone the repository if you have not already
 ```bash
-git clone --depth=1 https://github.com/bahlolab/Foundhaplo.git 
+git clone --depth=1 https://github.com/bahlolab/FoundHaplo.git 
 ```
 Use [FoundHaplo/scripts/prepare_inputs/Initialise.sh](https://github.com/bahlolab/FoundHaplo/blob/main/scripts/prepare_inputs/Initialise.sh) as a guide to download the public reference data files into the relevant directories and software tools required by FoundHaplo
 
