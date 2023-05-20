@@ -100,45 +100,45 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   rand_string=system(paste0("echo $RANDOM | md5sum | head -c 32"),intern = TRUE)
   rand_string
   
-  if(source_of_disease_haplotypes="database")
+  if(source_of_disease_haplotypes=="database")
   {
-  if(!file.exists(db_unix_socket)){stop("db_unix_socket does not exist")}
-  db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_password,dbname=db_name,unix.socket=db_unix_socket)
-  
-  #select mutation_id
-  PathogenicMutations=dbSendQuery(db, paste0("SELECT * FROM PathogenicMutations where disease_id=","\"",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),"\"",";"))
-  PathogenicMutations <- dbFetch(PathogenicMutations,)
-  mutation_num=PathogenicMutations$mutation_id
-  
-  # select individuals with the given mutation_id
-  list_of_disease_individuals=dbSendQuery(db, paste0("SELECT * FROM IndividualsWithKnownMutations where mutation_id=","\"",mutation_num,"\"",";"))
-  list_of_disease_individuals <- dbFetch(list_of_disease_individuals,)
-  list_of_disease_individuals=list_of_disease_individuals$individual_id
-  
-  # select sample ids for respective individuals
-  
-  query_command=capture.output(cat(paste0("SELECT * FROM Samples where individual_id"," in ","("),paste0(list_of_disease_individuals[1:(length(list_of_disease_individuals)-1)],","),list_of_disease_individuals[length(list_of_disease_individuals)],paste0(")",";")))
-  sample_id=dbSendQuery(db,query_command)
-  sample_id=dbFetch(sample_id,)
-  sample_num=sample_id$sample_id
-  loop_over_disease_haplotypes=sample_num
+    if(!file.exists(db_unix_socket)){stop("db_unix_socket does not exist")}
+    db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_password,dbname=db_name,unix.socket=db_unix_socket)
+    
+    #select mutation_id
+    PathogenicMutations=dbSendQuery(db, paste0("SELECT * FROM PathogenicMutations where disease_id=","\"",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),"\"",";"))
+    PathogenicMutations <- dbFetch(PathogenicMutations,)
+    mutation_num=PathogenicMutations$mutation_id
+    
+    # select individuals with the given mutation_id
+    list_of_disease_individuals=dbSendQuery(db, paste0("SELECT * FROM IndividualsWithKnownMutations where mutation_id=","\"",mutation_num,"\"",";"))
+    list_of_disease_individuals <- dbFetch(list_of_disease_individuals,)
+    list_of_disease_individuals=list_of_disease_individuals$individual_id
+    
+    # select sample ids for respective individuals
+    
+    query_command=capture.output(cat(paste0("SELECT * FROM Samples where individual_id"," in ","("),paste0(list_of_disease_individuals[1:(length(list_of_disease_individuals)-1)],","),list_of_disease_individuals[length(list_of_disease_individuals)],paste0(")",";")))
+    sample_id=dbSendQuery(db,query_command)
+    sample_id=dbFetch(sample_id,)
+    sample_num=sample_id$sample_id
+    loop_over_disease_haplotypes=sample_num
   }
   
   #add disease sample names in order
-  if(source_of_disease_haplotypes="directory")
+  if(source_of_disease_haplotypes=="directory")
   {
-  if(!is.na(db_port)){stop("db_port must be NA when source_of_disease_haplotypes is a directory")}
-  if(!is.na(db_host)){stop("db_host must be NA when source_of_disease_haplotypes is a directory")}
-  if(!is.na(db_password)){stop("db_password must be NA when source_of_disease_haplotypes is a directory")}
-  if(!is.na(db_name)){stop("db_name must be NA when source_of_disease_haplotypes is a directory")}
-  if(!is.na(db_unix_socket)){stop("db_unix_socket must be NA when source_of_disease_haplotypes is a directory")}
-
-  list_of_disease_individuals=list.files(disease_files_DIR,full.names = TRUE,pattern = ".vcf")
-  loop_over_disease_haplotypes=1:length(list_of_disease_individuals)
+    if(!is.na(db_port)){stop("db_port must be NA when source_of_disease_haplotypes is a directory")}
+    if(!is.na(db_host)){stop("db_host must be NA when source_of_disease_haplotypes is a directory")}
+    if(!is.na(db_password)){stop("db_password must be NA when source_of_disease_haplotypes is a directory")}
+    if(!is.na(db_name)){stop("db_name must be NA when source_of_disease_haplotypes is a directory")}
+    if(!is.na(db_unix_socket)){stop("db_unix_socket must be NA when source_of_disease_haplotypes is a directory")}
+    
+    list_of_disease_individuals=list.files(disease_files_DIR,full.names = TRUE,pattern = ".vcf")
+    loop_over_disease_haplotypes=1:length(list_of_disease_individuals)
   }
-
   
-###
+  
+  ###
   
   if(data_type!="controls"  & !grepl(".gz", test_file, fixed = TRUE)) # if we are testing the test individuals of interest
   {
@@ -204,73 +204,73 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   for(j in loop_over_disease_haplotypes) # loop over all disease haplotypes in disease_files_DIR
   {
     
-    if(source_of_disease_haplotypes="database")
+    if(source_of_disease_haplotypes=="database")
     {
-    Genotypes=dbSendQuery(db, paste0("SELECT * FROM Genotypes where sample_id=","\"",j,"\"",";"))
-    Genotypes <- dbFetch(Genotypes,)
-    
-    
-    GeneticMarkers=dbSendQuery(db,"SELECT * FROM GeneticMarkers;") # will have to change this as the database grow, cant load the entire table to R
-    GeneticMarkers <- dbFetch(GeneticMarkers,)
-    
-    Genotypes_markers=merge(GeneticMarkers, Genotypes, by=c("marker_id"))
-    
-    # Create MAF of the analysis corresponding to the relevant population
-    if(frequency_type=="ALL")
-    {
-      MAF=Genotypes_markers[,"maf_gnomad_ALL"]
+      Genotypes=dbSendQuery(db, paste0("SELECT * FROM Genotypes where sample_id=","\"",j,"\"",";"))
+      Genotypes <- dbFetch(Genotypes,)
       
-      controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
       
+      GeneticMarkers=dbSendQuery(db,"SELECT * FROM GeneticMarkers;") # will have to change this as the database grow, cant load the entire table to R
+      GeneticMarkers <- dbFetch(GeneticMarkers,)
+      
+      Genotypes_markers=merge(GeneticMarkers, Genotypes, by=c("marker_id"))
+      
+      # Create MAF of the analysis corresponding to the relevant population
+      if(frequency_type=="ALL")
+      {
+        MAF=Genotypes_markers[,"maf_gnomad_ALL"]
+        
+        controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
+        
+      }
+      if(frequency_type=="AFR")
+      {
+        MAF=Genotypes_markers[,"maf_gnomad_AFR"]
+        
+        controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
+      }
+      
+      if(frequency_type=="EUR")
+      {
+        
+        MAF=Genotypes_markers[,"maf_gnomad_NFE"]
+        
+        controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
+        
+      }
+      
+      if(frequency_type=="AMR")
+      {
+        MAF=Genotypes_markers[,"maf_gnomad_AMR"]
+        
+        controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
+      }
+      
+      if(frequency_type=="EAS")
+      {
+        
+        MAF=Genotypes_markers[,"maf_gnomad_EAS"]
+        
+        controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
+      }
+      
+      if(frequency_type=="SAS")
+      {
+        MAF=Genotypes_markers[,"maf_gnomad_SAS"]
+        
+        controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
+      }
+      
+      database_file=as.data.frame(cbind(Genotypes_markers[,c("chr","position_hg19","ref","alt")],MAF,Genotypes_markers[,"genotype"])) # create a data frame with relevant columns for one disease haplotype
+      
+      disease_individual=dbSendQuery(db, paste0("SELECT * FROM Samples where sample_id=","\"",j,"\"",";"))
+      disease_individual <- dbFetch(disease_individual,)
+      disease_individual=disease_individual$external_lab_id
+      
+      database_file=database_file[,c("#CHROM","POS","REF","ALT","MAF","disease_individual")]
     }
-    if(frequency_type=="AFR")
-    {
-      MAF=Genotypes_markers[,"maf_gnomad_AFR"]
-      
-      controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
-    }
     
-    if(frequency_type=="EUR")
-    {
-      
-      MAF=Genotypes_markers[,"maf_gnomad_NFE"]
-      
-      controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
-      
-    }
-    
-    if(frequency_type=="AMR")
-    {
-      MAF=Genotypes_markers[,"maf_gnomad_AMR"]
-      
-      controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
-    }
-    
-    if(frequency_type=="EAS")
-    {
-      
-      MAF=Genotypes_markers[,"maf_gnomad_EAS"]
-      
-      controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
-    }
-    
-    if(frequency_type=="SAS")
-    {
-      MAF=Genotypes_markers[,"maf_gnomad_SAS"]
-      
-      controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
-    }
-    
-    database_file=as.data.frame(cbind(Genotypes_markers[,c("chr","position_hg19","ref","alt")],MAF,Genotypes_markers[,"genotype"])) # create a data frame with relevant columns for one disease haplotype
-    
-    disease_individual=dbSendQuery(db, paste0("SELECT * FROM Samples where sample_id=","\"",j,"\"",";"))
-    disease_individual <- dbFetch(disease_individual,)
-    disease_individual=disease_individual$external_lab_id
-    
-    database_file=database_file[,c("#CHROM","POS","REF","ALT","MAF","disease_individual")]
-    }
-    
-    if(source_of_disease_haplotypes="directory")
+    if(source_of_disease_haplotypes=="directory")
     {
       if(frequency_type=="ALL")
       {
