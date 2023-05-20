@@ -7,11 +7,14 @@ Database setup follows recommendations from [Research Computing guide to running
 
 ## How to initiate the database
 
-1. Create a folder for the FoundHaplo database (i.e. a sub folder inside FoundHaplo directory)
-
+1. Create a folder for the FoundHaplo database
 ```bash
 mkdir -p /mypath/FoundHaplo_database
 FoundHaplo_database_DIR=/mypath/FoundHaplo_database
+```
+Or create the database inside FoundHaplo_DIR/FoundHaplo_database directory
+```bash
+FoundHaplo_database_DIR=$FoundHaplo_DIR/FoundHaplo_database
 cd FoundHaplo_database_DIR
 ```
 2. Setup singularity
