@@ -20,7 +20,7 @@ If you do not have the Nextflow pipeline, run the main R function [Generate_FH_s
 6. After running FoundHaplo, Run [Analyse_FH.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Analyse_FH.R) to predict and plot the test samples likely to carry the tested disease-causing variants, based on the output by FoundHaplo.
 
 ```R
-Analyse_FH(results_FILE="FoundHaplo/results/FH_IBD_scores/results.txt",save_FH_output_DIR="FoundHaplo/results/FH_Analysis",critical_percentile=0.99)
+Analyse_FH(results_FILE="/mypath/FoundHaplo/results/FH_IBD_scores/results.txt",save_FH_output_DIR="/mypath/FoundHaplo/results/FH_Analysis",critical_percentile=0.99)
 ```
 
 All the parameters that user has to specify are described below
