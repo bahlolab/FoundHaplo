@@ -29,7 +29,7 @@ Set the variables as below,
 * FoundHaplo_DIR : FoundHaplo directory i.e path/FoundHaplo
 * TEST_SAMPLES_FILE : Path to .txt file with test sample IDs, Saved in the same directory as the test file in samples.txt
 * CONTROL_SAMPLES_FILE :  Path to .txt file with control sample IDs, Saved in $FoundHaplo_DIR/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population
-* CHUNK_SIZE: Number of samples in one chunk. We recommend a CHUNK_SIZE of 1000 sample names if the test cohort is large (>=10,000) or CHUNK_SIZE of 100 otherwise.
+* CHUNK_SIZE: Number of samples of the test cohort that should be included in one chunk. We recommend a CHUNK_SIZE of 1000 sample names if the test cohort is large (>=10,000) or CHUNK_SIZE of 100 otherwise. Control cohort will be in chunks of 100 samples by default.
 
 3. Nextflow pipeline requires below scripts and files which are in /FoundHaplo/scripts/run_nextflow/.
 
