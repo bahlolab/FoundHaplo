@@ -3,8 +3,8 @@
 * Note: Generate_FH_score function easily works on the command line as it uses system() function to query from VCFtools and BCFtools. Hence recomended to use a nextflow pipeline as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing%20with%20Nextflow.md).
 
 ```R
-Generate_FH_score(source_of_disease_haplotypes="directory",db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA,DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR="FoundHaplo_PATH/input_files/public_data/genetic_map_HapMapII_GRCh37",disease_files_DIR="FoundHaplo_PATH/input_files/input_vcf_data/disease_haplotypes",test_file="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz.imputed.trimmed.vcf.gz",test_name="example_test",test_list="FoundHaplo_PATH/input_files/input_vcf_data/test_cohort/samples/samples.txt",data_type="test",controls_file_DIR="FoundHaplo_PATH/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
-",save_report_DIR="FoundHaplo_PATH/results/output",TEMP_DIR="FoundHaplo_PATH/temp")
+Generate_FH_score(source_of_disease_haplotypes="directory",db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA,DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR="/mypath/FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37",disease_files_DIR="/mypath/FoundHaplo/input_files/input_vcf_data/disease_haplotypes",test_file="/mypath/FoundHaplo/input_files/input_vcf_data/test_cohort/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz.imputed.trimmed.vcf.gz",test_name="example_test",test_list="/mypath/FoundHaplo/input_files/input_vcf_data/test_cohort/samples/samples.txt",data_type="test",controls_file_DIR="/mypath/FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
+",save_report_DIR="/mypath/FoundHaplo/results/output",TEMP_DIR="/mypath/FoundHaplo/temp")
 ```
 
 # All the parameters that user has to specify are described below
@@ -32,7 +32,7 @@ Generate_FH_score(source_of_disease_haplotypes="directory",db_port=NA,db_host=NA
 21. **save_report_DIR** directory path to save the output of FoundHaplo IBD sharing for further analysis
 22. **TEMP_DIR** directory path to save the temporary files
 
-The function returns all the details of IBD sharing for each test/control sample and will be saved in a seperate tab delimitted text file in dir_to_save_report location, with below columns:
+The function returns all the details of IBD sharing for each test/control sample and will be saved in a seperate tab delimitted text file in save_report_DIR location, with below columns:
 
 1. **data_type** "test" or "control" 
 2. **test_name** meaningful name for the test cohort 
