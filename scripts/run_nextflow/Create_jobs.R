@@ -65,24 +65,23 @@
 Create_jobs=function(manifest_FILE,test_sample_chunks_DIR,control_sample_chunks_DIR,source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,controls_file_DIR,save_report_DIR,TEMP_DIR)
 { 
   #test
-  test_list=list.files(test_sample_chunks_DIR,full.names = TRUE)
-#specify parameters that should be given to the function Generate_FH_score
-test_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,"test",controls_file_DIR,save_report_DIR,TEMP_DIR)
-
-#controls
-controls_list=list.files(control_sample_chunks_DIR,full.names = TRUE)
-#specify parameters that should be given to the function Generate_FH_score
-control_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,"controls",controls_file_DIR,save_report_DIR,TEMP_DIR)
-
-
-manifest.txt_entries=rbind(test_cohort_entires,control_cohort_entires)
-
-#specify path to save the manifest.txt file
-write.table(manifest.txt_entries,manifest_FILE,sep="\t",quote=FALSE,col.names = FALSE,row.names = FALSE)
-
-print(paste0("writing manifest.txt file to ",manifest_FILE))
-
-
-
+  test.txt=list.files(test_sample_chunks_DIR,full.names = TRUE)
+  #specify parameters that should be given to the function Generate_FH_score
+  test_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test.txt,"test",controls_file_DIR,save_report_DIR,TEMP_DIR)
+  
+  #controls
+  controls.txt=list.files(control_sample_chunks_DIR,full.names = TRUE)
+  #specify parameters that should be given to the function Generate_FH_score
+  control_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls.txt,"controls",controls_file_DIR,save_report_DIR,TEMP_DIR)
+  
+  
+  manifest.txt_entries=rbind(test_cohort_entires,control_cohort_entires)
+  
+  #specify path to save the manifest.txt file
+  write.table(manifest.txt_entries,manifest_FILE,sep="\t",quote=FALSE,col.names = FALSE,row.names = FALSE)
+  
+  print(paste0("writing manifest.txt file to ",manifest_FILE))
+  
+  
+  
 }
-
