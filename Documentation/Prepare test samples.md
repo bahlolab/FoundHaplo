@@ -4,13 +4,13 @@ Follow below steps everytime you either have a new test cohort to run or you nee
 
 ```bash
 FoundHaplo_DIR=/mypath/FoundHaplo
-INPUT_PLINK_FILE=/mypath/PLINK_file
+INPUT_PLINK_DIR=/mypath/PLINK_file_DIR
 INPUT_PLINK_BASE_NAME=PLINK_file
 CHROMOSOME=CHROMOSOME
 GENOTYPEHARMONIZER_JAR=/mypath/GenotypeHarmonizer.jar
 PLINK_TOOL_EXECUTABLE=/mypath/PLINK_executable 
 
-$FoundHaplo_DIR/scripts/prepare_inputs/test_samples_pre_imputation.sh $FoundHaplo_DIR $INPUT_PLINK_FILE INPUT_PLINK_BASE_NAME $CHROMOSOME $GENOTYPEHARMONIZER_JAR $PLINK_TOOL_EXECUTABLE
+$FoundHaplo_DIR/scripts/prepare_inputs/test_samples_pre_imputation.sh $FoundHaplo_DIR $INPUT_PLINK_DIR INPUT_PLINK_BASE_NAME $CHROMOSOME $GENOTYPEHARMONIZER_JAR $PLINK_TOOL_EXECUTABLE
 ```
 Run example below,
 
@@ -20,20 +20,23 @@ $FoundHaplo_DIR/scripts/prepare_inputs/test_samples_pre_imputation.sh $FoundHapl
 Set the variables as below,
 
 * FoundHaplo_DIR : FoundHaplo directory i.e /mypath/FoundHaplo
-* INPUT_PLINK_FILE : PLINK file with individuals to be tested for known disease variants
+* INPUT_PLINK_DIR : Directory to the PLINK file that has individuals to be tested for known disease variants
 * INPUT_PLINK_BASE_NAME : File name of the PLINK file 
 * CHROMOSOME: Chromosome relevant to the interested disease variant without "chr" prefix
 * GENOTYPEHARMONIZER_JAR : Path to GenotypeHarmonizer.jar
 * PLINK_TOOL_EXECUTABLE : Path to Plink executable 
 
-2. Impute the generated VCF file in FoundHaplo/temp/ using Michigan imputation server with 1000G phase 3 V5 (GRCh37/hg19) as reference panel with the hg19 human genome build. Use below parameters when using Michigan imputation server.
-Do not filter for imputation quality yet (keep rsq Filter off).
+2. Impute the generated VCF file in FoundHaplo/temp/ using Michigan imputation server (Genotype Imputaion Minimac 4) with 1000G phase 3 V5 (GRCh37/hg19) as reference panel with the hg19 human genome build. Use below parameters when using [Michigan imputation server](https://imputationserver.sph.umich.edu/). 
 
 Array build GRCh37/hg19.
 
-Phase using Eagle v2.4
+Do not filter for imputation quality yet (keep rsq Filter off). 
 
-Mode "Quality Control and Phasing Only"
+Phase using Eagle v2.4.
+
+Select the relevant ancestral population for the cohort (FoundHaplo example is of EUR ancestry).
+
+Mode "Quality Control and Phasing Only".
 
 Rename and save the resulting imputed and phased file with the "imputed_phased_" prefix, and its original file name in the same location.
 
