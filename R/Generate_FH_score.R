@@ -1,4 +1,4 @@
-#' A wrapper function to generate FH score and IBD details for each test/control - disease pair using a database of disease haplotypes
+#' A wrapper function to generate FH score and IBD details for each test/control - disease pair using known disease haplotypes sourced from a directory or from a database of disease haplotypes
 #'
 #' @description
 #' This function save FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR"
@@ -610,6 +610,10 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   }
   
   system(paste0("rm -rf ",TEMP_DIR,"/",rand_string,".vcf")) # delete the temporary vcf file created
-  dbDisconnect(db)
+ 
+  if(source_of_disease_haplotypes=="database")
+  {
+   dbDisconnect(db)
+  }
   
 }
