@@ -3,18 +3,17 @@
 * Note: Generate_FH_score function easily works on the command line as it uses system() function to query from VCFtools and BCFtools. Hence recomended to use a nextflow pipeline as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing%20with%20Nextflow.md).
 
 ```R
-Generate_FH_score(source_of_disease_haplotypes="directory",db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA,DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR="/mypath/FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37",disease_files_DIR="/mypath/FoundHaplo/input_files/input_vcf_data/disease_haplotypes",test_file="/mypath/FoundHaplo/input_files/input_vcf_data/test_cohort/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz.imputed.trimmed.vcf.gz",test_name="example_test",test_list="/mypath/FoundHaplo/input_files/input_vcf_data/test_cohort/samples/samples.txt",data_type="test",controls_file_DIR="/mypath/FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR
-",save_report_DIR="/mypath/FoundHaplo/results/output",TEMP_DIR="/mypath/FoundHaplo/temp")
+Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR="/mypath/FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37",disease_files_DIR="/mypath/FoundHaplo/input_files/input_vcf_data/disease_haplotypes",test_file="/mypath/FoundHaplo/input_files/input_vcf_data/test_cohort/FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz.imputed.trimmed.vcf.gz",test_name="example_test",test_list="/mypath/FoundHaplo/input_files/input_vcf_data/test_cohort/samples/samples.txt",data_type="test",controls_file_DIR="/mypath/FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR",save_report_DIR="/mypath/FoundHaplo/results/output",TEMP_DIR="/mypath/FoundHaplo/temp")
 ```
 
 # All the parameters that user has to specify are described below
 
-1. **source_of_disease_haplotypes** Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to NA. db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA. "database" works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
-2. **db_port** Network port of the FoundHaplo database 
-3. **db_host** Server to the running FoundHaplo database instance
-4. **db_password** Password of the remote user
-5. **db_name Name** of the FoundHaplo database, default is FoundHaploDB
-6. **db_unix_socket** Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
+1. **source_of_disease_haplotypes** Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid". "database" works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
+2. **db_port** Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory 
+3. **db_host** Server to the running FoundHaplo database instance, "invalid" if disease haplotypes are sourced from a directory
+4. **db_password** Password of the remote user, "invalid" if disease haplotypes are sourced from a directory
+5. **db_name Name** of the FoundHaplo database, default is FoundHaploDB, "invalid" if disease haplotypes are sourced from a directory
+6. **db_unix_socket** Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock, "invalid" if disease haplotypes are sourced from a directory
 7. **DCV** Name of the disease causing variant of interest i.e FAME1.chr8.119379052 
 8. **minor_allele_cutoff** The minimum minor allele frequncy of SNPs allowed, we recommend this to be 0 
 9. **gen_allele_mismatch_rate** Genotype and imputation error rate allowed, default is 0.1

@@ -5,25 +5,27 @@
 #' @param manifest_FILE Path of the manifest.txt file
 #' @param test_sample_chunks_DIR Directory to the .txt files with chunks of test sample IDs
 #' @param control_sample_chunks_DIR Directory to the .txt files with chunks of control sample IDs
-#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"
-#' @param db_port Network port of the FoundHaplo database 
-#' @param db_host Server to the running FoundHaplo database instance
-#' @param db_password Password of the remote user
-#' @param db_name Name of the FoundHaplo database, default is FoundHaploDB
-#' @param db_unix_socket Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
+#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"
+#' @param db_port Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory  
+#' @param db_host Server to the running FoundHaplo database instance, "invalid" if disease haplotypes are sourced from a directory 
+#' @param db_password Password of the remote user, "invalid" if disease haplotypes are sourced from a directory 
+#' @param db_name Name of the FoundHaplo database, default is FoundHaploDB, "invalid" if disease haplotypes are sourced from a directory 
+#' @param db_unix_socket Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock, "invalid" if disease haplotypes are sourced from a directory 
 #' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052 (type \code{"character"})
-#' @param minor_allele_cutoff The minimum minor allele frequncy of SNPs allowed, we recommend this to be 0 (type \code{"numeric"})
+#' @param minor_allele_cutoff The minimum minor allele frequency of SNPs allowed, we recommend this to be 0 (type \code{"numeric"})
+#' @param gen_allele_mismatch_rate Genotype and imputation error rate allowed, default is 0.1
+#' @param MA_cutoff Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4
+#' @param meiosis Estimated number of meiosis between disease-test pair, default is 1
 #' @param imputation_quality_score_cutoff_test Minimum allowed imputation quality which is R-squared. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise (type \code{"numeric"})
 #' @param frequency_type Population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc (type \code{"character"})
-#' @param geneticMap_DIR Directory path to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
+#' @param geneticMap_DIR Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
 #' @param disease_files_DIR directory of the disease haplotype VCFs for a single disease variant(type \code{"character"})
-#' @param test_file path of the test cohort file (type \code{"character"})
+#' @param test_file File path to the test cohort VCF (type \code{"character"})
 #' @param test_name meaningful name for the test cohort  (type \code{"character"})
-#' @param test_list path to a set of 100 test samples from the test cohort  (type \code{"character"})
-#' @param data_type "test" or "control (type \code{"character"})
-#' @param controls_file_DIR Directory where the 1000genome control files are stored  (type \code{"character"})
-#' @param save_report_DIR Directory path to save the required details of the IBD sharing to analyze later  (type \code{"character"})
-#' @param TEMP_DIR Directory path to save the temporary files  (type \code{"character"})
+#' @param test_list .txt File path to the file with chunk of test/control samples names to be analysed from the test/control cohort  (type \code{"character"})
+#' @param controls_file_DIR Directory where the 1000 Genomes control files are stored  (type \code{"character"})
+#' @param save_report_DIR Directory to save the required details of the IBD sharing to analyze later  (type \code{"character"})
+#' @param TEMP_DIR Directory to save the temporary files  (type \code{"character"})
 #' @return Write a manifest.txt file that includes all the parameters required to run FoundHaplo. Each line of the manifest.txt file can be submitted as a seperate job parallely.
 #'
 #' @examples
@@ -56,33 +58,31 @@
 #' {
 #' write.table(control_sample_names_chunk[[chunk]],paste0(temp_dir,"/2.controls/","file",chunk,".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 #' }
-#' Create_jobs_DB(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),control_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),source_of_disease_haplotypes="directory",db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA,minor_allele_cutoff=0,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),TEMP_DIR=temp_dir)
+#' Create_jobs_DB(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),control_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),TEMP_DIR=temp_dir)
 #' print("Example content of a manifest.txt file is below")
 #' read.delim(paste0(temp_dir,"/4/manifest.txt"),header=FALSE)
 
-Create_jobs=function(manifest_FILE,control_sample_chunks_DIR,control_sample_chunks_DIR,source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls_file_DIR,save_report_DIR,TEMP_DIR)
-{
-  
+Create_jobs=function(manifest_FILE,test_sample_chunks_DIR,control_sample_chunks_DIR,source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,controls_file_DIR,save_report_DIR,TEMP_DIR)
+{ 
   #test
-  test_list=list.files(control_sample_chunks_DIR,full.names = TRUE)
-  #specify parameters that should be given to the function Generate_FH_score
-  test_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,"test",controls_file_DIR,save_report_DIR,TEMP_DIR)
-  
-  
-  #controls
-  controls_list=list.files(control_sample_chunks_DIR,full.names = TRUE)
-  #specify parameters that should be given to the function Generate_FH_score
-  control_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls_list,"controls",controls_file_DIR,save_report_DIR,TEMP_DIR)
-  
-  manifest.txt_entries=rbind(test_cohort_entires,control_cohort_entires)
-  
-  #specify path to save the manifest.txt file
-  write.table(manifest.txt_entries,manifest_FILE,sep="\t",quote=FALSE,col.names = FALSE,row.names = FALSE)
-  
-  print(paste0("writing manifest.txt file to ",manifest_FILE))
-  
-  
-  
-}
+  test_list=list.files(test_sample_chunks_DIR,full.names = TRUE)
+#specify parameters that should be given to the function Generate_FH_score
+test_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,"test",controls_file_DIR,save_report_DIR,TEMP_DIR)
 
+#controls
+controls_list=list.files(control_sample_chunks_DIR,full.names = TRUE)
+#specify parameters that should be given to the function Generate_FH_score
+control_cohort_entires=expand.grid(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,"controls",controls_file_DIR,save_report_DIR,TEMP_DIR)
+
+
+manifest.txt_entries=rbind(test_cohort_entires,control_cohort_entires)
+
+#specify path to save the manifest.txt file
+write.table(manifest.txt_entries,manifest_FILE,sep="\t",quote=FALSE,col.names = FALSE,row.names = FALSE)
+
+print(paste0("writing manifest.txt file to ",manifest_FILE))
+
+
+
+}
 

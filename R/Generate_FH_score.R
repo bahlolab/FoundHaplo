@@ -6,12 +6,12 @@
 #' Ethnicity of the test cohort should be decided in advance EUR,AMR,SAS,EAS,AFR etc
 #' Make sure that imputation quality score R2 or R-squared is the third field of the INFO column of the test VCF file.
 #' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
-#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to NA. db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA
-#' @param db_port Network port of the FoundHaplo database 
-#' @param db_host Server to the running FoundHaplo database instance
-#' @param db_password Password of the remote user
-#' @param db_name Name of the FoundHaplo database, default is FoundHaploDB
-#' @param db_unix_socket Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
+#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"
+#' @param db_port Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory 
+#' @param db_host Server to the running FoundHaplo database instance, "invalid" if disease haplotypes are sourced from a directory
+#' @param db_password Password of the remote user, "invalid" if disease haplotypes are sourced from a directory
+#' @param db_name Name of the FoundHaplo database, default is FoundHaploDB, "invalid" if disease haplotypes are sourced from a directory
+#' @param db_unix_socket Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock, "invalid" if disease haplotypes are sourced from a directory
 #' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052 (type \code{"character"})
 #' @param minor_allele_cutoff The minimum minor allele frequency of SNPs allowed, we recommend this to be 0 (type \code{"numeric"})
 #' @param gen_allele_mismatch_rate Genotype and imputation error rate allowed, default is 0.1
@@ -85,7 +85,7 @@
 #' write.table(file00,paste0(temp_DIR,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 #' write.vcf(FAME1_control_cohort,paste0(temp_DIR,"/3/","FAME1.chr8.vcf.gz"))
 #' write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-#' Generate_FH_score(source_of_disease_haplotypes="directory",db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA,DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
+#' Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
 #' setwd(paste0(temp_DIR,"/4"))
 #' read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE)
 #' setwd(orig_DIR)
@@ -102,6 +102,8 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   
   if(source_of_disease_haplotypes=="database")
   {
+  
+    if(class(db_port)!="numeric"){stop("db_port must be a number")}
     if(!file.exists(db_unix_socket)){stop("db_unix_socket does not exist")}
     db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_password,dbname=db_name,unix.socket=db_unix_socket)
     
@@ -127,11 +129,11 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   #add disease sample names in order
   if(source_of_disease_haplotypes=="directory")
   {
-    if(!is.na(db_port)){stop("db_port must be NA when source_of_disease_haplotypes is a directory")}
-    if(!is.na(db_host)){stop("db_host must be NA when source_of_disease_haplotypes is a directory")}
-    if(!is.na(db_password)){stop("db_password must be NA when source_of_disease_haplotypes is a directory")}
-    if(!is.na(db_name)){stop("db_name must be NA when source_of_disease_haplotypes is a directory")}
-    if(!is.na(db_unix_socket)){stop("db_unix_socket must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_port!="invalid"){stop("db_port must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_host!="invalid"){stop("db_host must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_password!="invalid"){stop("db_password must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_name!="invalid"){stop("db_name must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_unix_socket!="invalid"){stop("db_unix_socket must be NA when source_of_disease_haplotypes is a directory")}
     
     list_of_disease_individuals=list.files(disease_files_DIR,full.names = TRUE,pattern = ".vcf")
     loop_over_disease_haplotypes=1:length(list_of_disease_individuals)
