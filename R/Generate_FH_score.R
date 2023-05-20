@@ -103,7 +103,7 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   if(source_of_disease_haplotypes=="database")
   {
   
-    if(class(db_port)!="numeric"){stop("db_portt must be a number")}
+    if(class(db_port)!="numeric"){stop("db_port must be a number")}
     if(!file.exists(db_unix_socket)){stop("db_unix_socket does not exist")}
     db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_password,dbname=db_name,unix.socket=db_unix_socket)
     
