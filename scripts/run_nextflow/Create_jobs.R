@@ -5,12 +5,12 @@
 #' @param manifest_FILE Path of the manifest.txt file
 #' @param test_sample_chunks_DIR Directory to the .txt files with chunks of test sample IDs
 #' @param control_sample_chunks_DIR Directory to the .txt files with chunks of control sample IDs
-#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to NA. db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA
-#' @param db_port Network port of the FoundHaplo database 
-#' @param db_host Server to the running FoundHaplo database instance
-#' @param db_password Password of the remote user
-#' @param db_name Name of the FoundHaplo database, default is FoundHaploDB
-#' @param db_unix_socket Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
+#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"
+#' @param db_port Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory  
+#' @param db_host Server to the running FoundHaplo database instance, "invalid" if disease haplotypes are sourced from a directory 
+#' @param db_password Password of the remote user, "invalid" if disease haplotypes are sourced from a directory 
+#' @param db_name Name of the FoundHaplo database, default is FoundHaploDB, "invalid" if disease haplotypes are sourced from a directory 
+#' @param db_unix_socket Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock, "invalid" if disease haplotypes are sourced from a directory 
 #' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052 (type \code{"character"})
 #' @param minor_allele_cutoff The minimum minor allele frequency of SNPs allowed, we recommend this to be 0 (type \code{"numeric"})
 #' @param gen_allele_mismatch_rate Genotype and imputation error rate allowed, default is 0.1
@@ -58,7 +58,7 @@
 #' {
 #' write.table(control_sample_names_chunk[[chunk]],paste0(temp_dir,"/2.controls/","file",chunk,".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 #' }
-#' Create_jobs_DB(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),control_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),source_of_disease_haplotypes="directory",db_port=NA,db_host=NA,db_password=NA,db_name=NA,db_unix_socket=NA,minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),TEMP_DIR=temp_dir)
+#' Create_jobs_DB(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),control_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),TEMP_DIR=temp_dir)
 #' print("Example content of a manifest.txt file is below")
 #' read.delim(paste0(temp_dir,"/4/manifest.txt"),header=FALSE)
 
