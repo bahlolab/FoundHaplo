@@ -73,7 +73,7 @@ Set the variables as below,
 * FoundHaplo_DIR : FoundHaplo directory i.e /mypath/FoundHaplo
 * INPUT_VCF_FILE : Imputed VCF file with individuals with known diease variants that can be pedigree phased.
 * INPUT_VCF_BASE_NAME : File name of the imputed INPUT_VCF 
-* DCV : Name the disease variant of interest in the format of disease.chr.position. i.e FAME1.chr8.119379052.
+* DCV : Name the disease variant of interest in the format of disease.chr.position. i.e FAME1.chr8.119379052. Use OMIM abbreviation for the disease.
 * ANNOVAR_DIR : ANNOVAR directory
 * ANNOVAR_HUMANDB_DIR : ANNOVAR database directory
 * SAMPLE_INFO_FILE : Path to a tab delimitted .txt file with sample names and type of phasing to be used included in a new line, include sample names as in the INPUT_VCF_FILE in below mentioned order.   

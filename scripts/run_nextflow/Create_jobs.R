@@ -11,7 +11,7 @@
 #' @param db_password Password of the remote user, "invalid" if disease haplotypes are sourced from a directory 
 #' @param db_name Name of the FoundHaplo database, default is FoundHaploDB, "invalid" if disease haplotypes are sourced from a directory 
 #' @param db_unix_socket Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock, "invalid" if disease haplotypes are sourced from a directory 
-#' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052 (type \code{"character"})
+#' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052. Use OMIM abbreviation for the disease. (type \code{"character"})
 #' @param minor_allele_cutoff The minimum minor allele frequency of SNPs allowed, we recommend this to be 0 (type \code{"numeric"})
 #' @param gen_allele_mismatch_rate Genotype and imputation error rate allowed, default is 0.1
 #' @param MA_cutoff Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4

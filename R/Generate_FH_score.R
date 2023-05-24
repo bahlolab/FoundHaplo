@@ -265,7 +265,7 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
         controls_file <-fread(paste0(controls_file_DIR,"/",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),".",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 2),".vcf.gz"),skip = "#CHROM", select = c(1:9))
       }
       
-      database_file=as.data.frame(cbind(Genotypes_markers[,c("chr","position_hg19","ref","alt")],MAF,Genotypes_markers[,"genotype"])) # create a data frame with relevant columns for one disease haplotype
+      database_file=as.data.frame(cbind(Genotypes_markers[,c("chromosome","position_hg19","reference_allele","alternate_allele")],MAF,Genotypes_markers[,"genotype"])) # create a data frame with relevant columns for one disease haplotype
       
       disease_individual=dbSendQuery(db, paste0("SELECT * FROM Samples where sample_id=","\"",j,"\"",";"))
       disease_individual <- dbFetch(disease_individual,)
