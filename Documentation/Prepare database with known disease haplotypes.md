@@ -179,6 +179,8 @@ Parameters starting from family_id must be specified based on the databse schema
 source /mypath_to_save_SQL_FILE;
 exit;
 ```
+Repeat steps 4 and 5 to import all the disease haplotypes into the database
+
 6. Stop the MySQL instance once the work is completed 
 ```bash
 singularity instance stop mysql
