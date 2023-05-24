@@ -15,7 +15,7 @@ FoundHaplo_database_DIR=/mypath/FoundHaplo_database
 Or create the database inside FoundHaplo_DIR/FoundHaplo_database directory
 ```bash
 FoundHaplo_database_DIR=$FoundHaplo_DIR/FoundHaplo_database
-cd FoundHaplo_database_DIR
+cd $FoundHaplo_database_DIR
 ```
 2. Setup singularity
 
