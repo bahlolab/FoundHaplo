@@ -16,7 +16,7 @@
 #' @import DBI
 #' @export
 
-Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_host,db_password,db_name,db_unix_socket,family_id,individual_id,father_id,mother_id,sex,sex_method,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene,inheritance_model,chromosome,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
+Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_host,db_password,db_name,db_unix_socket,family_id,individual_id,father_id,mother_id,sex,sex_method,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,external_source,phasing_method,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene,genomic_region,inheritance_model,chromosome,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
 {
   
   library(data.table)
