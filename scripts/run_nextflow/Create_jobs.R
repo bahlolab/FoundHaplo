@@ -22,7 +22,6 @@
 #' @param disease_files_DIR directory of the disease haplotype VCFs for a single disease variant(type \code{"character"})
 #' @param test_file File path to the test cohort VCF (type \code{"character"})
 #' @param test_name meaningful name for the test cohort  (type \code{"character"})
-#' @param test_list .txt File path to the file with chunk of test/control samples names to be analysed from the test/control cohort  (type \code{"character"})
 #' @param controls_file_DIR Directory where the 1000 Genomes control files are stored  (type \code{"character"})
 #' @param save_report_DIR Directory to save the required details of the IBD sharing to analyze later  (type \code{"character"})
 #' @param TEMP_DIR Directory to save the temporary files  (type \code{"character"})
@@ -61,8 +60,10 @@
 #' Create_jobs_DB(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),control_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),TEMP_DIR=temp_dir)
 #' print("Example content of a manifest.txt file is below")
 #' read.delim(paste0(temp_dir,"/4/manifest.txt"),header=FALSE)
-
-Create_jobs=function(manifest_FILE,test_sample_chunks_DIR,control_sample_chunks_DIR,source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,test_list,controls_file_DIR,save_report_DIR,TEMP_DIR)
+#' 
+#' 
+#' 
+Create_jobs=function(manifest_FILE,test_sample_chunks_DIR,control_sample_chunks_DIR,source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,controls_file_DIR,save_report_DIR,TEMP_DIR)
 { 
   #test
   test.txt=list.files(test_sample_chunks_DIR,full.names = TRUE)
