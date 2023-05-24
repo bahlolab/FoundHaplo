@@ -121,7 +121,7 @@ You are now connected to MySQL server using singularity!
 
 4. Create the FoundHaplo database (FoundHaploDB) and tables in MySQL using schema as below.
 
-```
+```MySQL
 source /mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql;
 exit;
 ```
@@ -138,12 +138,18 @@ SLURM : centos 7 , others : centos 6
 Unzip the tar folder in terminal ONLY. Do not unzip by right clicking
 
 2. Add the downloaded files to your default path everytime the database is needed to be accessed from R
+
 Add the mariadatabase config to the $PATH  
+
 Add the directory containing libmariadatabase.so.3 to your LD_LIBRARY_PATH. 
 
 ```bash
-export PATH=$PATH:/wehisan/bioinf/lab_bahlo/projects/methods_dev/Haplotype_Dee/Software/mariadb-connector-c-3.1.11-centos7-amd64/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/wehisan/bioinf/lab_bahlo/projects/methods_dev/Haplotype_Dee/Software/mariadb-connector-c-3.1.11-centos7-amd64/lib/mariadb
+export PATH=$PATH:/mypath/mariadb-connector-c-3.1.11-centos7-amd64/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mypath/mariadb-connector-c-3.1.11-centos7-amd64/lib/mariadb
+```
+Create a directory named scripts to save .sql scripts to import disease haplotypes created in R
+```bash
+mkdir $FoundHaplo_database_DIR/scripts
 ```
 
 3. install RMariaDB in R
