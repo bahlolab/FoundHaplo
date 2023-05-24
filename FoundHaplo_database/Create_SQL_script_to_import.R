@@ -106,6 +106,8 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   mysql_commands <- save_SQL_FILE
   cat("USE FoundHaploDB;\n", file=mysql_commands)
   
+  # connecting to the database
+  
   db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_password,dbname=db_name,unix.socket=db_unix_socket)
   
   fetch_genetic_markers=dbSendQuery(db, "SELECT * FROM GeneticMarkers;") # can not add LIMIT here as in SQL
@@ -114,7 +116,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   mysql_commands <- save_SQL_FILE
   cat("USE FoundHaploDB;\n", file=mysql_commands)
   
-  # importing the first disease haplotype
+  # writing the sql commands to import the first disease haplotype into save_SQL_FILE
   if(nrow(fetch_genetic_markers)==0)
   {
     for (ii in seq_len(nrow(individuals))) {
@@ -147,9 +149,9 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
       cat(ii_command, file=mysql_commands, append=TRUE)
     }
   }
-  # importing the first disease haplotype
+  # writing the sql commands to import the first disease haplotype into save_SQL_FILE
   
-  # importing the second disease haplotype onwards
+  # writing the sql commands to import second disease onwards into save_SQL_FILE
   if(nrow(fetch_genetic_markers)>0)
   {
     
@@ -176,11 +178,9 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     marker_type=as.data.frame(marker_type,stringsAsFactors=FALSE)
     fetch_genetic_markers$marker_type=marker_type
     
-    fetch_genetic_markers <- data.frame(marker_id=fetch_genetic_markers$marker_id,rs_id=fetch_genetic_markers$rs_id,chr=fetch_genetic_markers$chr,position_hg19=fetch_genetic_markers$position_hg19,position_hg38=fetch_genetic_markers$position_hg38,position_cm=fetch_genetic_markers$position_cm,ref=fetch_genetic_markers$ref,alt=fetch_genetic_markers$alt,marker_type=fetch_genetic_markers$marker_type,maf_gnomad_ALL=fetch_genetic_markers$maf_gnomad_ALL,maf_gnomad_AFR=fetch_genetic_markers$maf_gnomad_AFR,maf_gnomad_NFE=fetch_genetic_markers$maf_gnomad_NFE,maf_gnomad_FIN=fetch_genetic_markers$maf_gnomad_FIN,maf_gnomad_AMR=fetch_genetic_markers$maf_gnomad_AMR,maf_gnomad_EAS=fetch_genetic_markers$maf_gnomad_EAS,maf_gnomad_SAS=fetch_genetic_markers$maf_gnomad_SAS, stringsAsFactors=FALSE)
+    fetch_genetic_markers <- data.frame(marker_id=fetch_genetic_markers$marker_id,rs_id=fetch_genetic_markers$rs_id,chr=fetch_genetic_markers$chr,position_hg19=fetch_genetic_markers$position_hg19,position_hg38=fetch_genetic_markers$position_hg38,position_cM=fetch_genetic_markers$position_cM,ref=fetch_genetic_markers$ref,alt=fetch_genetic_markers$alt,marker_type=fetch_genetic_markers$marker_type,maf_gnomad_ALL=fetch_genetic_markers$maf_gnomad_ALL,maf_gnomad_AFR=fetch_genetic_markers$maf_gnomad_AFR,maf_gnomad_NFE=fetch_genetic_markers$maf_gnomad_NFE,maf_gnomad_FIN=fetch_genetic_markers$maf_gnomad_FIN,maf_gnomad_AMR=fetch_genetic_markers$maf_gnomad_AMR,maf_gnomad_EAS=fetch_genetic_markers$maf_gnomad_EAS,maf_gnomad_SAS=fetch_genetic_markers$maf_gnomad_SAS, stringsAsFactors=FALSE)
     current_genetic_markers=fetch_genetic_markers # current database markers
     
-    
-    #run the import script for the new file to import
     #get markers common to current database
     genetic_markers$type=interaction(genetic_markers$chr,genetic_markers$position_hg19,genetic_markers$ref,genetic_markers$alt)
     current_genetic_markers$type=interaction(current_genetic_markers$chr,current_genetic_markers$position_hg19,current_genetic_markers$ref,current_genetic_markers$alt)
@@ -189,14 +189,12 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     
     common_markers_genotypes=subset(genotypes,genotypes$marker_id %in% common_markers$marker_id)
     common_markers_genotypes$marker_id=current_common_markers$marker_id
-    #write ONLY common_markers_genotypes to sql file
-    
-    #get new markers current database
+
     common_markers_row_names=row.names(common_markers)
     
     
     new_markers=subset(genetic_markers,!row.names(genetic_markers) %in% common_markers_row_names)
-    nrow(new_markers)+nrow(common_markers)==nrow(genetic_markers)
+    if(nrow(new_markers)+nrow(common_markers)!=nrow(genetic_markers)){stop("new markers are not labeled properly in marker_id column in table genetic_markers")}
     new_markers_genotypes=subset(genotypes,genotypes$marker_id %in% new_markers$marker_id)
     
     if(nrow(new_markers)>0)
@@ -204,7 +202,6 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
       new_markers$marker_id=(end_marker+1):(end_marker+nrow(new_markers))
       new_markers_genotypes$marker_id=(end_marker+1):(end_marker+nrow(new_markers))
     }
-    #### run carefully
     
     ##check if individuals there
     Individuals=dbSendQuery(db, "SELECT * FROM Individuals;") # can not add LIMIT here as in SQL
@@ -232,10 +229,10 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     
     ##check if pathogenic_mutations is there
     
-    pathogenic_mutations=dbSendQuery(db, "SELECT * FROM pathogenic_mutations;") # can not add LIMIT here as in SQL
-    pathogenic_mutations <- dbFetch(pathogenic_mutations,)
+    PathogenicMutations=dbSendQuery(db, "SELECT * FROM PathogenicMutations;") # can not add LIMIT here as in SQL
+    PathogenicMutations <- dbFetch(PathogenicMutations,)
     
-    if(pathogenic_mutations$mutation_id %!in% pathogenic_mutations$mutation_id)
+    if(PathogenicMutations$mutation_id %!in% pathogenic_mutations$mutation_id)
     {
       
       for (ii in seq_len(nrow(pathogenic_mutations))) {
@@ -256,7 +253,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     }
     
     
-    ##write ONLY new_markers and new_markers_genotypes to sql file
+    ##write ONLY new_markers and new_markers_genotypes to the .sql file because common_markers_genotypes and common_markers are already in teh database
     
     if(nrow(new_markers)>0)
     {
@@ -276,7 +273,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
       
     }
   }
-  # importing the second disease haplotype onwards
+  # writing the sql commands to import second disease onwards into save_SQL_FILE
   
   print("SQL script is saved in ",save_SQL_FILE) 
 }
