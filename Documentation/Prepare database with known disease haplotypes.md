@@ -157,13 +157,23 @@ mkdir $FoundHaplo_database_DIR/scripts
 install.packages("RMariaDB") 
 ```
 
-4. Run /mypath/FoundHaplo/FoundHaplo_database/Create_SQL_script_to_import.R to import each created disease haplotype into the database.
+4. Run /mypath/FoundHaplo/FoundHaplo_database/Create_SQL_script_to_import.R to import each created disease haplotype into the database. Create_SQL_script_to_import.R script can only import one disease haplotype at a time.
 ```R
-Create_SQL_script_to_import(disease_hap_file=/mypath/disease_hap_file,save_SQL_file=/mypath/save_SQL_file,db_port=port_number,db_host=server_where_the_instance_is_running,db_password=pwd,db_name=FoundHaploDB,db_unix_socket=FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock,family_id,individual_id,father_id,mother_id,sex,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene=inheritance_model,chr,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
+Create_SQL_script_to_import(disease_hap_FILE=/mypath/disease_hap_FILE,save_SQL_FILE=/mypath/save_SQL_FILE,db_port=port_number,db_host=server_where_the_instance_is_running,db_password=pwd,db_name=FoundHaploDB,db_unix_socket=FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock,family_id,individual_id,father_id,mother_id,sex,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene=inheritance_model,chr,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
 ```
+All the parameters that user has to specify are described below
+
+* disease_hap_FILE = Disease haplotype VCF file created using guidelines [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20known%20disease%20haplotypes.md)
+* save_SQL_FILE = Path to save the .sql command files 
+* db_port= Port number of the database
+* db_host= Database host
+* db_password= Randomly generated user password to access the database from R
+* db_name= Name of the database
+* db_unix_socket= Path to .sock of the database i.e $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
+
 Parameters starting from family_id must be specified based on the databse schema as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/FoundHaplo_database/FoundHaplo_database_info.docx)
 
-5. Connect to the database and source the resulting sql script of the Create_SQL_script_to_import.R into the FoundHaploDB to import disease haplotypes
+5. Connect to the database and source the resulting sql script of the Create_SQL_script_to_import.R saved in save_SQL_FILE into the FoundHaploDB to import disease haplotypes
 
 Go back to the [documentaton](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
 
