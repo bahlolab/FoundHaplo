@@ -6,7 +6,7 @@ Create_SQL_script_to_import(disease_hap_file,save_SQL_file,port,host,password,db
   library(data.table)
   library(DBI)
   library(RMariaDB)
-  hap <-fread(disease_hap_file,skip = "#CHROM")
+  disease_hap_file <-fread(disease_hap_file,skip = "#CHROM")
   
   options(scipen=99)
   
