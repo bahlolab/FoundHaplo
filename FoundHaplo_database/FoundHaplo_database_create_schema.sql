@@ -33,12 +33,12 @@ CREATE TABLE `PathogenicMutations` (
     `disease_id` varchar(20) NOT NULL,
     `omim_id` int,
     `gene` varchar(255),
-    `inheritance_model` varchar(255),
+    `inheritance_model` varchar(255) NOT NULL,
     `chr` varchar(15) NOT NULL,
     `start_position_hg19` int NOT NULL,
     `end_position_hg19` int,
     `start_position_hg38` int,
-    `end_hposition_g38` int,
+    `end_position_hg38` int,
     `start_position_cM` double,
     `end_position_cM` double,
     PRIMARY KEY (`mutation_id`)
@@ -47,7 +47,7 @@ CREATE TABLE `PathogenicMutations` (
 CREATE TABLE `IndividualsWithKnownMutations` (
     `individual_id` int NOT NULL,
     `mutation_id` int NOT NULL,
-    `genotype` tinyint,
+    `genotype` tinyint NOT NULL,
     `validated` BOOLEAN,
     `validation_method` varchar(255),
     `validation_note` varchar(255),
