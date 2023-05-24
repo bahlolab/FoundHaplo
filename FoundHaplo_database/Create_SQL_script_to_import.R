@@ -16,7 +16,7 @@
 #' @import DBI
 #' @export
 
-Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_host,db_password,db_name,db_unix_socket,family_id,individual_id,father_id,mother_id,sex,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene=inheritance_model,chr,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
+Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_host,db_password,db_name,db_unix_socket,family_id,individual_id,father_id,mother_id,sex,sex_method,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,external_source,phasing_method,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene,genomic_region,inheritance_model,chromosome,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
 {
   
   library(data.table)
@@ -27,18 +27,18 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   options(scipen=99)
   
   individuals <- data.frame(family_id=family_id, individual_id=individual_id, father_id=father_id, mother_id=mother_id,
-                            sex=sex, ethnicity=paste0("\"",ethnicity,"\""),
+                            sex=sex,sex_method=paste0("\"",sex_method,"\""),ethnicity=paste0("\"",ethnicity,"\""),
                             ethnicity_superpopulation=paste0("\"",ethnicity_superpopulation,"\""),ethnicity_method=paste0("\"",ethnicity_method,"\""),
                             stringsAsFactors=FALSE)
   
   
-  samples <- data.frame(sample_id=sample_id, individual_id=individual_id,data_type=paste0("\"",data_type,"\""),external_lab_id=paste0("\"",external_lab_id,"\""),impute_method=paste0("\"",impute_method,"\""),impute_panel=paste0("\"",impute_panel,"\""),import_date=paste0("\"",import_date,"\""),
+  samples <- data.frame(sample_id=sample_id, individual_id=individual_id,data_type=paste0("\"",data_type,"\""),external_lab_id=paste0("\"",external_lab_id,"\""),external_source=paste0("\"",external_source,"\""),phasing_method=paste0("\"",phasing_method,"\""),impute_method=paste0("\"",impute_method,"\""),impute_panel=paste0("\"",impute_panel,"\""),import_date=paste0("\"",import_date,"\""),
                         stringsAsFactors=FALSE)
   
   pathogenic_mutations <- data.frame(mutation_id=mutation_id,
                                      disease=paste0("\"",disease,"\""), disease_id=paste0("\"",disease_id,"\""),
-                                     omim_id=omim_id, gene=paste0("\"",gene,"\""), inheritance_model=paste0("\"",inheritance_model,"\""),
-                                     chr=paste0("\"",chr,"\""), start_position_hg19=start_position_hg19, end_position_hg19=end_position_hg19,start_position_hg38=start_position_hg38,end_position_hg38=end_position_hg38,
+                                     omim_id=omim_id, gene=paste0("\"",gene,"\""), genomic_region=paste0("\"",genomic_region,"\""),inheritance_model=paste0("\"",inheritance_model,"\""),
+                                     chromosome=paste0("\"",chromosome,"\""), start_position_hg19=start_position_hg19, end_position_hg19=end_position_hg19,start_position_hg38=start_position_hg38,end_position_hg38=end_position_hg38,
                                      start_position_cM=start_position_cM, end_position_cM=end_position_cM,
                                      stringsAsFactors=FALSE)
   
@@ -68,12 +68,12 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   disease_hap_FILE=as.data.frame(disease_hap_FILE)
   
   genetic_markers <- data.frame(marker_id=1:nrow(disease_hap_FILE), rs_id=paste0("\"", disease_hap_FILE$ID, "\""),
-                                chr=paste0("\"chr", disease_hap_FILE[,"#CHROM"], "\""),
+                                chromosome=paste0("\"chr", disease_hap_FILE[,"#CHROM"], "\""),
                                 position_hg19=disease_hap_FILE$POS,
                                 position_hg38=-99999,
                                 position_cM=-99999,
-                                ref=paste0("\"", disease_hap_FILE$REF, "\""),
-                                alt=paste0("\"", disease_hap_FILE$ALT, "\""),
+                                reference_allele=paste0("\"", disease_hap_FILE$REF, "\""),
+                                alternate_allele=paste0("\"", disease_hap_FILE$ALT, "\""),
                                 marker_type="\"SNP\"",
                                 maf_gnomad_ALL=as.numeric(hap_info_extract$AF_raw),
                                 maf_gnomad_AFR=as.numeric(hap_info_extract$AF_afr),
@@ -162,34 +162,34 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     
     fetch_genetic_markers$rs_id=rs_id
     
-    chr=paste0("\"", fetch_genetic_markers$chr, "\"")
-    chr=as.data.frame(chr,stringsAsFactors=FALSE)
-    fetch_genetic_markers$chr=chr
+    chromosome=paste0("\"", fetch_genetic_markers$chromosome, "\"")
+    chromosome=as.data.frame(chromosome,stringsAsFactors=FALSE)
+    fetch_genetic_markers$chromosome=chromosome
     
-    ref=paste0("\"", fetch_genetic_markers$ref, "\"")
-    ref=as.data.frame(ref,stringsAsFactors=FALSE)
-    fetch_genetic_markers$ref=ref
+    reference_allele=paste0("\"", fetch_genetic_markers$reference_allele, "\"")
+    reference_allele=as.data.frame(reference_allele,stringsAsFactors=FALSE)
+    fetch_genetic_markers$reference_allele=reference_allele
     
-    alt=paste0("\"", fetch_genetic_markers$alt, "\"")
-    alt=as.data.frame(alt,stringsAsFactors=FALSE)
-    fetch_genetic_markers$alt=alt
+    alternate_allele=paste0("\"", fetch_genetic_markers$alternate_allele, "\"")
+    alternate_allele=as.data.frame(alternate_allele,stringsAsFactors=FALSE)
+    fetch_genetic_markers$alternate_allele=alternate_allele
     
     marker_type=paste0("\"", fetch_genetic_markers$marker_type, "\"")
     marker_type=as.data.frame(marker_type,stringsAsFactors=FALSE)
     fetch_genetic_markers$marker_type=marker_type
     
-    fetch_genetic_markers <- data.frame(marker_id=fetch_genetic_markers$marker_id,rs_id=fetch_genetic_markers$rs_id,chr=fetch_genetic_markers$chr,position_hg19=fetch_genetic_markers$position_hg19,position_hg38=fetch_genetic_markers$position_hg38,position_cM=fetch_genetic_markers$position_cM,ref=fetch_genetic_markers$ref,alt=fetch_genetic_markers$alt,marker_type=fetch_genetic_markers$marker_type,maf_gnomad_ALL=fetch_genetic_markers$maf_gnomad_ALL,maf_gnomad_AFR=fetch_genetic_markers$maf_gnomad_AFR,maf_gnomad_NFE=fetch_genetic_markers$maf_gnomad_NFE,maf_gnomad_FIN=fetch_genetic_markers$maf_gnomad_FIN,maf_gnomad_AMR=fetch_genetic_markers$maf_gnomad_AMR,maf_gnomad_EAS=fetch_genetic_markers$maf_gnomad_EAS,maf_gnomad_SAS=fetch_genetic_markers$maf_gnomad_SAS, stringsAsFactors=FALSE)
+    fetch_genetic_markers <- data.frame(marker_id=fetch_genetic_markers$marker_id,rs_id=fetch_genetic_markers$rs_id,chromosome=fetch_genetic_markers$chromosome,position_hg19=fetch_genetic_markers$position_hg19,position_hg38=fetch_genetic_markers$position_hg38,position_cM=fetch_genetic_markers$position_cM,reference_allele=fetch_genetic_markers$reference_allele,alternate_allele=fetch_genetic_markers$alternate_allele,marker_type=fetch_genetic_markers$marker_type,maf_gnomad_ALL=fetch_genetic_markers$maf_gnomad_ALL,maf_gnomad_AFR=fetch_genetic_markers$maf_gnomad_AFR,maf_gnomad_NFE=fetch_genetic_markers$maf_gnomad_NFE,maf_gnomad_FIN=fetch_genetic_markers$maf_gnomad_FIN,maf_gnomad_AMR=fetch_genetic_markers$maf_gnomad_AMR,maf_gnomad_EAS=fetch_genetic_markers$maf_gnomad_EAS,maf_gnomad_SAS=fetch_genetic_markers$maf_gnomad_SAS, stringsAsFactors=FALSE)
     current_genetic_markers=fetch_genetic_markers # current database markers
     
     #get markers common to current database
-    genetic_markers$type=interaction(genetic_markers$chr,genetic_markers$position_hg19,genetic_markers$ref,genetic_markers$alt)
-    current_genetic_markers$type=interaction(current_genetic_markers$chr,current_genetic_markers$position_hg19,current_genetic_markers$ref,current_genetic_markers$alt)
+    genetic_markers$type=interaction(genetic_markers$chromosome,genetic_markers$position_hg19,genetic_markers$reference_allele,genetic_markers$alternate_allele)
+    current_genetic_markers$type=interaction(current_genetic_markers$chromosome,current_genetic_markers$position_hg19,current_genetic_markers$reference_allele,current_genetic_markers$alternate_allele)
     common_markers=subset(genetic_markers,genetic_markers$type %in% current_genetic_markers$type)
     current_common_markers=subset(current_genetic_markers,current_genetic_markers$type %in% genetic_markers$type)
     
     common_markers_genotypes=subset(genotypes,genotypes$marker_id %in% common_markers$marker_id)
     common_markers_genotypes$marker_id=current_common_markers$marker_id
-
+    
     common_markers_row_names=row.names(common_markers)
     
     
