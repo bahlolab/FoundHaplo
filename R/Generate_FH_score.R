@@ -102,8 +102,8 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   
   if(source_of_disease_haplotypes=="database")
   {
-    
-    if(class(db_port)!="numeric"){stop("db_port must be a number")}
+    class(db_port)="numeric"
+
     if(!file.exists(db_unix_socket)){stop("db_unix_socket does not exist")}
     if(disease_files_DIR!="invalid"){stop("disease_files_DIR must be invalid when source_of_disease_haplotypes is database")}
     
