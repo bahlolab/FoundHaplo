@@ -20,7 +20,7 @@
 #' @param imputation_quality_score_cutoff_test Minimum allowed imputation quality which is R-squared. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise (type \code{"numeric"})
 #' @param frequency_type Population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc (type \code{"character"})
 #' @param geneticMap_DIR Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
-#' @param disease_files_DIR directory of the disease haplotype VCFs for a single disease variant(type \code{"character"})
+#' @param disease_files_DIR directory of the disease haplotype VCFs for a single disease variant. "invalid" if disease haplotypes are sourced from a database (type \code{"character"})
 #' @param test_file File path to the test cohort VCF (type \code{"character"})
 #' @param test_name meaningful name for the test cohort  (type \code{"character"})
 #' @param test_list .txt File path to the file with chunk of test/control samples names to be analysed from the test/control cohort  (type \code{"character"})
@@ -102,12 +102,14 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   
   if(source_of_disease_haplotypes=="database")
   {
-  
+    
     if(class(db_port)!="numeric"){stop("db_port must be a number")}
     if(!file.exists(db_unix_socket)){stop("db_unix_socket does not exist")}
+    if(disease_files_DIR!="invalid"){stop("disease_files_DIR must be invalid when source_of_disease_haplotypes is database")}
+    
     db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_password,dbname=db_name,unix.socket=db_unix_socket)
     
-    #select mutation_id
+    #select mutation_id (disease_id in PathogenicMutations should be the same as the disease code in DCV)
     PathogenicMutations=dbSendQuery(db, paste0("SELECT * FROM PathogenicMutations where disease_id=","\"",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),"\"",";"))
     PathogenicMutations <- dbFetch(PathogenicMutations,)
     mutation_num=PathogenicMutations$mutation_id
@@ -129,11 +131,11 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   #add disease sample names in order
   if(source_of_disease_haplotypes=="directory")
   {
-    if(db_port!="invalid"){stop("db_port must be NA when source_of_disease_haplotypes is a directory")}
-    if(db_host!="invalid"){stop("db_host must be NA when source_of_disease_haplotypes is a directory")}
-    if(db_password!="invalid"){stop("db_password must be NA when source_of_disease_haplotypes is a directory")}
-    if(db_name!="invalid"){stop("db_name must be NA when source_of_disease_haplotypes is a directory")}
-    if(db_unix_socket!="invalid"){stop("db_unix_socket must be NA when source_of_disease_haplotypes is a directory")}
+    if(db_port!="invalid"){stop("db_port must be invalid when source_of_disease_haplotypes is a directory")}
+    if(db_host!="invalid"){stop("db_host must be invalid when source_of_disease_haplotypes is a directory")}
+    if(db_password!="invalid"){stop("db_password must be invalid when source_of_disease_haplotypes is a directory")}
+    if(db_name!="invalid"){stop("db_name must be invalid when source_of_disease_haplotypes is a directory")}
+    if(db_unix_socket!="invalid"){stop("db_unix_socket must be invalid when source_of_disease_haplotypes is a directory")}
     
     list_of_disease_individuals=list.files(disease_files_DIR,full.names = TRUE,pattern = ".vcf")
     loop_over_disease_haplotypes=1:length(list_of_disease_individuals)
@@ -268,8 +270,9 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
       disease_individual=dbSendQuery(db, paste0("SELECT * FROM Samples where sample_id=","\"",j,"\"",";"))
       disease_individual <- dbFetch(disease_individual,)
       disease_individual=disease_individual$external_lab_id
+      colnames(database_file)=c("#CHROM","POS","REF","ALT","MAF",disease_individual)
       
-      database_file=database_file[,c("#CHROM","POS","REF","ALT","MAF","disease_individual")]
+      database_file=database_file[,c("#CHROM","POS","REF","ALT","MAF",disease_individual)]
     }
     
     if(source_of_disease_haplotypes=="directory")
@@ -612,10 +615,11 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
   }
   
   system(paste0("rm -rf ",TEMP_DIR,"/",rand_string,".vcf")) # delete the temporary vcf file created
- 
+  
   if(source_of_disease_haplotypes=="database")
   {
-   dbDisconnect(db)
+    dbDisconnect(db)
   }
   
 }
+
