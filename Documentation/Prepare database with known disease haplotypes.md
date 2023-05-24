@@ -12,9 +12,10 @@ Database setup follows recommendations from [Research Computing guide to running
 mkdir -p /mypath/FoundHaplo_database
 FoundHaplo_database_DIR=/mypath/FoundHaplo_database
 ```
-Or create the database inside FoundHaplo_DIR/FoundHaplo_database directory
+Or create a folder "FoundHaplo_database" for the database inside FoundHaplo_DIR/FoundHaplo_database directory
 ```bash
-FoundHaplo_database_DIR=$FoundHaplo_DIR/FoundHaplo_database
+mkdir -p $FoundHaplo_DIR/FoundHaplo_database/FoundHaplo_database
+FoundHaplo_database_DIR=$FoundHaplo_DIR/FoundHaplo_database/FoundHaplo_database
 cd $FoundHaplo_database_DIR
 ```
 2. Setup singularity
@@ -88,25 +89,7 @@ singularity instance start \
 ```bash
 singularity run instance://mysql
 ```
-The MySQL server is now running on the server
-
-9. To connect to the server we use the installed `mysql` client with the additional information about where to find the local socket (directory bound to container)
-
-```bash
-mysql -S $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
-```
-You are now running MySQL server using singularity!
-
-10. Create the FoundHaplo database (FoundHaploDB) and tables in MySQL using schema as below.
-
-```
-source /mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql;
-exit;
-```
-11. Stop the MySQL instance once the work is completed 
-```bash
-singularity instance stop mysql
-```
+The MySQL instance is now running on the server
 
 ## How to acess the database
 
@@ -134,7 +117,16 @@ singularity exec instance://mysql create_remote_admin_user.sh
 mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword 
 ```
 
-4. Stop the MySQL instance once the work is completed 
+You are now connected to MySQL server using singularity!
+
+4. Create the FoundHaplo database (FoundHaploDB) and tables in MySQL using schema as below.
+
+```
+source /mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql;
+exit;
+```
+
+5. Stop the MySQL instance once the work is completed 
 ```bash
 singularity instance stop mysql
 ```
