@@ -1,6 +1,6 @@
 
 
-Create_SQL_script_to_import(disease_hap_file,save_SQL_file,port,host,password,dbname,unix.socket,family_id,individual_id,father_id,mother_id,sex,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene=inheritance_model,chr,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
+Create_SQL_script_to_import(disease_hap_file,save_SQL_file,db_port,db_host,db_password,db_name,db_unix_socket,family_id,individual_id,father_id,mother_id,sex,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene=inheritance_model,chr,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
 {
   
   library(data.table)
@@ -90,11 +90,51 @@ Create_SQL_script_to_import(disease_hap_file,save_SQL_file,port,host,password,db
   mysql_commands <- save_SQL_file
   cat("USE FoundHaploDB;\n", file=mysql_commands)
   
-  db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=port,host=host,user ='remote_usr',password=password,dbname=dbname,unix.socket=unix.socket)
+  db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_password,dbname=db_name,unix.socket=db_unix_socket)
   
   fetch_genetic_markers=dbSendQuery(db, "SELECT * FROM GeneticMarkers;") # can not add LIMIT here as in SQL
   fetch_genetic_markers <- dbFetch(fetch_genetic_markers,)
   
+  mysql_commands <- save_SQL_file
+  cat("USE FoundHaploDB;\n", file=mysql_commands)
+  
+  if(nrow(fetch_genetic_markers)==0)
+  {
+    for (ii in seq_len(nrow(individuals))) {
+      ii_command <- paste0("INSERT INTO Individuals (", paste(names(individuals), collapse=","), ") VALUES(", paste(individuals[ii, ], collapse=","), ");\n")
+      cat(ii_command, file=mysql_commands, append=TRUE)
+    }
+    
+    for (ii in seq_len(nrow(samples))) {
+      ii_command <- paste0("INSERT INTO Samples (", paste(names(samples), collapse=","), ") VALUES(", paste(samples[ii, ], collapse=","), ");\n")
+      cat(ii_command, file=mysql_commands, append=TRUE)
+    }
+    
+    for (ii in seq_len(nrow(pathogenic_mutations))) {
+      ii_command <- paste0("INSERT INTO PathogenicMutations (", paste(names(pathogenic_mutations), collapse=","), ") VALUES(", paste(pathogenic_mutations[ii, ], collapse=","), ");\n")
+      cat(ii_command, file=mysql_commands, append=TRUE)
+    }
+    
+    for (ii in seq_len(nrow(individuals_with_known_mutations))) {
+      ii_command <- paste0("INSERT INTO IndividualsWithKnownMutations (", paste(names(individuals_with_known_mutations), collapse=","), ") VALUES(", paste(individuals_with_known_mutations[ii, ], collapse=","), ");\n")
+      cat(ii_command, file=mysql_commands, append=TRUE)
+    }
+    
+    for (ii in seq_len(nrow(genetic_markers))) {
+      ii_command <- paste0("INSERT INTO GeneticMarkers (", paste(names(genetic_markers), collapse=","), ") VALUES(", paste(genetic_markers[ii, ], collapse=","), ");\n")
+      cat(ii_command, file=mysql_commands, append=TRUE)
+    }
+    
+    for (ii in seq_len(nrow(genotypes))) {
+      ii_command <- paste0("INSERT INTO Genotypes (", paste(names(genotypes), collapse=","), ") VALUES(", paste(genotypes[ii, ], collapse=","), ");\n")
+      cat(ii_command, file=mysql_commands, append=TRUE)
+    }
+  }
+  
+  
+  if(nrow(fetch_genetic_markers)>0)
+  {
+    
   end_marker=max(fetch_genetic_markers$marker_id)
   
   rs_id=paste0("\"", fetch_genetic_markers$rs_id, "\"")
@@ -119,9 +159,6 @@ Create_SQL_script_to_import(disease_hap_file,save_SQL_file,port,host,password,db
   fetch_genetic_markers$marker_type=marker_type
   
   fetch_genetic_markers <- data.frame(marker_id=fetch_genetic_markers$marker_id,rs_id=fetch_genetic_markers$rs_id,chr=fetch_genetic_markers$chr,position_hg19=fetch_genetic_markers$position_hg19,position_hg38=fetch_genetic_markers$position_hg38,position_cm=fetch_genetic_markers$position_cm,ref=fetch_genetic_markers$ref,alt=fetch_genetic_markers$alt,marker_type=fetch_genetic_markers$marker_type,maf_gnomad_ALL=fetch_genetic_markers$maf_gnomad_ALL,maf_gnomad_AFR=fetch_genetic_markers$maf_gnomad_AFR,maf_gnomad_NFE=fetch_genetic_markers$maf_gnomad_NFE,maf_gnomad_FIN=fetch_genetic_markers$maf_gnomad_FIN,maf_gnomad_AMR=fetch_genetic_markers$maf_gnomad_AMR,maf_gnomad_EAS=fetch_genetic_markers$maf_gnomad_EAS,maf_gnomad_SAS=fetch_genetic_markers$maf_gnomad_SAS, stringsAsFactors=FALSE)
-  
-  
-  
   current_genetic_markers=fetch_genetic_markers # current database markers
   
   
@@ -150,13 +187,24 @@ Create_SQL_script_to_import(disease_hap_file,save_SQL_file,port,host,password,db
     new_markers_genotypes$marker_id=(end_marker+1):(end_marker+nrow(new_markers))
   }
   #### run carefully
-  mysql_commands <- save_SQL_file
-  cat("USE FoundHaploDB;\n", file=mysql_commands)
   
   ##check if individuals there
+  Individuals=dbSendQuery(db, "SELECT * FROM Individuals;") # can not add LIMIT here as in SQL
+  Individuals <- dbFetch(Individuals,)
+  if(individuals$individual_id %in% Individuals$individual_id){
+    stop("individual_id already exist in the database")
+  }
+  
   for (ii in seq_len(nrow(individuals))) {
     ii_command <- paste0("INSERT INTO Individuals (", paste(names(individuals), collapse=","), ") VALUES(", paste(individuals[ii, ], collapse=","), ");\n")
     cat(ii_command, file=mysql_commands, append=TRUE)
+  }
+  
+  Samples=dbSendQuery(db, "SELECT * FROM Samples;") # can not add LIMIT here as in SQL
+  Samples <- dbFetch(Samples,)
+  
+  if(Samples$sample_id %in% samples$sample_id & individuals$individual_id %in% Individuals$individual_id){
+    stop("sample_id already exist the database for the same individual_id")
   }
   
   for (ii in seq_len(nrow(samples))) {
@@ -166,9 +214,16 @@ Create_SQL_script_to_import(disease_hap_file,save_SQL_file,port,host,password,db
   
   ##check if pathogenic_mutations is there
   
+  pathogenic_mutations=dbSendQuery(db, "SELECT * FROM pathogenic_mutations;") # can not add LIMIT here as in SQL
+  pathogenic_mutations <- dbFetch(pathogenic_mutations,)
+  
+  if(pathogenic_mutations$mutation_id %!in% pathogenic_mutations$mutation_id)
+  {
+    
   for (ii in seq_len(nrow(pathogenic_mutations))) {
     ii_command <- paste0("INSERT INTO PathogenicMutations (", paste(names(pathogenic_mutations), collapse=","), ") VALUES(", paste(pathogenic_mutations[ii, ], collapse=","), ");\n")
     cat(ii_command, file=mysql_commands, append=TRUE)
+  }
   }
   
   for (ii in seq_len(nrow(individuals_with_known_mutations))) {
@@ -202,5 +257,7 @@ Create_SQL_script_to_import(disease_hap_file,save_SQL_file,port,host,password,db
     }
     
   }
+  }
+  
   print("SQL script is saved in ",save_SQL_file) 
 }
