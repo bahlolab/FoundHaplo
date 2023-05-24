@@ -58,7 +58,7 @@ Generate_FH_score(
 
 \item{geneticMap_DIR}{Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})}
 
-\item{disease_files_DIR}{directory of the disease haplotype VCFs for a single disease variant(type \code{"character"})}
+\item{disease_files_DIR}{directory of the disease haplotype VCFs for a single disease variant. "invalid" if disease haplotypes are sourced from a database (type \code{"character"})}
 
 \item{test_file}{File path to the test cohort VCF (type \code{"character"})}
 
