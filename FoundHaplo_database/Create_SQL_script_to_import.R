@@ -22,6 +22,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   library(data.table)
   library(DBI)
   library(RMariaDB)
+  
   disease_hap_FILE <-fread(disease_hap_FILE,skip = "#CHROM")
   
   options(scipen=99)
@@ -102,9 +103,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   dummy=sapply(strsplit(dummy,"/",fixed=TRUE),"[[", 1)
   
   genotypes$genotype=dummy
-  
-  mysql_commands <- save_SQL_FILE
-  cat("USE FoundHaploDB;\n", file=mysql_commands)
+
   
   # connecting to the database
   
@@ -189,7 +188,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     
     common_markers_genotypes=subset(genotypes,genotypes$marker_id %in% common_markers$marker_id)
     common_markers_genotypes$marker_id=current_common_markers$marker_id
-
+    
     common_markers_row_names=row.names(common_markers)
     
     
@@ -232,7 +231,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     PathogenicMutations=dbSendQuery(db, "SELECT * FROM PathogenicMutations;") # can not add LIMIT here as in SQL
     PathogenicMutations <- dbFetch(PathogenicMutations,)
     
-    if(PathogenicMutations$mutation_id %!in% pathogenic_mutations$mutation_id)
+    if(!(PathogenicMutations$mutation_id %in% pathogenic_mutations$mutation_id))
     {
       
       for (ii in seq_len(nrow(pathogenic_mutations))) {
