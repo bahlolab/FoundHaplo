@@ -7,7 +7,7 @@
 #' @param db_port Port number of the database
 #' @param db_host Database host
 #' @param db_password Randomly generated user password to access the database from R
-#' @param db_name Name of the database
+#' @param db_name Name of the databasenici
 #' @param db_unix_socket Path to .sock of the database i.e $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
 #' Parameters starting from family_id must be specified based on the databse schema as explained in https://github.com/bahlolab/FoundHaplo/blob/main/FoundHaplo_database/FoundHaplo_database_info.docx
 #' @return .sql file written in save_SQL_file path
@@ -16,7 +16,7 @@
 #' @import DBI
 #' @export
 
-Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_host,db_password,db_name,db_unix_socket,family_id,individual_id,father_id,mother_id,sex,sex_method,ethnicity,ethnicity_superpopulation,ethnicity_method,sample_id,data_type,external_lab_id,external_source,phasing_method,impute_method,impute_panel,import_date,mutation_id,disease,disease_id,omim_id,gene,genomic_region,inheritance_model,chromosome,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
+Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_host,db_password,db_name,db_unix_socket,family_id,individual_id,father_id,mother_id,sex,sex_method,ancestral_population,ancestral_superpopulation,ancestry_method,sample_id,data_type,external_lab_id,external_source,phasing_method,impute_method,impute_phasing_panel,import_date,DCV_id,disease,disease_name,omim_id,gene,genomic_region,inheritance_model,chromosome,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
 {
   
   library(data.table)
@@ -27,22 +27,22 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   options(scipen=99)
   
   individuals <- data.frame(family_id=family_id, individual_id=individual_id, father_id=father_id, mother_id=mother_id,
-                            sex=sex,sex_method=paste0("\"",sex_method,"\""),ethnicity=paste0("\"",ethnicity,"\""),
-                            ethnicity_superpopulation=paste0("\"",ethnicity_superpopulation,"\""),ethnicity_method=paste0("\"",ethnicity_method,"\""),
+                            sex=sex,sex_method=paste0("\"",sex_method,"\""),ancestral_population=paste0("\"",ancestral_population,"\""),
+                            ancestral_superpopulation=paste0("\"",ancestral_superpopulation,"\""),ancestry_method=paste0("\"",ancestry_method,"\""),
                             stringsAsFactors=FALSE)
   
   
-  samples <- data.frame(sample_id=sample_id, individual_id=individual_id,data_type=paste0("\"",data_type,"\""),external_lab_id=paste0("\"",external_lab_id,"\""),external_source=paste0("\"",external_source,"\""),phasing_method=paste0("\"",phasing_method,"\""),impute_method=paste0("\"",impute_method,"\""),impute_panel=paste0("\"",impute_panel,"\""),import_date=paste0("\"",import_date,"\""),
+  samples <- data.frame(sample_id=sample_id, individual_id=individual_id,data_type=paste0("\"",data_type,"\""),external_lab_id=paste0("\"",external_lab_id,"\""),external_source=paste0("\"",external_source,"\""),phasing_method=paste0("\"",phasing_method,"\""),impute_method=paste0("\"",impute_method,"\""),impute_phasing_panel=paste0("\"",impute_phasing_panel,"\""),import_date=paste0("\"",import_date,"\""),
                         stringsAsFactors=FALSE)
   
-  pathogenic_mutations <- data.frame(mutation_id=mutation_id,
-                                     disease=paste0("\"",disease,"\""), disease_id=paste0("\"",disease_id,"\""),
+  pathogenic_mutations <- data.frame(DCV_id=DCV_id,
+                                     disease=paste0("\"",disease,"\""), disease_name=paste0("\"",disease_name,"\""),
                                      omim_id=omim_id, gene=paste0("\"",gene,"\""), genomic_region=paste0("\"",genomic_region,"\""),inheritance_model=paste0("\"",inheritance_model,"\""),
                                      chromosome=paste0("\"",chromosome,"\""), start_position_hg19=start_position_hg19, end_position_hg19=end_position_hg19,start_position_hg38=start_position_hg38,end_position_hg38=end_position_hg38,
                                      start_position_cM=start_position_cM, end_position_cM=end_position_cM,
                                      stringsAsFactors=FALSE)
   
-  individuals_with_known_mutations <- data.frame(individual_id=individual_id, mutation_id=mutation_id, genotype=genotype,
+  individuals_with_known_mutations <- data.frame(individual_id=individual_id, DCV_id=DCV_id, genotype=genotype,
                                                  validated=validated, validation_method=paste0("\"",validation_method,"\""),
                                                  validation_note=paste0("\"",validation_note,"\""),
                                                  stringsAsFactors=FALSE)
@@ -130,12 +130,12 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     }
     
     for (ii in seq_len(nrow(pathogenic_mutations))) {
-      ii_command <- paste0("INSERT INTO PathogenicMutations (", paste(names(pathogenic_mutations), collapse=","), ") VALUES(", paste(pathogenic_mutations[ii, ], collapse=","), ");\n")
+      ii_command <- paste0("INSERT INTO DiseaseCausingVariants (", paste(names(pathogenic_mutations), collapse=","), ") VALUES(", paste(pathogenic_mutations[ii, ], collapse=","), ");\n")
       cat(ii_command, file=mysql_commands, append=TRUE)
     }
     
     for (ii in seq_len(nrow(individuals_with_known_mutations))) {
-      ii_command <- paste0("INSERT INTO IndividualsWithKnownMutations (", paste(names(individuals_with_known_mutations), collapse=","), ") VALUES(", paste(individuals_with_known_mutations[ii, ], collapse=","), ");\n")
+      ii_command <- paste0("INSERT INTO IndividualsWithDiseaseCausingVariants (", paste(names(individuals_with_known_mutations), collapse=","), ") VALUES(", paste(individuals_with_known_mutations[ii, ], collapse=","), ");\n")
       cat(ii_command, file=mysql_commands, append=TRUE)
     }
     
