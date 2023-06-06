@@ -21,3 +21,5 @@ split -l 100 -d --additional-suffix=.txt $CONTROL_SAMPLES_FILE  $CONTROL_SAMPLES
 
 echo "Sample IDs for the test cohort are in $TEST_SAMPLES_DIR/samples"
 echo "Sample IDs for the control cohort are in $CONTROL_SAMPLES_DIR/samples"
+
+
