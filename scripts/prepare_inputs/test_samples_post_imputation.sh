@@ -26,9 +26,9 @@ vcftools --gzvcf $INPUT_VCF_FILE --chr $CHROMOSOME --remove-indels --min-alleles
 
 mkdir -p $FoundHaplo_DIR/input_files/input_vcf_data/test_cohort/samples
 
-echo "Saving sample IDs to $FoundHaplo_DIR/input_files/input_vcf_data/test_cohort/samples/samples.txt"
+echo "Saving sample IDs to $FoundHaplo_DIR/input_files/input_vcf_data/test_cohort/samples.txt"
 
-bcftools query -l $FoundHaplo_DIR/input_files/input_vcf_data/test_cohort/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz > $FoundHaplo_DIR/input_files/input_vcf_data/test_cohort/samples/samples.txt
+bcftools query -l $FoundHaplo_DIR/input_files/input_vcf_data/test_cohort/$INPUT_VCF_BASE_NAME.imputed.trimmed.vcf.gz > $FoundHaplo_DIR/input_files/input_vcf_data/test_cohort/samples.txt
 
 rm -rf $FoundHaplo_DIR/temp/*
 
