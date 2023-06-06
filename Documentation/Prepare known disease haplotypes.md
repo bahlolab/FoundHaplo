@@ -65,14 +65,14 @@ $FoundHaplo_DIR/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh $Fo
 ```
 Run example below,
 ```bash
-$FoundHaplo_DIR/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh $FoundHaplo_DIR $FoundHaplo_DIR/temp/imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052. $ANNOVAR_DIR $ANNOVAR_HUMANDB_DIR $FoundHaplo_DIR/example/sample_info.txt
+$FoundHaplo_DIR/scripts/prepare_inputs/disease_haplotypes_post_imputation.sh $FoundHaplo_DIR $FoundHaplo_DIR/temp/imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8.vcf.gz imputed_phased_FAME1_disease_cohort.snp.0.98.sample.0.98.chr8 FAME1.chr8.119379052. $ANNOVAR_DIR $ANNOVAR_HUMANDB_DIR $FoundHaplo_DIR/example/sample_info.txt
 ```
 
 Set the variables as below,
 
 * FoundHaplo_DIR : FoundHaplo directory i.e /mypath/FoundHaplo
-* INPUT_VCF_FILE : Imputed VCF file with individuals with known diease variants that can be pedigree phased.
-* INPUT_VCF_BASE_NAME : File name of the imputed INPUT_VCF 
+* INPUT_VCF_FILE : Path to imputed VCF file with individuals carrying known diease variants that can be pedigree phased.
+* INPUT_VCF_BASE_NAME : File name of the Imputed VCF file 
 * DCV : Name the disease variant of interest in the format of disease.chr.position. i.e FAME1.chr8.119379052. Use OMIM abbreviation for the disease.
 * ANNOVAR_DIR : ANNOVAR directory
 * ANNOVAR_HUMANDB_DIR : ANNOVAR database directory
