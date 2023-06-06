@@ -35,8 +35,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   samples <- data.frame(sample_id=sample_id, individual_id=individual_id,data_type=paste0("\"",data_type,"\""),external_lab_id=paste0("\"",external_lab_id,"\""),external_source=paste0("\"",external_source,"\""),phasing_method=paste0("\"",phasing_method,"\""),impute_method=paste0("\"",impute_method,"\""),impute_phasing_panel=paste0("\"",impute_phasing_panel,"\""),import_date=paste0("\"",import_date,"\""),
                         stringsAsFactors=FALSE)
   
-  pathogenic_mutations <- data.frame(DCV_id=DCV_id,
-                                     disease=paste0("\"",disease,"\""), disease_name=paste0("\"",disease_name,"\""),
+  pathogenic_mutations <- data.frame(DCV_id=DCV_id, disease_name=paste0("\"",disease_name,"\""),
                                      omim_id=omim_id, gene=paste0("\"",gene,"\""), genomic_region=paste0("\"",genomic_region,"\""),inheritance_model=paste0("\"",inheritance_model,"\""),
                                      chromosome=paste0("\"",chromosome,"\""), start_position_hg19=start_position_hg19, end_position_hg19=end_position_hg19,start_position_hg38=start_position_hg38,end_position_hg38=end_position_hg38,
                                      start_position_cM=start_position_cM, end_position_cM=end_position_cM,
