@@ -58,8 +58,8 @@ $FoundHaplo_DIR/scripts/prepare_inputs/test_samples_post_imputation.sh $FoundHap
 Set the variables as below,
 
 * FoundHaplo_DIR : FoundHaplo directory i.e path/FoundHaplo
-* INPUT_VCF_FILE : Imputed VCF file with individuals with known diease variants that can be pedigree phased.
-* INPUT_VCF_BASE_NAME : File name of the imputed INPUT_VCF 
+* INPUT_VCF_FILE : Imputed VCF file of the test cohort
+* INPUT_VCF_BASE_NAME : File name of the imputed Imputed VCF file  
 * DCV : Name the disease variant of interest in the format of disease.chr.position. i.e FAME1.chr8.119379052. Use OMIM abbreviation for the disease.
 
 The test_samples_post_imputation.sh will create a VCF file with test individuals in FoundHaplo/input_files/input_vcf_data/test_cohort
