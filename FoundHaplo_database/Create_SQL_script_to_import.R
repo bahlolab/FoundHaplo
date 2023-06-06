@@ -1,21 +1,3 @@
-#' Import disease haplotype into the FoundHaplo database
-#'
-#' @description
-#' Import each created disease haplotype into the database. Create_SQL_script_to_import.R script can only import one disease haplotype at a time
-#' @param disease_hap_file Disease haplotype VCF file created using Foundhaplo Github guidelines
-#' @param save_SQL_file Path to save the .sql command files
-#' @param db_port Port number of the database
-#' @param db_host Database host
-#' @param db_password Randomly generated user password to access the database from R
-#' @param db_name Name of the databasenici
-#' @param db_unix_socket Path to .sock of the database i.e $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
-#' Parameters starting from family_id must be specified based on the databse schema as explained in https://github.com/bahlolab/FoundHaplo/blob/main/FoundHaplo_database/FoundHaplo_database_info.docx
-#' @return .sql file written in save_SQL_file path
-#' @import RMariaDB
-#' @import data.table
-#' @import DBI
-#' @export
-
 Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_host,db_password,db_name,db_unix_socket,family_id,individual_id,father_id,mother_id,sex,sex_method,ancestral_population,ancestral_superpopulation,ancestry_method,sample_id,data_type,external_lab_id,external_source,phasing_method,impute_method,impute_phasing_panel,import_date,DCV_id,disease,disease_name,omim_id,gene,genomic_region,inheritance_model,chromosome,start_position_hg19,end_position_hg19,start_position_hg38,end_position_hg38,start_position_cM,end_position_cM,genotype,validated,validation_method,validation_note)
 {
   
@@ -106,7 +88,6 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   genotypes$genotype=dummy
   
   mysql_commands <- save_SQL_FILE
-  cat("USE FoundHaploDB;\n", file=mysql_commands)
   
   # connecting to the database
   
@@ -115,8 +96,8 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   fetch_genetic_markers=dbSendQuery(db, "SELECT * FROM GeneticMarkers;") # can not add LIMIT here as in SQL
   fetch_genetic_markers <- dbFetch(fetch_genetic_markers,)
   
-  mysql_commands <- save_SQL_FILE
-  cat("USE FoundHaploDB;\n", file=mysql_commands)
+  ii_command <- paste0("USE ",db_name, ";\n")
+  cat(ii_command, file=mysql_commands)
   
   # writing the sql commands to import the first disease haplotype into save_SQL_FILE
   if(nrow(fetch_genetic_markers)==0)
