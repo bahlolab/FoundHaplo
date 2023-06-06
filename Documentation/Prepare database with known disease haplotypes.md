@@ -171,7 +171,7 @@ All the parameters that user has to specify are described below
 * db_name= Name of the database
 * db_unix_socket= Path to .sock of the database i.e $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
 
-Parameters starting from family_id must be specified based on the databse schema as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/FoundHaplo_database/FoundHaplo_database_info.docx)
+Parameters starting from family_id must be specified based on the databse schema as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/FoundHaplo_database/FoundHaplo_database_info.md)
 
 5. Connect to the database and source the resulting sql script of the Create_SQL_script_to_import.R saved in save_SQL_FILE into the FoundHaploDB to import disease haplotypes
 
