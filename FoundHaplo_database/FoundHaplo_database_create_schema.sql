@@ -44,7 +44,7 @@ CREATE TABLE `DiseaseCausingVariants` (
     `end_position_hg38` int,
     `start_position_cM` double,
     `end_position_cM` double,
-    PRIMARY KEY (`mutation_id`)
+    PRIMARY KEY (`DCV_id`)
 );
 
 CREATE TABLE `IndividualsWithDiseaseCausingVariants` (
