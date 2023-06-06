@@ -28,54 +28,93 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
                                                  validation_note=paste0("\"",validation_note,"\""),
                                                  stringsAsFactors=FALSE)
   
-  fields=c("R2","AF","AF_raw", "AF_afr", "AF_sas","AF_amr", "AF_eas", "AF_nfe", "AF_fin")
-  
-  get_info_fields <- function(info, fields) {
-    info_split <- strsplit(strsplit(info, ";")[[1]], "=")
-    info_split_names <- sapply(info_split, "[", 1)
-    info_split_names[1:6]=c("R2","AF","AF_raw", "AF_afr", "AF_sas","AF_amr", "AF_eas", "AF_nfe", "AF_fin")
-    info_split_values <- sapply(info_split, "[", 2)
-    
-    return(info_split_values[match(fields, fields)])
-  }
-  
-  hap_info_extract <- do.call(rbind, lapply(disease_hap_FILE$INFO, function(x) get_info_fields(x, fields)))
-  hap_info_extract <- apply(hap_info_extract, 2, as.numeric)
-  hap_info_extract <- apply(hap_info_extract, 2, function(x) ifelse(is.na(x), 0, x))
-  hap_info_extract <- as.data.frame(hap_info_extract, stringsAsFactors=FALSE)
-  rownames(hap_info_extract) <- rownames(disease_hap_FILE)
-  colnames(hap_info_extract) <- fields
-  
-  disease_hap_FILE=as.data.frame(disease_hap_FILE)
-  
-  genetic_markers <- data.frame(marker_id=1:nrow(disease_hap_FILE), rs_id=paste0("\"", disease_hap_FILE$ID, "\""),
-                                chromosome=paste0("\"chr", disease_hap_FILE[,"#CHROM"], "\""),
-                                position_hg19=disease_hap_FILE$POS,
-                                position_hg38=-99999,
-                                position_cM=-99999,
-                                reference_allele=paste0("\"", disease_hap_FILE$REF, "\""),
-                                alternate_allele=paste0("\"", disease_hap_FILE$ALT, "\""),
-                                marker_type="\"SNP\"",
-                                maf_gnomad_ALL=as.numeric(hap_info_extract$AF_raw),
-                                maf_gnomad_AFR=as.numeric(hap_info_extract$AF_afr),
-                                maf_gnomad_NFE=as.numeric(hap_info_extract$AF_nfe),
-                                maf_gnomad_FIN=as.numeric(hap_info_extract$AF_fin),
-                                maf_gnomad_AMR=as.numeric(hap_info_extract$AF_amr),
-                                maf_gnomad_EAS=as.numeric(hap_info_extract$AF_eas),
-                                maf_gnomad_SAS=as.numeric(hap_info_extract$AF_sas),
-                                stringsAsFactors=FALSE)
-  
-  
   R2=sapply(strsplit(disease_hap_FILE$INFO,";",fixed=TRUE),"[[", 1)
   if(sum(R2 %like% "R2")==0){
     print("Disease haplotypes are not imputed, set R-squared to zero")
     R2=rep(0,nrow(disease_hap_FILE))
+    
+    fields=c("AF_raw", "AF_afr", "AF_sas","AF_amr", "AF_eas", "AF_nfe", "AF_fin") # make sure you only have these fields in the VCF file
+    
+    get_info_fields <- function(info, fields) {
+      info_split <- strsplit(strsplit(info, ";")[[1]], "=")
+      info_split_names <- sapply(info_split, "[", 1)
+      info_split_names[1:6]=c("AF_raw", "AF_afr", "AF_sas","AF_amr", "AF_eas", "AF_nfe", "AF_fin")
+      info_split_values <- sapply(info_split, "[", 2)
+      
+      return(info_split_values[match(fields, fields)])
+    }
+    
+    hap_info_extract <- do.call(rbind, lapply(disease_hap_FILE$INFO, function(x) get_info_fields(x, fields)))
+    hap_info_extract <- apply(hap_info_extract, 2, as.numeric)
+    hap_info_extract <- apply(hap_info_extract, 2, function(x) ifelse(is.na(x), 0, x))
+    hap_info_extract <- as.data.frame(hap_info_extract, stringsAsFactors=FALSE)
+    rownames(hap_info_extract) <- rownames(disease_hap_FILE)
+    colnames(hap_info_extract) <- fields
+    
+    disease_hap_FILE=as.data.frame(disease_hap_FILE)
+    
+    genetic_markers <- data.frame(marker_id=1:nrow(disease_hap_FILE), rs_id=paste0("\"", disease_hap_FILE$ID, "\""),
+                                  chromosome=paste0("\"chr", disease_hap_FILE[,"#CHROM"], "\""),
+                                  position_hg19=disease_hap_FILE$POS,
+                                  position_hg38=-99999,
+                                  position_cM=-99999,
+                                  reference_allele=paste0("\"", disease_hap_FILE$REF, "\""),
+                                  alternate_allele=paste0("\"", disease_hap_FILE$ALT, "\""),
+                                  marker_type="\"SNP\"",
+                                  maf_gnomad_ALL=as.numeric(hap_info_extract$AF_raw),
+                                  maf_gnomad_AFR=as.numeric(hap_info_extract$AF_afr),
+                                  maf_gnomad_NFE=as.numeric(hap_info_extract$AF_nfe),
+                                  maf_gnomad_FIN=as.numeric(hap_info_extract$AF_fin),
+                                  maf_gnomad_AMR=as.numeric(hap_info_extract$AF_amr),
+                                  maf_gnomad_EAS=as.numeric(hap_info_extract$AF_eas),
+                                  maf_gnomad_SAS=as.numeric(hap_info_extract$AF_sas),
+                                  stringsAsFactors=FALSE)
+    
   }
   
+  # script is different when R-squared does not exist in the VCF file
   if(sum(R2 %like% "R2")==nrow(disease_hap_FILE)){
     R2=sapply(strsplit(R2,"=",fixed=TRUE),"[[", 2)
+    
+    fields=c("R2","AF_raw", "AF_afr", "AF_sas","AF_amr", "AF_eas", "AF_nfe", "AF_fin") # make sure you only have these fields in the VCF file
+    
+    get_info_fields <- function(info, fields) {
+      info_split <- strsplit(strsplit(info, ";")[[1]], "=")
+      info_split_names <- sapply(info_split, "[", 1)
+      info_split_names[1:6]=c("R2","AF_raw", "AF_afr", "AF_sas","AF_amr", "AF_eas", "AF_nfe", "AF_fin") # make sure you only have these fields in the VCF file
+      info_split_values <- sapply(info_split, "[", 2)
+      
+      return(info_split_values[match(fields, fields)])
     }
-  
+    
+    hap_info_extract <- do.call(rbind, lapply(disease_hap_FILE$INFO, function(x) get_info_fields(x, fields)))
+    hap_info_extract <- apply(hap_info_extract, 2, as.numeric)
+    hap_info_extract <- apply(hap_info_extract, 2, function(x) ifelse(is.na(x), 0, x))
+    hap_info_extract <- as.data.frame(hap_info_extract, stringsAsFactors=FALSE)
+    rownames(hap_info_extract) <- rownames(disease_hap_FILE)
+    colnames(hap_info_extract) <- fields
+    
+    disease_hap_FILE=as.data.frame(disease_hap_FILE)
+    
+    genetic_markers <- data.frame(marker_id=1:nrow(disease_hap_FILE), rs_id=paste0("\"", disease_hap_FILE$ID, "\""),
+                                  chromosome=paste0("\"chr", disease_hap_FILE[,"#CHROM"], "\""),
+                                  position_hg19=disease_hap_FILE$POS,
+                                  position_hg38=-99999,
+                                  position_cM=-99999,
+                                  reference_allele=paste0("\"", disease_hap_FILE$REF, "\""),
+                                  alternate_allele=paste0("\"", disease_hap_FILE$ALT, "\""),
+                                  marker_type="\"SNP\"",
+                                  maf_gnomad_ALL=as.numeric(hap_info_extract$AF_raw),
+                                  maf_gnomad_AFR=as.numeric(hap_info_extract$AF_afr),
+                                  maf_gnomad_NFE=as.numeric(hap_info_extract$AF_nfe),
+                                  maf_gnomad_FIN=as.numeric(hap_info_extract$AF_fin),
+                                  maf_gnomad_AMR=as.numeric(hap_info_extract$AF_amr),
+                                  maf_gnomad_EAS=as.numeric(hap_info_extract$AF_eas),
+                                  maf_gnomad_SAS=as.numeric(hap_info_extract$AF_sas),
+                                  stringsAsFactors=FALSE)
+    
+  }
+
   genotypes <- data.frame(marker_id=1:nrow(disease_hap_FILE), sample_id=sample_id, genotype=disease_hap_FILE$h1,imputed=1,imputation_quality=R2,
                           stringsAsFactors=FALSE)
   
