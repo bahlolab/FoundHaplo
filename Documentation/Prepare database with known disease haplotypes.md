@@ -119,7 +119,7 @@ mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppas
 
 You are now connected to MySQL server using singularity!
 
-4. IF you have not already created the FoundHaplo database, create the FoundHaplo database (FoundHaploDB) and tables in MySQL using schema as below.
+4. If you have not already created the FoundHaplo database, create the FoundHaplo database (FoundHaploDB) and tables in MySQL using schema as below.
 
 ```MySQL
 source /mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql;
