@@ -53,7 +53,7 @@ $FoundHaplo_DIR/scripts/prepare_inputs/test_samples_post_imputation.sh $FoundHap
 Run example below,
 
 ```bash
-$FoundHaplo_DIR/scripts/prepare_inputs/test_samples_post_imputation.sh $FoundHaplo_DIR $FoundHaplo_DIR/temp/imputed_phased_FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz imputed_phased_FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz FAME1.chr8.119379052.
+$FoundHaplo_DIR/scripts/prepare_inputs/test_samples_post_imputation.sh $FoundHaplo_DIR $FoundHaplo_DIR/temp/imputed_phased_FAME1_test_cohort.snp.0.98.sample.0.98.chr8.vcf.gz imputed_phased_FAME1_test_cohort.snp.0.98.sample.0.98.chr8 FAME1.chr8.119379052.
 ```
 Set the variables as below,
 
