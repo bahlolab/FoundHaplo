@@ -174,7 +174,9 @@ All the parameters that user has to specify are described below
 Parameters starting from family_id must be specified based on the databse schema as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/FoundHaplo_database/FoundHaplo_database_info.md)
 
 5. Connect to the database and source the resulting sql script of the Create_SQL_script_to_import.R saved in save_SQL_FILE into the FoundHaploDB to import disease haplotypes
-
+```bash
+mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword 
+```
 ```MySQL
 source /mypath_to_save_SQL_FILE;
 exit;
