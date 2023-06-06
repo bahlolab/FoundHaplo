@@ -31,9 +31,8 @@ CREATE TABLE `Samples` (
 );
 
 CREATE TABLE `DiseaseCausingVariants` (
-    `mutation_id` int NOT NULL AUTO_INCREMENT,
+    `DCV_id` int NOT NULL AUTO_INCREMENT,
     `disease_name` varchar(255) NOT NULL,
-    `disease_id` varchar(20) NOT NULL,
     `omim_id` int,
     `gene` varchar(255),
     `genomic_region` varchar(255) NOT NULL,
@@ -57,8 +56,8 @@ CREATE TABLE `IndividualsWithDiseaseCausingVariants` (
     `validation_note` varchar(255),
     FOREIGN KEY (`individual_id`) 
         REFERENCES `Individuals`(`individual_id`),
-    FOREIGN KEY (`mutation_id`) 
-        REFERENCES `DiseaseCausingVariants`(`mutation_id`)
+    FOREIGN KEY (`DCV_id`) 
+        REFERENCES `DiseaseCausingVariants`(`DCV_id`)
 );
 
 CREATE TABLE `GeneticMarkers` (
