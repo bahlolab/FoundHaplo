@@ -11,7 +11,7 @@ CREATE TABLE `Individuals` (
     `sex_method` varchar(255),
     `ancestral_population` varchar(255),
     `ancestral_superpopulation` varchar(255) NOT NULL,
-    `ancestry_method` varchar(255),
+    `ancestry_method` varchar(255) NOT NULL,
     PRIMARY KEY (`individual_id`)
 );
 
@@ -23,8 +23,8 @@ CREATE TABLE `Samples` (
     `external_source` varchar(255),
     `phasing_method` varchar(255) NOT NULL,
     `impute_method` varchar(255) NOT NULL,
-    `impute_phasing_panel` varchar(255),
-    `import_date` varchar(255) NOT NULL,
+    `impute_phasing_panel` varchar(255) NOT NULL,
+    `import_date` date NOT NULL,
     PRIMARY KEY (`sample_id`),
     FOREIGN KEY (`individual_id`) 
         REFERENCES `Individuals`(`individual_id`)
@@ -49,7 +49,7 @@ CREATE TABLE `DiseaseCausingVariants` (
 
 CREATE TABLE `IndividualsWithDiseaseCausingVariants` (
     `individual_id` int NOT NULL,
-    `mutation_id` int NOT NULL,
+    `DCV_id` int NOT NULL,
     `genotype` tinyint NOT NULL,
     `validated` BOOLEAN NOT NULL,
     `validation_method` varchar(255) NOT NULL,

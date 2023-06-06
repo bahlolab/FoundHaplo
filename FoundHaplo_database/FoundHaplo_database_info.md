@@ -7,6 +7,10 @@ FoundHaplo database schema consists of six relational tables as listed
 below. Tables are automatically created by the script in
 FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql
 
+``` r
+#Table
+```
+
 ## R Markdown
 
 |        Field name         | Data type |                               Description                                |   Key   |
