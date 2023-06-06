@@ -186,7 +186,7 @@ Repeat steps 4 and 5 to import all the disease haplotypes into the database
 singularity instance stop mysql
 ```
 
-Note : You can keep connecting to the MySQL instance using mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword as long as the the singularity instance is not terminated. Singularity instance must be terminated after working/accessing the database to help prevent database getting crashed.
+Note : You can keep connecting to the MySQL instance using "mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword" as long as the the singularity instance is not terminated. Singularity instance must be terminated after working/accessing the database to help prevent database getting crashed.
 
 Go back to the [documentaton](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
 
