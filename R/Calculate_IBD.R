@@ -282,7 +282,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
   
   Max_left_cM=DCV_cM-data_file[xL-(which(cumulative_IBD==max(cumulative_IBD))[1]-1),"position_cM"] # the cM location at which the chain gave the highest IBD to the left
   
-  number_of_allele_mismatches_in_the_left_markov_chain=sum(allele_mismatch[1:which(cumulative_IBD==max(cumulative_IBD))]) # total number of allele mismatches to the left
+  number_of_allele_mismatches_in_the_left_markov_chain=sum(allele_mismatch[1:which(cumulative_IBD==max(cumulative_IBD))[1]]) # total number of allele mismatches to the left
   number_of_markers_in_the_left_markov_chain=which(cumulative_IBD==max(cumulative_IBD))[1] # total number of markers traversed until end of left sharing
   
   numer_of_haplotype_switches_in_the_left_markov_chain=length(which(c(FALSE, tail(test_haplotype[1:which(cumulative_IBD==max(cumulative_IBD))[1]],-1) != head(test_haplotype[1:which(cumulative_IBD==max(cumulative_IBD))[1]],-1))))# number of times the chain switches between the two test haplotypes
@@ -437,7 +437,7 @@ Calculate_IBD=function(data_file,DCV,geneticMap_DIR,gen_allele_mismatch_rate=0.0
   
   Max_total_cM=Max_left_cM+Max_right_cM
   
-  number_of_allele_mismatches_in_the_right_markov_chain=sum(allele_mismatch[1:which(cumulative_IBD==max(cumulative_IBD))]) # total number of allele mismatches to the right
+  number_of_allele_mismatches_in_the_right_markov_chain=sum(allele_mismatch[1:which(cumulative_IBD==max(cumulative_IBD))[1]]) # total number of allele mismatches to the right
   number_of_markers_in_the_right_markov_chain=which(cumulative_IBD==max(cumulative_IBD))[1] # total number of markers traversed until end of right sharing
   
   numer_of_haplotype_switches_in_the_right_markov_chain=length(which(c(FALSE, tail(test_haplotype[1:which(cumulative_IBD==max(cumulative_IBD))[1]],-1) != head(test_haplotype[1:which(cumulative_IBD==max(cumulative_IBD))[1]],-1)))) # number of times the chain switches between the two test haplotypes
