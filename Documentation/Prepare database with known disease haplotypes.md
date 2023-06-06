@@ -91,7 +91,7 @@ singularity run instance://mysql
 ```
 The MySQL instance is now running on the server
 
-## How to acess the database
+## How to acess the MySQL instance
 
 1. Run singularity instance if its already stopped.
 ```bash
@@ -107,19 +107,19 @@ $FoundHaplo_database_DIR/mysql.simg mysql
 
 singularity run instance://mysql
 ```
-2. To create a remote user to access the database by multiple nodes if needed. Note down the generated password 
+2. To create a remote user to access the MySQL instance by multiple nodes if needed. Note down the generated password 
 ```bash
 singularity exec instance://mysql create_remote_admin_user.sh 
 ```
 
-3. Now you can connect to the FoundHaplo database from different nodes using below command
+3. Now you can connect to the the MySQL instance from different nodes using below command
 ```bash
 mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword 
 ```
 
 You are now connected to MySQL server using singularity!
 
-4. Create the FoundHaplo database (FoundHaploDB) and tables in MySQL using schema as below.
+4. IF you have not already created the FoundHaplo database, create the FoundHaplo database (FoundHaploDB) and tables in MySQL using schema as below.
 
 ```MySQL
 source /mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql;
