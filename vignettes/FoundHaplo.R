@@ -71,7 +71,7 @@ detach(final_file) # final_file is ready to compare disease and the two test hap
 #Calculate_IBD generates the IBD report and saves in a given directory as a text file
 Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
 Final_IBD_score
-setwd( orig_dir )
+setwd(orig_DIR)
 
 ## -----------------------------------------------------------------------------
 ## Run the wrapper function Generate_FH_score that uses all the above functions
@@ -91,8 +91,8 @@ sample_info=data.frame(rbind(c("HG00362_1_HG00362_1,HG00362_2_HG00362_2","duo"),
 write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 # Phase FAME1_disease_cohort by pedigree
 Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
-                   output_DIR = paste0(temp_DIR,"/1"),
-                   sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
+                    output_DIR = paste0(temp_DIR,"/1"),
+                    sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
 # FAME1_test_cohort is the test cohort
 write.vcf(FAME1_test_cohort,paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"))
 write.table(file00,paste0(temp_DIR,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
@@ -102,7 +102,7 @@ write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quo
 # Assuming disease haplotypes are soruced from a directory instead of FoundHaplo database
 Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
 setwd(paste0(temp_DIR,"/4"))
-FH_IBD_scores=read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE) # read the first .txt file with results to review
+read_FH_IBD_scores=read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE) # read the first .txt file with results to review
 # Concatanate all the results in list.files(paste0(temp_DIR,"/4"))  into one text file for analysis
 setwd(orig_DIR)
 
