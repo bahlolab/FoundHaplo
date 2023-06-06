@@ -1,5 +1,5 @@
 ---
-title: "FoundHaplo_database_info"
+title: "FoundHaplo database information"
 author: "Erandee"
 date: "`r Sys.Date()`"
 output: github_document
@@ -11,21 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 FoundHaplo database schema consists of six relational tables as listed below. Tables are automatically created by the script in FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql
 
-```{r
-<<<<<<< HEAD
-"data_type" in Samples table : Disease haplotypes should be SNP genotyped since FoundHaplo currently only works on SNP array data
-"phasing_method" in Samples table : Disease haplotypes should be phased using duo, trio or related samples so that disease haplotypes can be created by pedigree phasing
-"marker_type" in GeneticMarkers table : Genetic markers should be bi-allelic SNPs. FoundHaplo algorithm only uses bi-allelic SNPs for inferrence.
-"ancestral_population" and "ancestral_superpopulation" in Individuals table : Ancestry should be classified based on 1000 Genomes ancestry categoris since 1000 Genomes data is used as teh control cohort for inference.
-=======
-#"data_type" in Samples table : Disease haplotypes should be SNP genotyped since FoundHaplo currently only works on SNP array data
-#"phasing_method" in Samples table : Disease haplotypes should be phased using duo, trio or related samples so that disease haplotypes can be created by pedigree phasing
-#"marker_type" in GeneticMarkers table : Genetic markers should be bi-allelic SNPs. FoundHaplo algorithm only uses bi-allelic SNPs for inferrence.
-#"ancestral_population" and "ancestral_superpopulation" in Individuals table : Ancestry should be classified based on 1000 Genomes ancestry categoris since 1000 Genomes data is used as teh control cohort for inference.
->>>>>>> c2abe6fbacb0f37554bd0d5e65fdc366e0cd0ad6
-```
-## R Markdown
+1. "data_type" in Samples table : Disease haplotypes should be SNP genotyped since FoundHaplo currently only works on SNP array data
 
+2. "phasing_method" in Samples table : Disease haplotypes should be phased using duo, trio or related samples so that disease haplotypes can be created by pedigree phasing
+
+3. "marker_type" in GeneticMarkers table : Genetic markers should be bi-allelic SNPs. FoundHaplo algorithm only uses bi-allelic SNPs for inferrence
+
+4. "ancestral_population" and "ancestral_superpopulation" in Individuals table : Ancestry should be classified based on 1000 Genomes ancestry categories since 1000 Genomes data is used as the control cohort for inference
 
 | Field name | Data type |       Description       |  Key |
 | :---------: | :-----------: | :------------------------------: | :-------------------: |  
