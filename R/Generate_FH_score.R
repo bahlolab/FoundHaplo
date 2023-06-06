@@ -109,10 +109,10 @@ Generate_FH_score=function(source_of_disease_haplotypes,db_port,db_host,db_passw
     
     db = dbConnect(RMariaDB::MariaDB(),bigint = 'integer',port=db_port,host=db_host,user ='remote_usr',password=db_password,dbname=db_name,unix.socket=db_unix_socket)
     
-    #select disease_name (disease_name in DiseaseCausingVariants should be the same as the disease code in DCV)
-    PathogenicMutations=dbSendQuery(db, paste0("SELECT * FROM PathogenicMutations where disease_id=","\"",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),"\"",";"))
+    #select disease_name (disease_name in DiseaseCausingVariants should be the same as in the DCV i.e "disease_name.chr1.12345")
+    PathogenicMutations=dbSendQuery(db, paste0("SELECT * FROM DiseaseCausingVariants where disease_name=","\"",sapply(strsplit(DCV,".",fixed=TRUE),"[[", 1),"\"",";"))
     PathogenicMutations <- dbFetch(PathogenicMutations,)
-    mutation_num=PathogenicMutations$mutation_id
+    mutation_num=PathogenicMutations$DCV_id
     
     # select individuals with the given DCV_id
     list_of_disease_individuals=dbSendQuery(db, paste0("SELECT * FROM IndividualsWithDiseaseCausingVariants where DCV_id=","\"",mutation_num,"\"",";"))
