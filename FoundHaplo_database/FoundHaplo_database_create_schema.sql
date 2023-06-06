@@ -9,9 +9,9 @@ CREATE TABLE `Individuals` (
     `mother_id` int,
     `sex` tinyint,
     `sex_method` varchar(255),
-    `ethnicity` varchar(255),
-    `ethnicity_superpopulation` varchar(255),
-    `ethnicity_method` varchar(255),
+    `ancestral_population` varchar(255),
+    `ancestral_superpopulation` varchar(255) NOT NULL,
+    `ancestry_method` varchar(255),
     PRIMARY KEY (`individual_id`)
 );
 
@@ -23,20 +23,20 @@ CREATE TABLE `Samples` (
     `external_source` varchar(255),
     `phasing_method` varchar(255) NOT NULL,
     `impute_method` varchar(255) NOT NULL,
-    `impute_panel` varchar(255),
+    `impute_phasing_panel` varchar(255),
     `import_date` varchar(255) NOT NULL,
     PRIMARY KEY (`sample_id`),
     FOREIGN KEY (`individual_id`) 
         REFERENCES `Individuals`(`individual_id`)
 );
 
-CREATE TABLE `PathogenicMutations` (
+CREATE TABLE `DiseaseCausingVariants` (
     `mutation_id` int NOT NULL AUTO_INCREMENT,
-    `disease` varchar(255) NOT NULL,
+    `disease_name` varchar(255) NOT NULL,
     `disease_id` varchar(20) NOT NULL,
     `omim_id` int,
     `gene` varchar(255),
-    `genomic_region` varchar(255),
+    `genomic_region` varchar(255) NOT NULL,
     `inheritance_model` varchar(255) NOT NULL,
     `chromosome` varchar(15) NOT NULL,
     `start_position_hg19` int NOT NULL,
@@ -48,17 +48,17 @@ CREATE TABLE `PathogenicMutations` (
     PRIMARY KEY (`mutation_id`)
 );
 
-CREATE TABLE `IndividualsWithKnownMutations` (
+CREATE TABLE `IndividualsWithDiseaseCausingVariants` (
     `individual_id` int NOT NULL,
     `mutation_id` int NOT NULL,
     `genotype` tinyint NOT NULL,
-    `validated` BOOLEAN,
-    `validation_method` varchar(255),
+    `validated` BOOLEAN NOT NULL,
+    `validation_method` varchar(255) NOT NULL,
     `validation_note` varchar(255),
     FOREIGN KEY (`individual_id`) 
         REFERENCES `Individuals`(`individual_id`),
     FOREIGN KEY (`mutation_id`) 
-        REFERENCES `PathogenicMutations`(`mutation_id`)
+        REFERENCES `DiseaseCausingVariants`(`mutation_id`)
 );
 
 CREATE TABLE `GeneticMarkers` (
@@ -70,7 +70,7 @@ CREATE TABLE `GeneticMarkers` (
     `position_cM` double,
     `reference_allele` varchar(255) NOT NULL,
     `alternate_allele` varchar(255) NOT NULL,
-    `marker_type` varchar(255),
+    `marker_type` varchar(255) NOT NULL,
     `maf_gnomad_ALL` FLOAT NOT NULL,
     `maf_gnomad_AFR` FLOAT NOT NULL,
     `maf_gnomad_NFE` FLOAT NOT NULL,
@@ -85,8 +85,8 @@ CREATE TABLE `Genotypes` (
     `marker_id` bigint NOT NULL,
     `sample_id` int NOT NULL,
     `genotype` tinyint NOT NULL,
-    `imputed` BOOLEAN,
-    `imputation_quality` FLOAT,
+    `imputed` BOOLEAN NOT NULL,
+    `imputation_quality` FLOAT NOT NULL,
     PRIMARY KEY (`marker_id`, `sample_id`), 
     FOREIGN KEY (`marker_id`) 
         REFERENCES `GeneticMarkers`(`marker_id`),
