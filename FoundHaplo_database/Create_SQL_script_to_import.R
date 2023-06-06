@@ -85,11 +85,14 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
   
   
   R2=sapply(strsplit(disease_hap_FILE$INFO,";",fixed=TRUE),"[[", 1)
-  table(R2 %like% "R2")
+  if(sum(R2 %like% "R2")==0){
+    print("Disease haplotypes are not imputed, set R-squared to zero")
+    R2=rep(0,nrow(disease_hap_FILE))
+  }
   
-  R2=sapply(strsplit(R2,"=",fixed=TRUE),"[[", 2)
-  
-  
+  if(sum(R2 %like% "R2")==nrow(disease_hap_FILE)){
+    R2=sapply(strsplit(R2,"=",fixed=TRUE),"[[", 2)
+    }
   
   genotypes <- data.frame(marker_id=1:nrow(disease_hap_FILE), sample_id=sample_id, genotype=disease_hap_FILE$h1,imputed=1,imputation_quality=R2,
                           stringsAsFactors=FALSE)
