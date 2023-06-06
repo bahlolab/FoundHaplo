@@ -2,7 +2,7 @@
 title: "FoundHaplo_database_info"
 author: "Erandee"
 date: "`r Sys.Date()`"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -14,23 +14,23 @@ FoundHaplo database schema consists of six relational tables as listed below. Ta
 ## R Markdown
 
 
-| Field name | Data type    | Description              |  Key                 |
-| :---------: | :-----------: | :-------------------:     | :-------------------: |  
-| family_id  | int          | Unique family identifier (One individual can have multiple samples)    |  |
-| individual_id | int          |Unique individual identifier     | Primary |
-| father_id | int| Individual identifier of the father     | |
-| mother_id | int          | Individual identifier of the mother     | |
-| sex | tinyint          |Male=1, Female=2     | |
-| sex_method | varchar          | Method of estimating the sex      | |
-| ancestral_population | varchar          | Inferred ancestral population based on 1000 Genomes classification     |  |
-| ancestral_superpopulation | varchar          | Inferred ancestral super-population based on 1000 Genomes classification     | |
-| ancestry_method | varchar          | Method of inferring ancestry ex: PCA or reported    | |
+| Field name | Data type |       Description       |  Key |
+| :---------: | :-----------: | :------------------------------: | :-------------------: |  
+| family_id  | int | Unique family identifier (One individual can have multiple samples) |  |
+| individual_id | int |Unique individual identifier | Primary |
+| father_id | int| Individual identifier of the father | |
+| mother_id | int | Individual identifier of the mother | |
+| sex | tinyint | Male=1, Female=2 | |
+| sex_method | varchar | Method of estimating the sex | |
+| ancestral_population | varchar | Inferred ancestral population based on 1000 Genomes classification |  |
+| ancestral_superpopulation | varchar | Inferred ancestral super-population based on 1000 Genomes classification | |
+| ancestry_method | varchar | Method of inferring ancestry ex: PCA or reported | |
 Table: Individuals table
         
-| Field name | Data type    | Description              |  Key                 |
-| :---------: | :-----------: | :-------------------:     | :-------------------: |  
+| Field name | Data type |       Description       |  Key |
+| :---------: | :-----------: | :------------------------------: | :-------------------: |  
 | sample_id  | int | Unique sample identifier (One individual can have multiple samples) | Primary |
-| individual_id | int |Unique individual identifier | Foreign from table Individuals   |
+| individual_id | int |Unique individual identifier | Foreign from table Individuals |
 | data_type | varchar| Type of data ex: WGS/SNP genotyping etc. | |
 | external_lab_id | varchar | Unique original sample identifier | |
 | external_source | varchar |Source of sample collection | |
@@ -40,10 +40,10 @@ Table: Individuals table
 | import_date | varchar | The date the sample was imported to the database | |
 Table: Samples  table
 
-| Field name | Data type    | Description              |  Key                 |
-| :---------: | :-----------: | :-------------------:     | :-------------------: |  
+| Field name | Data type |       Description       |  Key |
+| :---------: | :-----------: | :------------------------------: | :-------------------: |  
 | DCV_id  | int | Unique identifier for a specific mutation | Primary |
-| disease_name | varchar | Unique OMIM abbreviation (This should be the same as the first part of DCV parameter) | Foreign from table Individuals   |
+| disease_name | varchar | Unique OMIM abbreviation (This should be the same as the first part of DCV parameter) | Foreign from table Individuals |
 | omim_id | int| Unique  OMIM identifier for the disease variant/mutation | |
 | gene | varchar | Gene containing the mutatio | |
 | genomic_region | varchar | Exonic, intronic etc. | |
@@ -57,8 +57,8 @@ Table: Samples  table
 | end_position_cM | double | End position of the variant in cM |  |
 Table: DiseaseCausingVariants  table
 
-| Field name | Data type    | Description              |  Key                 |
-| :---------: | :-----------: | :-------------------:     | :-------------------: |  
+| Field name | Data type |       Description       |  Key |
+| :---------: | :-----------: | :------------------------------: | :-------------------: |  
 | individual_id  | int | Unique identifier for a specific mutation | Foreign from table Individuals |
 | DCV_id | int | Unique identifier for a specific mutation| Foreign from table  DiseaseCausingVariants |
 | genotype | int| INumber of copies of the identified disease variant ex: 1 or 2 | |
@@ -68,8 +68,8 @@ Table: DiseaseCausingVariants  table
 Table: IndividualsWithDiseaseCausingVariants  table
 
 
-| Field name | Data type    | Description              |  Key                 |
-| :---------: | :-----------: | :-------------------:     | :-------------------: |  
+| Field name | Data type |       Description       |  Key |
+| :---------: | :-----------: | :------------------------------: | :-------------------: |  
 | marker_id  | bigint | Unique identifier of genetic markers | Primary |
 | rs_id | varchar | Reference SNP identifier | |
 | chromosome | int| Chromosome ex: chr1 | |
@@ -88,8 +88,8 @@ Table: IndividualsWithDiseaseCausingVariants  table
 | maf_gnomad_SAS | FLOAT | Allele frequency in South Asian population |  |
 Table: GeneticMarkers  table
 
-| Field name | Data type    | Description              |  Key                 |
-| :---------: | :-----------: | :-------------------:     | :-------------------: |  
+| Field name | Data type |       Description       |  Key |
+| :---------: | :-----------: | :------------------------------: | :-------------------: |  
 | marker_id  | bigint | Unique identifier of genetic markers | Primary |
 | sample_id | int | Unique sample identifier (One individual can have multiple samples) | Foreign from table Samples |
 | genotype | tinyint| “0” denotes the reference allele and “1” denotes the alternate allele | |
