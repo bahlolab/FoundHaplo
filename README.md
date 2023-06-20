@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/542031544.svg)](https://zenodo.org/badge/latestdoi/542031544)
+
 # FoundHaplo
 
 Tool to Identify individuals with inherited disease causing variants using SNP chip data.
