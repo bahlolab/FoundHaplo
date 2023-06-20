@@ -1,7 +1,7 @@
 FoundHaplo database information
 ================
 Erandee
-2023-06-06
+2023-06-18
 
 FoundHaplo database schema consists of six relational tables as listed
 below. Tables are automatically created by the script in
@@ -69,14 +69,14 @@ Samples table
 
 DiseaseCausingVariants table
 
-|    Field name     | Data type |                          Description                          |                    Key                    |
-|:-----------------:|:---------:|:-------------------------------------------------------------:|:-----------------------------------------:|
-|   individual_id   |    int    |                 Unique individual identifier                  |      Foreign from table Individuals       |
-|      DCV_id       |    int    |           Unique identifier for a specific mutation           | Foreign from table DiseaseCausingVariants |
-|     genotype      |    int    | Number of copies of the identified disease variant eg: 1 or 2 |                                           |
-|     validated     |  BOOLEAN  |               Is the disease variant validated?               |                                           |
-| validation_method |  varchar  |       Validation method eg: RP-PCR, bioinformatic etc.        |                                           |
-|  validation_note  |  varchar  |               Extra note on validation, if any                |                                           |
+|    Field name     | Data type |                          Description                          |                          Key                          |
+|:-----------------:|:---------:|:-------------------------------------------------------------:|:-----------------------------------------------------:|
+|   individual_id   |    int    |                 Unique individual identifier                  |      Primary and Foreign from table Individuals       |
+|      DCV_id       |    int    |           Unique identifier for a specific mutation           | Primary and Foreign from table DiseaseCausingVariants |
+|     genotype      |    int    | Number of copies of the identified disease variant eg: 1 or 2 |                                                       |
+|     validated     |  BOOLEAN  |               Is the disease variant validated?               |                                                       |
+| validation_method |  varchar  |       Validation method eg: RP-PCR, bioinformatic etc.        |                                                       |
+|  validation_note  |  varchar  |               Extra note on validation, if any                |                                                       |
 
 IndividualsWithDiseaseCausingVariants table
 

@@ -54,6 +54,7 @@ CREATE TABLE `IndividualsWithDiseaseCausingVariants` (
     `validated` BOOLEAN NOT NULL,
     `validation_method` varchar(255) NOT NULL,
     `validation_note` varchar(255),
+    PRIMARY KEY (`individual_id`, `DCV_id`), 
     FOREIGN KEY (`individual_id`) 
         REFERENCES `Individuals`(`individual_id`),
     FOREIGN KEY (`DCV_id`) 
