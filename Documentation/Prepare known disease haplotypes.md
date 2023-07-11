@@ -46,7 +46,7 @@ Phase using Eagle v2.4.
 
 Select the relevant ancestral population for the cohort (FoundHaplo example is of EUR ancestry).
 
-Mode "Quality Control and Phasing Only".
+Mode "Quality Control and Imputation".
 
 Rename and save the resulting imputed and phased file with the "imputed_phased_" prefix, and its original file name in the same location.
 
