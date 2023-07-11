@@ -176,7 +176,7 @@ if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} #t
 if(!dir.exists(paste0(tempdir(), "/2"))){dir.create(paste0(tempdir(), "/2"))} #to save test_list of sample names in .txt files
 if(!dir.exists(paste0(tempdir(), "/3"))){dir.create(paste0(tempdir(), "/3"))}  # controls_file_DIR
 if(!dir.exists(paste0(tempdir(), "/4"))){dir.create(paste0(tempdir(), "/4"))} # to save IBD results
-temp_DIR <- tempdir() # To carryout the main workload
+temp_DIR <- tempdir() # To carry out the main workload
 library(vcfR)
 # FAME1_disease_cohort is the disease file
 write.vcf(FAME1_disease_cohort,paste0(temp_DIR,"/","FAME1_disease_cohort.vcf.gz"))
@@ -191,8 +191,8 @@ write.vcf(FAME1_test_cohort,paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"))
 write.table(file00,paste0(temp_DIR,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 write.vcf(FAME1_control_cohort,paste0(temp_DIR,"/3/","FAME1.chr8.vcf.gz"))
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-# Generate_FH_score calculates FH score values for every disease-test pair and save results in .txt files for every disease haplotype
-# Assuming disease haplotypes are sourced from a directory instead of FoundHaplo database
+# Generate_FH_score calculates FH score values for every disease-test pair and saves results in .txt files for every disease haplotype
+# Assuming disease haplotypes are sourced from a directory instead of the FoundHaplo database
 Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
 setwd(paste0(temp_DIR,"/4"))
 FH_IBD_scores=read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE) # read the first .txt file with results to review
