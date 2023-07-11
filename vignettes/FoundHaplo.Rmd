@@ -10,30 +10,30 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-Individuals who inherit the same genetic mutation from a common ancestor also share genomic regions either side of the shared disease-causing variant. This suggests that the presence of a disease-causing genetic variant can be inferred by assessing identity by descent sharing of the variant-associated haplotype between an individual known to have the disease-causing mutation and a patient with unknown aetiology.
+Individuals who inherit the same genetic mutation from a common ancestor also share genomic regions on either side of the shared disease-causing variant. This suggests that the presence of a disease-causing genetic variant can be inferred by assessing identity by descent sharing of the variant-associated haplotype between an individual known to have the disease-causing mutation and a patient with unknown aetiology.
 
-Using a Hidden Markov Model, Foundhaplo calculates the FH score, which is the likelihood of identity by descent between the samples of interest and a known disease causing haplotype and evaluate the resulted scores against a control cohort to predict individuals that carry disease causing haplotypes using SNP chip data.
+Using a Hidden Markov Model, Foundhaplo calculates the FH score, which is the likelihood of identity by descent between the samples of interest and a known disease-causing haplotype and evaluates the resulted scores against a control cohort to predict individuals that carry disease-causing haplotypes using SNP chip data.
 
 
 ## Data Format
 
-There are three types of input data required by FoundHaplo R package
+There are three types of input data required by the FoundHaplo R package
 
-1. bgzipped imputed VCF file with individuals with known diseases and atleast one of their family memebers to create the disease haplotype
+1. bgzipped imputed VCF file with individuals with known diseases and at least one of their family members to create the disease haplotype
 2. bgzipped imputed VCF file with test samples
-3. bgzipped VCF file with 1000 Genomes control samples for a specific population from EUR,AMR,SAS,EAS and AFR.
+3. bgzipped VCF file with 1000 Genomes control samples for a specific population from EUR, AMR, SAS, EAS and AFR.
 
 Disease and test VCF files are generated from PLINK BED, BIM and FAM files, which are the binary files of .ped/map (http://www.cog-genomics.org/plink2).
 
 ### VCF files for disease and test cohort 
 
-The input for FoundHaplo is imputed  bgzipped VCF files with haplotype data with below columns.
+The input for FoundHaplo is imputed  bgzipped VCF files with haplotype data with the below columns.
 
-1. CHROM  : Chromosome 
+1. CHROM : Chromosome 
 2. POS : Base-pair position
 3. ID : rs# or variant identifier
 4. REF :  Reference allele
-5. ALT  : Alternate allele
+5. ALT : Alternate allele
 6. QUAL : A quality score associated with the inference of the given alleles.
 7. FILTER : A flag indicating which of a given set of filters the variation has failed or PASS if all the filters were passed successfully.
 8. INFO : An extensible list of key-value pairs (fields) describing the variation. See below for some common fields. Multiple fields are separated by semicolons with optional values in the format
@@ -64,22 +64,20 @@ gnomAD population frequencies to disease cort VCF files are annotated from ANNOV
 Function | Description
 ------------------ | --------------------------------------------------
 Find_bp_to_trim | Outputs the base pair positions corresponding to +-10cM from a given locus
-Create_hap_VCF | Takes a phased input data file with columns in VCF format and separate haplotypes into two columns
+Create_hap_VCF | Takes a phased input data file with columns in VCF format and separates haplotypes into two columns
 Convert_bp_cM | Adds a column with centiMorgan values to the input file
 Phasing_by_pedigree | Phase samples with a disease variant by pedigrees
 Calculate_IBD |  Calculate the FH score and IBD details between a known disease haplotype and a test individual for a disease variant of interest
 Generate_FH_score | A wrapper function to generate FH scores and IBD details for each test/control - disease pair
-Analyse_FH |  This function analyse the FoundHaplo scores and predict samples that carry the known disease haplotypes
+Analyse_FH |  This function analyse the FoundHaplo scores and predicts samples that carry the known disease haplotypes
 
 ## Example
 
 Below is an IBD analysis performed on simulated data to demonstrate the steps involved in FoundHaplo. Change the parameters for each function to see how it affects the results.
 
-**NOTE: Run Generate_FH_score function on R command line since system() command used in the function to utilise vcfools/bcftools may not work on R studio..**
+**NOTE: Run Generate_FH_score function on the R command line since the system() command used in the function to utilise vcfools/bcftools may not work on R studio..**
 
-### Calculate the corresponding base pair positions
-
-First we calculate the corresponding base pair positions of 10cM both sides of the disease causing variant.
+### Calculate the corresponding base pair positions and trim the dataset to contain +-10cM on either side of the disease-causing variant
 
 ```{r}
 library(FoundHaplo)
@@ -88,7 +86,7 @@ library(data.table)
 library(dplyr)
 
 file.remove(list.files())
-# lets look at an example Hapmap genetic map file
+# let's look at an example HapMap genetic map file
 str(genetic_map_GRCh37_chr8)
 orig_DIR <- getwd()
 temp_DIR <- tempdir()
@@ -103,7 +101,7 @@ Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),geneticMap_DIR=temp_DIR,
 
 ```{r}
 # FAME1_test_cohort is a VCF file with samples to test using FoundHaplo
-#Create_hap_VCF seperates haplotype data into two columns of a dataframe.
+#Create_hap_VCF separates haplotype data into two columns of a data frame.
 test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
 head(test_haplotype_info)
 ```
@@ -111,7 +109,7 @@ head(test_haplotype_info)
 
 ```{r}
 # Convert_bp_cM adds a new column with centiMorgan positions corresponding to the base pairs in haplotype_file data
-test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info,DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info, DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
 head(test_haplotype_info_cM)
 ```
 ### Phase samples with a disease variant by pedigrees
