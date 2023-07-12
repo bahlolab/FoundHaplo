@@ -25,7 +25,7 @@ Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_
 15. **disease_files_DIR** directory of the disease haplotype VCFs for a single disease variant, which is FoundHaplo/input_files/input_vcf_data/disease_haplotypes by default. "invalid" if disease haplotypes are sourced from a database (type \code{"character"})
 16. **test_file** path of the test cohort file gzipped, which is in FoundHaplo/input_files/input_vcf_data/test_cohort.
 17. **test_name** meaningful name for the test cohort 
-18. **test_list** path to a .txt file that includes sample names from the test/control cohort. If running in parallel, We recommend a list of 1000 sample names. List of sample names in a test/control cohort can be split into chunks of samples as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md). Sample names for the test cohort are in /wehisan/bioinf/lab_bahlo/users/robertson.e/FH_test_1/FoundHaplo/input_files/input_vcf_data/test_cohort and sample names for the control cohort are in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population.  
+18. **test_list** path to a .txt file that includes sample names from the test/control cohort. If running in parallel, We recommend a list of 1000 sample names. List of sample names in a test/control cohort can be split into chunks of samples as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing%20with%20Nextflow.md). Sample names for the test cohort are in /wehisan/bioinf/lab_bahlo/users/robertson.e/FH_test_1/FoundHaplo/input_files/input_vcf_data/test_cohort and sample names for the control cohort are in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population.  
 19. **data_type** "test" or "controls"
 20. **controls_file_DIR** directory where the 1000 Genomes gzipped VCF control files are stored. Select the control population cohort the same as the test cohort i.e FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR.
 21. **save_report_DIR** directory path to save the output of FoundHaplo IBD sharing for further analysis
@@ -54,7 +54,7 @@ The function returns all the details of IBD sharing for each test/control sample
 19. **total_number_of_markers_in_data_file**
 20. **total_cM_span_of_data_file**
 
-Name of each text file will correspond to a single job sumbitted by the pipeline explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing.md) i.e. data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt.
+Name of each text file will correspond to a single job sumbitted by the pipeline explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing%20with%20Nextflow.md) i.e. data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt.
 
 Concatenate all the .txt files in save_report_DIR and generate a single text file for further analysis as below.
 
