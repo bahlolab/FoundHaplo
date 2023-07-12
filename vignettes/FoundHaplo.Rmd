@@ -1,16 +1,16 @@
 ---
-title: "FoundHaplo Introduction"
+  title: "FoundHaplo Introduction"
 author: "Erandee Robertson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-%\VignetteIndexEntry{FoundHaplo Introduction}
+  %\VignetteIndexEntry{FoundHaplo Introduction}
 %\VignetteEngine{knitr::rmarkdown}
 %\VignetteEncoding{UTF-8}
-  \usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
 ---
-
-Individuals who inherit the same genetic mutation from a common ancestor also share genomic regions on either side of the shared disease-causing variant. This suggests that the presence of a disease-causing genetic variant can be inferred by assessing identity by descent sharing of the variant-associated haplotype between an individual known to have the disease-causing mutation and a patient with unknown aetiology.
+  
+  Individuals who inherit the same genetic mutation from a common ancestor also share genomic regions on either side of the shared disease-causing variant. This suggests that the presence of a disease-causing genetic variant can be inferred by assessing identity by descent sharing of the variant-associated haplotype between an individual known to have the disease-causing mutation and a patient with unknown aetiology.
 
 Using a Hidden Markov Model, Foundhaplo calculates the FH score, which is the likelihood of identity by descent between the samples of interest and a known disease-causing haplotype and evaluates the resulted scores against a control cohort to predict individuals that carry disease-causing haplotypes using SNP chip data.
 
@@ -58,17 +58,17 @@ Refer https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%
 
 HapMap genetic maps are needed to annotate genetic map distances and are in https://github.com/bahlolab/Foundhaplo/tree/main/input_files/public_data/genetic_map_HapMapII_GRCh37
 gnomAD population frequencies to disease cort VCF files are annotated from ANNOVR, https://annovar.openbioinformatics.org/en/latest/user-guide/download/
-
-## Key Functions
-
-Function | Description
+  
+  ## Key Functions
+  
+  Function | Description
 ------------------ | --------------------------------------------------
-Find_bp_to_trim | Outputs the base pair positions corresponding to +-10cM from a given locus
+  Find_bp_to_trim | Outputs the base pair positions corresponding to +-10cM from a given locus
 Create_hap_VCF | Takes a phased input data file with columns in VCF format and separates haplotypes into two columns
 Convert_bp_cM | Adds a column with centiMorgan values to the input file
 Phasing_by_pedigree | Phase samples with a disease variant by pedigrees
 Calculate_IBD |  Calculate the FH score and IBD details between a known disease haplotype and a test individual for a disease variant of interest
-Generate_FH_score | A wrapper function to generate FH scores and IBD details for each test/control - disease pair
+Generate_FH_score | The wrapper function to generate FH scores and IBD details for each test/control - disease pair. 
 Analyse_FH |  This function analyse the FoundHaplo scores and predicts samples that carry the known disease haplotypes
 
 ## Example
@@ -76,10 +76,9 @@ Analyse_FH |  This function analyse the FoundHaplo scores and predicts samples t
 Below is an IBD analysis performed on simulated data to demonstrate the steps involved in FoundHaplo. Change the parameters for each function to see how it affects the results.
 
 **NOTE: Run Generate_FH_score function on the R command line since the system() command used in the function to utilise vcfools/bcftools may not work on R studio..**
-
-### Calculate the corresponding base pair positions and trim the dataset to contain +-10cM on either side of the disease-causing variant
-
-```{r}
+  
+  ### Calculate the corresponding base pair positions and trim the dataset to contain +-10cM on either side of the disease-causing variant
+  ```{r}
 library(FoundHaplo)
 library(vcfR)
 library(data.table)
@@ -94,13 +93,13 @@ setwd( temp_DIR )
 # save the Hapmap genetic map file to read from
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE) # save genetic_map_GRCh37_chr8 as a text file to read from
 # Find_bp_to_trim gives the corresponding base pair positions of +-10cM from a given disease locus
-Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),geneticMap_DIR=temp_DIR,output_file=paste0(temp_DIR,"/DCV_bp.txt"))
+Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052"),geneticMap_DIR=temp_DIR,output_file=paste0(temp_DIR,"/DCV_bp.txt"))
 ```
 
 ### Create haplotype columns from the test cohort VCF file
 
 ```{r}
-# FAME1_test_cohort is a VCF file with samples to test using FoundHaplo
+# FAME1_test_cohort is a VCF file with imputed SNP genotyped samples to test using FoundHaplo
 #Create_hap_VCF separates haplotype data into two columns of a data frame.
 test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
 head(test_haplotype_info)
@@ -109,13 +108,13 @@ head(test_haplotype_info)
 
 ```{r}
 # Convert_bp_cM adds a new column with centiMorgan positions corresponding to the base pairs in haplotype_file data
-test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info, DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info, DCV="FAME1.chr8.119379052",geneticMap_DIR=temp_DIR)
 head(test_haplotype_info_cM)
 ```
 ### Phase samples with a disease variant by pedigrees
 
 ```{r}
-if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} # create a temporafy directory to save disease haplotypes
+if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} # create a temporary directory to save disease haplotypes
 
 # FAME1_disease_cohort is a VCF file with genotype data of disease individuals
 write.vcf(FAME1_disease_cohort,paste0(temp_DIR,"/","FAME1_disease_cohort.vcf.gz")) # save FAME1_disease_cohort as a VCF file to read from
@@ -148,7 +147,7 @@ common_markers=merge(disease_file, test_haplotype_info_cM, by=c("#CHROM","POS", 
 fix=common_markers[,c("#CHROM","POS","REF","ALT")]
 test_haplotype_info_cM=merge(test_haplotype_info_cM, fix, by=c("#CHROM","POS", "REF","ALT"))
 disease_file=merge(disease_file, fix, by=c("#CHROM","POS", "REF","ALT"))
-disease_file=Convert_bp_cM(haplotype_file=disease_file,DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+disease_file=Convert_bp_cM(haplotype_file=disease_file,DCV="FAME1.chr8.119379052",geneticMap_DIR=temp_DIR)
 disease_file=disease_file[,which(!colnames(disease_file) %in% c("#CHROM","REF","ALT"))]
 final_file=as.data.frame(cbind(disease_file,test_haplotype_info_cM[,c(11,11+1)]))
 final_file=subset(final_file,final_file$MAF>0)
@@ -159,9 +158,9 @@ attach(final_file)
 final_file <- final_file[order(POS),]
 detach(final_file) # final_file is ready to compare disease and the two test haplotypes for IBD relateness
 #Calculate_IBD generates the IBD report and saves in a given directory as a text file
-Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052",geneticMap_DIR=temp_DIR)
 Final_IBD_score
-setwd( orig_dir )
+setwd( orig_DIR )
 ```
 
 ### A wrapper function to generate FH score and IBD details for each test/control - disease pair
@@ -184,8 +183,8 @@ sample_info=data.frame(rbind(c("HG00362_1_HG00362_1,HG00362_2_HG00362_2","duo"),
 write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 # Phase FAME1_disease_cohort by pedigree
 Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
-                   output_DIR = paste0(temp_DIR,"/1"),
-                   sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
+                    output_DIR = paste0(temp_DIR,"/1"),
+                    sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
 # FAME1_test_cohort is the test cohort
 write.vcf(FAME1_test_cohort,paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"))
 write.table(file00,paste0(temp_DIR,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
@@ -193,7 +192,7 @@ write.vcf(FAME1_control_cohort,paste0(temp_DIR,"/3/","FAME1.chr8.vcf.gz"))
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
 # Generate_FH_score calculates FH score values for every disease-test pair and saves results in .txt files for every disease haplotype
 # Assuming disease haplotypes are sourced from a directory instead of the FoundHaplo database
-Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
+Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
 setwd(paste0(temp_DIR,"/4"))
 FH_IBD_scores=read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE) # read the first .txt file with results to review
 # Concatanate all the results in list.files(paste0(temp_DIR,"/4"))  into one text file for analysis
@@ -207,8 +206,9 @@ setwd(orig_DIR)
 orig_DIR <- getwd()
 temp_DIR <- tempdir()
 setwd( temp_DIR )
-# FH_IBD_scores represents all the concatenated FH scores from multiple .txt files
-write.table(FH_IBD_scores,"FH_IBD_scores.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-Analyse_FH("FH_IBD_scores.txt",temp_DIR,0.99)
+# FH_IBD_scores represents all the concatenated FH scores from multiple .txt files. This could be for multiple test samples across multiple disease haplotypes, and across multiple DCVs
+write.table(FH_IBD_scores,"FH_IBD_scores.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
+Analyse_FH("FH_IBD_scores.txt",temp_DIR,0.99,from_control=FALSE) 
+# Samples predicted to carry the disease haplotypes will be plotted in red and will be returned as output in the function
 setwd(orig_DIR)
 ```{r}
