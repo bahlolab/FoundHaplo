@@ -2,7 +2,7 @@
 #'
 #' @description
 #' sample.A with alleles 0|1 will be split to two columns with sample.A:a=0 and sample.A:b=1
-#' @param haplotype_file A dataframe file in VCF format (including columns in a typical VCF file) after removing meta data
+#' @param haplotype_file A dataframe file containing imputed SNP genotyped data in VCF format (including columns in a typical VCF file) after removing meta data
 #' @return A data frame with haplotypes of test individuals in two columns
 #' @import vcfR
 #' @importFrom dplyr mutate_all

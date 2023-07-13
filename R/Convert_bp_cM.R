@@ -1,10 +1,10 @@
 #' Adds a column with centiMorgan values to the input file
 #'
 #' @description
-#' "position_cM" column will be added after column "POS" in to a data frame file with VCF format
+#' "position_cM" column will be added after column "POS" in to a data frame file first nine columns in VCF format
 #' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
-#' @param haplotype_file A dataframe file in VCF format (including columns in a typical VCF file) after removing meta data
-#' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052.
+#' @param haplotype_file A dataframe file with first nine columns in VCF format after removing meta data, if any
+#' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052
 #' @param geneticMap_DIR Directory to genetic_map_HapMapII_GRCh37 location
 #' @return A dataframe with cM distance annotated
 #' @import tibble
@@ -14,7 +14,7 @@
 #' temp_DIR <- tempdir()
 #' setwd( temp_DIR )
 #' write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-#' haplotype_file_cM=Convert_bp_cM(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)),DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+#' haplotype_file_cM=Convert_bp_cM(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)),DCV="FAME1.chr8.119379052",geneticMap_DIR=temp_DIR)
 #' setwd(orig_DIR)
 
 Convert_bp_cM=function(haplotype_file,DCV,geneticMap_DIR)

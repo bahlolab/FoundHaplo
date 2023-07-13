@@ -6,7 +6,8 @@
 #' @param results_FILE Path to a single .txt file with all the FH scores by FoundHaplo
 #' @param save_FH_output_DIR Directory to save the graphical output of the FH scores
 #' @param critical_percentile Critical percentile of the control cohort to derive predictions
-#' @return A data frame predictions that gave FH scores greater than a selected critical percentile
+#' @param from_control If the critical value should be calculated from a control cohort or not. Default is from_control=TRUE. We recommend running a control cohort.
+#' @return A data frame predictions that gave FH scores greater than a selected critical percentile. This function plots results in a pdf file in save_FH_output_DIR
 #' @import dplyr
 #' @import ggplot2
 #' @import gridExtra
@@ -19,7 +20,7 @@
 #' Analyse_FH("FH_IBD_scores.txt",temp_DIR,0.99)
 #' setwd(orig_DIR)
 
-Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile=0.99)
+Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile=0.99,from_control=TRUE)
 {
 
   results_file=read.delim(results_FILE,header = FALSE)
@@ -53,9 +54,22 @@ Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile=0.99)
     controls=subset(file1,file1$data_type=="controls")
     test_set=subset(file1,file1$data_type=="test")
 
-    CLLR=controls %>%
-      group_by(test_name) %>%
-      summarize(critical_quantile = quantile(FH, probs = critical_percentile)) # you can change the critical value
+if(from_control){
+  print("Critical values are calculated from a control cohort")
+  if(nrow(controls)==0){stop("There are no controls to calculate the critical values. Please run a control cohort.")}
+  CLLR=controls %>%
+    group_by(test_name) %>%
+    summarize(critical_quantile = quantile(FH, probs = critical_percentile)) # you can change the critical value
+
+
+}
+if(!from_control){
+  print("Critical values are calculated from the test cohort")
+  CLLR=test_set %>%
+    group_by(test_name) %>%
+    summarize(critical_quantile = quantile(FH, probs = critical_percentile)) # you can change the critical value
+
+    }
 
     CLLR=as.data.frame(CLLR)
 
@@ -80,21 +94,11 @@ Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile=0.99)
     predictions=data.frame(rbind(predictions,predicted_samples))
     colnames(predictions)=c("DCV","test_name","test_sample_name","FH")
 
-    test_set$sample_index=1:nrow(test_set)
-    p2[[ii]]=ggplot(test_set)+
-      aes(x=sample_index,y=FH)+
-      geom_point(color="black")+labs(x="sample index",y="FH score",title="FH score of the test cohort in descending order",subtitle="Alternatively samples sharing the disease haplotypes can be identified if they are seprated as a cluster from the rest")+theme(plot.title = element_text(color="black", size=14, face="bold"),legend.key.size = unit(0.1, 'cm'),legend.text=element_text(size=10),legend.position="bottom",legend.title=element_blank(),panel.background = element_rect(fill = "white", colour = "white"),axis.text.y=element_text(size=10))
-
-  }
-
-  pdf(paste0(save_FH_output_DIR,"/FH_results.pdf"), height=8, width=14)
-  for(ii in 1:length(lengths(p1)))
-  {
+  pdf(paste0(save_FH_output_DIR,"/FH_results_",unique(results_file$DCV)[ii],".pdf"), height=8, width=14)
     print(grid.arrange(p1[[ii]],nrow = 1,ncol=1))
-    print(grid.arrange(p2[[ii]],nrow = 1,ncol=1))
 
-  }
   dev.off()
+  }
   print(paste0("Graphical output is saved in ",save_FH_output_DIR))
 
   print(paste0("Test samples that gave FH score values above the ",critical_percentile*100,"th critical percentile are below"))

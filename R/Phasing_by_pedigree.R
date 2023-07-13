@@ -5,7 +5,7 @@
 #' @details
 #' Make sure the input_vcf chromosome column doesn't have the "chr" prefix.
 #' @param input_vcf File path to a VCF file  (type \code{"character"})
-#' @param output_DIR Directory to save the output VCF files (type \code{"character"})
+#' @param output_DIR Directory to save the output VCF files. Must have a dedicated directory for the output (type \code{"character"})
 #' @param sample_info_file File path to a tab delimited .txt file with sample names and type of phasing to be used. Each phasing is included in a new line, include sample names as in the VCF file in mentioned order.
 #' For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
 #' For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
