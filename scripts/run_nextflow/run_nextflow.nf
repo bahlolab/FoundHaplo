@@ -25,7 +25,6 @@ stdout result
 
 """
 
-// edit : give the full path to FoundHaplo/scripts/run_nextflow/Args_Generate_FH_score.R
 Rscript /mypath/FoundHaplo/scripts/run_nextflow/Args_Generate_FH_score.R $x
 
 
