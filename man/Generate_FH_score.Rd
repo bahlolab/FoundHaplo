@@ -30,7 +30,7 @@ Generate_FH_score(
 )
 }
 \arguments{
-\item{source_of_disease_haplotypes}{Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"}
+\item{source_of_disease_haplotypes}{Are the disease haplotypes sourced from a "database" or from a "directory"? If from a directory, all the database-related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"}
 
 \item{db_port}{Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory}
 
@@ -54,7 +54,7 @@ Generate_FH_score(
 
 \item{imputation_quality_score_cutoff_test}{Minimum allowed imputation quality which is R-squared. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise (type \code{"numeric"})}
 
-\item{frequency_type}{Population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc (type \code{"character"})}
+\item{frequency_type}{Population of the test cohort i.e. one of EUR, AMR, SAS, EAS, AFR etc (type \code{"character"})}
 
 \item{geneticMap_DIR}{Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})}
 
@@ -64,7 +64,7 @@ Generate_FH_score(
 
 \item{test_name}{meaningful name for the test cohort  (type \code{"character"})}
 
-\item{test_list}{.txt File path to the file with chunk of test/control samples names to be analysed from the test/control cohort  (type \code{"character"})}
+\item{test_list}{.txt File path to the file with a chunk of test/control samples names to be analysed from the test/control cohort  (type \code{"character"})}
 
 \item{data_type}{"test" or "control (type \code{"character"})}
 
@@ -75,14 +75,14 @@ Generate_FH_score(
 \item{TEMP_DIR}{Directory to save the temporary files  (type \code{"character"})}
 }
 \value{
-All details of IBD sharing for each test/control sample will be saved in tab delimited text files in save_report_DIR location, with below columns :
+All details of IBD sharing for each test/control sample will be saved in tab-delimited text files in the save_report_DIR location, with the below columns :
 name of each text file will be data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt
-Each .txt file in save_report_DIR location will correspond to each disease haplotype tested
+Each .txt file in the save_report_DIR location will correspond to each disease haplotype tested
 
 \enumerate{
 \item data_type, "test" or "control (type \code{"character"})
 \item test_name, meaningful name for the test cohort (type \code{"character"})
-\item frequency_type, population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc (type \code{"character"})
+\item frequency_type, the population of the test cohort i.e. one of EUR, AMR, SAS, EAS, AFR etc (type \code{"character"})
 \item minor_allele_cutoff (type \code{"numeric"})
 \item imputation_quality_score_cutoff_test (type \code{"numeric"})
 \item DCV (type \code{"character"})
@@ -106,7 +106,6 @@ Each .txt file in save_report_DIR location will correspond to each disease haplo
 This function save FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR"
 Run this function on R command line since system() command used in the function to utilise vcfools/bcftools may not work on R studio.
 Ethnicity of the test cohort should be decided in advance EUR,AMR,SAS,EAS,AFR etc
-Make sure that imputation quality score R2 or R-squared is the third field of the INFO column of the test VCF file.
 Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
 }
 \examples{
@@ -129,7 +128,7 @@ write.vcf(FAME1_test_cohort,paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"))
 write.table(file00,paste0(temp_DIR,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 write.vcf(FAME1_control_cohort,paste0(temp_DIR,"/3/","FAME1.chr8.vcf.gz"))
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052.",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
+Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
 setwd(paste0(temp_DIR,"/4"))
 read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE)
 setwd(orig_DIR)

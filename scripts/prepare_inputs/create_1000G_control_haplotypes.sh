@@ -8,7 +8,7 @@ CHROMOSOME=$(echo "$DCV" | cut -d'.' -f2)
 prefix="chr"
 CHROMOSOME=${CHROMOSOME#"$prefix"}
 
-echo "Finding start and end base pair positions to trim the VCF files."
+echo "Finding start and end base pair positions to trim the VCF files. Trim to contain +- 10cM from the DCV locus."
 
 Rscript $FoundHaplo_DIR/scripts/prepare_inputs/Run_Find_bp_to_trim.R $DCV $FoundHaplo_DIR/input_files/public_data/genetic_map_HapMapII_GRCh37 $FoundHaplo_DIR/temp/DCV_bp.txt
 START_BP=$(cut -f2 $FoundHaplo_DIR/temp/DCV_bp.txt)

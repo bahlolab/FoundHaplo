@@ -4,7 +4,12 @@
 \alias{Analyse_FH}
 \title{Analyse FoundHaplo FH score values for predictions}
 \usage{
-Analyse_FH(results_FILE, save_FH_output_DIR, critical_percentile = 0.99)
+Analyse_FH(
+  results_FILE,
+  save_FH_output_DIR,
+  critical_percentile = 0.99,
+  from_control = TRUE
+)
 }
 \arguments{
 \item{results_FILE}{Path to a single .txt file with all the FH scores by FoundHaplo}
@@ -12,9 +17,11 @@ Analyse_FH(results_FILE, save_FH_output_DIR, critical_percentile = 0.99)
 \item{save_FH_output_DIR}{Directory to save the graphical output of the FH scores}
 
 \item{critical_percentile}{Critical percentile of the control cohort to derive predictions}
+
+\item{from_control}{If the critical value should be calculated from a control cohort or not. Default is from_control=TRUE. We recommend running a control cohort.}
 }
 \value{
-A data frame predictions that gave FH scores greater than a selected critical percentile
+A data frame predictions that gave FH scores greater than a selected critical percentile. This function plots results in a pdf file in save_FH_output_DIR
 }
 \description{
 Predictions that gave FH scores greater than a selected critical percentile of the 1000 Genomes control cohort will be lislted.

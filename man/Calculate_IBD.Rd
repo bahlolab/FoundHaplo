@@ -25,7 +25,7 @@ Calculate_IBD(
 }
 Make sure that data_file sample names do not have underscore}
 
-\item{DCV}{Name of the disease causing variant of interest i.e FAME1.chr8.119379052.}
+\item{DCV}{Name of the disease causing variant of interest i.e FAME1.chr8.119379052}
 
 \item{geneticMap_DIR}{Directory to genetic_map_HapMapII_GRCh37 location}
 
@@ -72,7 +72,7 @@ Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz
 disease_file <-fread(paste0(temp_DIR,"/",paste(c("NA11920_NA11920","Affected_parent_NA11920_Affected_parent_NA11920","Unaffected_parent_NA11920_Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
 test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
-test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info,DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info,DCV="FAME1.chr8.119379052",geneticMap_DIR=temp_DIR)
 MAF=sapply(strsplit(disease_file$INFO,";",fixed=TRUE),"[[", 6)
 MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[", 2)
 disease_file=as.data.frame(cbind(disease_file[,c("#CHROM","POS","REF","ALT")],MAF,disease_file[,"h1"]))
@@ -87,7 +87,7 @@ common_markers=merge(disease_file, test_haplotype_info_cM, by=c("#CHROM","POS", 
 fix=common_markers[,c("#CHROM","POS","REF","ALT")]
 test_haplotype_info_cM=merge(test_haplotype_info_cM, fix, by=c("#CHROM","POS", "REF","ALT"))
 disease_file=merge(disease_file, fix, by=c("#CHROM","POS", "REF","ALT"))
-disease_file=Convert_bp_cM(haplotype_file=disease_file,DCV="FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+disease_file=Convert_bp_cM(haplotype_file=disease_file,DCV="FAME1.chr8.119379052",geneticMap_DIR=temp_DIR)
 disease_file=disease_file[,which(!colnames(disease_file) \%in\% c("#CHROM","REF","ALT"))]
 final_file=as.data.frame(cbind(disease_file,test_haplotype_info_cM[,c(11,11+1)]))
 final_file=subset(final_file,final_file$MAF>0)
@@ -97,6 +97,6 @@ final_file=distinct(final_file,position_cM,.keep_all= TRUE)
 attach(final_file)
 final_file <- final_file[order(POS),]
 detach(final_file)
-Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052.",geneticMap_DIR=temp_DIR)
+Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052",geneticMap_DIR=temp_DIR)
 setwd( orig_DIR )
 }

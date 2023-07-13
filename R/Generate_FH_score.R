@@ -7,6 +7,13 @@
 #' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
 #' @param source_of_disease_haplotypes Are the disease haplotypes sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"
 #' @param db_port Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory
+#' This function saves FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR"
+#' Run this function on the R command line since the system() command used in the function to utilise vcfools/bcftools may not work on R studio.
+#' Ethnicity of the test cohort should be decided in advance EUR, AMR, SAS, EAS, AFR etc
+#' Make sure that imputation quality score R2 or R-squared is the third field of the INFO column of the test VCF file.
+#' Genome built should be GRCh37, and genetic map in "geneticMap_DIR" must have chromosomes named with the "chr" prefix; add the prefix if needed
+#' @param source_of_disease_haplotypes Are the disease haplotypes sourced from a "database" or from a "directory"? If from a directory, all the database-related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"
+#' @param db_port Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory
 #' @param db_host Server to the running FoundHaplo database instance, "invalid" if disease haplotypes are sourced from a directory
 #' @param db_password Password of the remote user, "invalid" if disease haplotypes are sourced from a directory
 #' @param db_name Name of the FoundHaplo database, default is FoundHaploDB, "invalid" if disease haplotypes are sourced from a directory
@@ -17,24 +24,24 @@
 #' @param MA_cutoff Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4
 #' @param meiosis Estimated number of meiosis between disease-test pair, default is 1
 #' @param imputation_quality_score_cutoff_test Minimum allowed imputation quality which is R-squared. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise (type \code{"numeric"})
-#' @param frequency_type Population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc (type \code{"character"})
+#' @param frequency_type Population of the test cohort i.e. one of EUR, AMR, SAS, EAS, AFR etc (type \code{"character"})
 #' @param geneticMap_DIR Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
 #' @param disease_files_DIR directory of the disease haplotype VCFs for a single disease variant. "invalid" if disease haplotypes are sourced from a database (type \code{"character"})
 #' @param test_file File path to the test cohort VCF (type \code{"character"})
 #' @param test_name meaningful name for the test cohort  (type \code{"character"})
-#' @param test_list .txt File path to the file with chunk of test/control samples names to be analysed from the test/control cohort  (type \code{"character"})
+#' @param test_list .txt File path to the file with a chunk of test/control samples names to be analysed from the test/control cohort  (type \code{"character"})
 #' @param data_type "test" or "control (type \code{"character"})
 #' @param controls_file_DIR Directory where the 1000 Genomes control files are stored  (type \code{"character"})
 #' @param save_report_DIR Directory to save the required details of the IBD sharing to analyze later  (type \code{"character"})
 #' @param TEMP_DIR Directory to save the temporary files  (type \code{"character"})
-#' @return All details of IBD sharing for each test/control sample will be saved in tab delimited text files in save_report_DIR location, with below columns :
+#' @return All details of IBD sharing for each test/control sample will be saved in tab-delimited text files in the save_report_DIR location, with the below columns :
 #' name of each text file will be data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt
-#' Each .txt file in save_report_DIR location will correspond to each disease haplotype tested
+#' Each .txt file in the save_report_DIR location will correspond to each disease haplotype tested
 #'
 #' \enumerate{
 #' \item data_type, "test" or "control (type \code{"character"})
 #' \item test_name, meaningful name for the test cohort (type \code{"character"})
-#' \item frequency_type, population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc (type \code{"character"})
+#' \item frequency_type, the population of the test cohort i.e. one of EUR, AMR, SAS, EAS, AFR etc (type \code{"character"})
 #' \item minor_allele_cutoff (type \code{"numeric"})
 #' \item imputation_quality_score_cutoff_test (type \code{"numeric"})
 #' \item DCV (type \code{"character"})

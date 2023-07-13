@@ -7,7 +7,7 @@
 Create_hap_VCF(haplotype_file)
 }
 \arguments{
-\item{haplotype_file}{A dataframe file in VCF format (including columns in a typical VCF file) after removing meta data}
+\item{haplotype_file}{A dataframe file containing imputed SNP genotyped data in VCF format (including columns in a typical VCF file) after removing meta data}
 }
 \value{
 A data frame with haplotypes of test individuals in two columns

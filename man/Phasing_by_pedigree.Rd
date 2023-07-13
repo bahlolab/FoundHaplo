@@ -9,7 +9,7 @@ Phasing_by_pedigree(input_vcf, output_DIR, sample_info_file)
 \arguments{
 \item{input_vcf}{File path to a VCF file  (type \code{"character"})}
 
-\item{output_DIR}{Directory to save the output VCF files (type \code{"character"})}
+\item{output_DIR}{Directory to save the output VCF files. Must have a dedicated directory for the output (type \code{"character"})}
 
 \item{sample_info_file}{File path to a tab delimited .txt file with sample names and type of phasing to be used. Each phasing is included in a new line, include sample names as in the VCF file in mentioned order.
 For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
