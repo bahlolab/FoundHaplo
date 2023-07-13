@@ -21,7 +21,7 @@ Analyse_FH(
 \item{from_control}{If the critical value should be calculated from a control cohort or not. Default is from_control=TRUE. We recommend running a control cohort.}
 }
 \value{
-A data frame predictions that gave FH scores greater than a selected critical percentile. This function plots results in a pdf file in save_FH_output_DIR
+A data frame with predictions that gave FH scores greater than a selected critical percentile. This function plots the predicted samples in a pdf file in save_FH_output_DIR
 }
 \description{
 Predictions that gave FH scores greater than a selected critical percentile of the 1000 Genomes control cohort will be lislted.

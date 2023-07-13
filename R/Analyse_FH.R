@@ -7,7 +7,7 @@
 #' @param save_FH_output_DIR Directory to save the graphical output of the FH scores
 #' @param critical_percentile Critical percentile of the control cohort to derive predictions
 #' @param from_control If the critical value should be calculated from a control cohort or not. Default is from_control=TRUE. We recommend running a control cohort.
-#' @return A data frame predictions that gave FH scores greater than a selected critical percentile. This function plots results in a pdf file in save_FH_output_DIR
+#' @return A data frame with predictions that gave FH scores greater than a selected critical percentile. This function plots the predicted samples in a pdf file in save_FH_output_DIR
 #' @import dplyr
 #' @import ggplot2
 #' @import gridExtra
