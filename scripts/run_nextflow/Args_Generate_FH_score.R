@@ -40,5 +40,5 @@ class(minor_allele_cutoff)="numeric"
 library(FoundHaplo)
 
 
-Generate_FH_score(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,
+Generate_FH_score(source_of_disease_haplotypes,db_port,db_host,db_password,db_name,db_unix_socket,DCV,minor_allele_cutoff,gen_allele_mismatch_rate,MA_cutoff,meiosis,imputation_quality_score_cutoff_test,frequency_type,geneticMap_DIR,disease_files_DIR,test_file,test_name,
 ,test_list,data_type,controls_file_DIR,save_report_DIR,TEMP_DIR)
