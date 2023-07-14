@@ -124,7 +124,7 @@ write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=F
 # Phasing_by_pedigree will create disease haplotypes in a given directory
 Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
                     output_DIR = paste0(tempdir(), "/1"),
-                    sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
+                    sample_info_file = paste0(temp_DIR,"/","sample_info.txt"),n.cores=1)
 # temp_DIR/1 will have disease haplotypes in VCF format. disease haplotype column in each file is named as "h1" with homozygous genotypes in every VCF file.
 ```
 ### Calculate the FH score and IBD details between a known disease haplotype and a test individual for a disease variant of interest
@@ -184,7 +184,7 @@ write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=F
 # Phase FAME1_disease_cohort by pedigree
 Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
                     output_DIR = paste0(temp_DIR,"/1"),
-                    sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
+                    sample_info_file = paste0(temp_DIR,"/","sample_info.txt"),n.cores=1)
 # FAME1_test_cohort is the test cohort
 write.vcf(FAME1_test_cohort,paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"))
 write.table(file00,paste0(temp_DIR,"/2/","file00",".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
