@@ -81,7 +81,7 @@ For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
 For the type "duo", affected-offspring,affected-parent duo
 For the type "related", affected-sample-1,affected-sample2 related
 
-The post imputation script will create a seperate file in VCF format for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/. The "h1" column in the file represents the disease haplotype. Additionaly the post imputation script will remove multiallelic SNPs using gnomAD frequency files downloaded with ANNOVAR. You can copy the disease haplotypes in FoundHaplo/input_files/input_vcf_data/disease_haplotypes to your preferred directory. You must dedicate a directory to store disease haplotypes for a single disease variant. 
+The post imputation script will create a seperate file in VCF format for each derived disease haplotype in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/. The "h1" column in the file represents the disease haplotype. Additionaly the post imputation script will remove multiallelic SNPs using gnomAD frequency files downloaded with ANNOVAR. You can copy the disease haplotypes in FoundHaplo/input_files/input_vcf_data/disease_haplotypes to your preferred directory. **You must dedicate a directory to store disease haplotypes for a single disease variant**. 
 
 The created disease haplotypes in FoundHaplo/input_files/input_vcf_data/disease_haplotypes/ can be efficiently managed in a MySQL database system. How to create and manage the FoundHaplo database is explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md). 
 The FoundHaplo database enables researchers to retain the privacy of their data.
