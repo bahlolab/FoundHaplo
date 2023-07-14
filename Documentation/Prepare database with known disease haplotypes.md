@@ -152,8 +152,9 @@ Create a directory named scripts to save .sql scripts to import disease haplotyp
 mkdir $FoundHaplo_database_DIR/scripts
 ```
 
-3. install RMariaDB in R
+3. install RMariaDB and DBI in R
 ```R
+install.packages("DBI") 
 install.packages("RMariaDB") 
 ```
 
