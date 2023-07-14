@@ -8,7 +8,7 @@ Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_
 
 # All the parameters that the user has to specify are described below
 
-1. **source_of_disease_haplotypes** Are the disease haplotypes sourced from a "database" or from a "directory"? If from a directory, all the database-related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid". "database" works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
+1. **source_of_disease_haplotypes** Are the disease haplotypes sourced from a "database" or from a "directory"? If from a directory, all the database-related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid". If sourcing from a directory, one must have a dedicated directory to store disease haplotypes for a single disease variant. database" works ONLY if you have installed the FoundHaplo database using instructions [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20database%20with%20known%20disease%20haplotypes.md)
 2. **db_port** Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory 
 3. **db_host** Server to the running FoundHaplo database instance, "invalid" if disease haplotypes are sourced from a directory
 4. **db_password** Password of the remote user, "invalid" if disease haplotypes are sourced from a directory
