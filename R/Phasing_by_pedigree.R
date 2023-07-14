@@ -7,6 +7,7 @@
 #' @param input_vcf File path to a VCF file  (type \code{"character"})
 #' @param output_DIR Directory to save the output VCF files. Must have a dedicated directory for the output (type \code{"character"})
 #' @param sample_info_file File path to a tab delimited .txt file with sample names and type of phasing to be used. Each phasing is included in a new line, include sample names as in the VCF file in mentioned order.
+#' @param n.cores Number of cores to parallelize, default is 1.
 #' For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
 #' For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
 #' "duo" and "related" works similarly (type \code{"character"})
@@ -32,21 +33,13 @@
 #'                          sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
 #' setwd( orig_DIR )
 
-Phasing_by_pedigree=function(input_vcf,output_DIR,sample_info_file)
+Phasing_by_pedigree=function(input_vcf,output_DIR,sample_info_file,n.cores=1)
 {
   if(!file.exists(input_vcf)){stop("input_vcf does not exist")}
   if(!dir.exists(output_DIR)){stop("output_DIR does not exist")}
   if(!file.exists(sample_info_file)){stop("sample_info_file does not exist")}
 
   sample_info=read.delim(sample_info_file,header=FALSE)
-  chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
-  if (nzchar(chk) && chk == "TRUE") {
-    # use 2 cores in CRAN/Travis/AppVeyor
-    n.cores <- 2
-  } else {
-    # use all cores in devtools::test()
-    n.cores <- min(nrow(sample_info),10,detectCores())
-  }
 
   #create the cluster
   my.cluster <- parallel::makeCluster(
@@ -224,6 +217,7 @@ Phasing_by_pedigree=function(input_vcf,output_DIR,sample_info_file)
     write.table(input_file_vcf@meta,paste0(output_DIR,"/",sample_info[line,1],".vcf"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
     write.table(data_file,paste0(output_DIR,"/",sample_info[line,1],".vcf"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = TRUE,append=TRUE)
 
+    print(paste0("line is ",line))
   })
   parallel::stopCluster(my.cluster)
 }
