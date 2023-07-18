@@ -17,7 +17,7 @@
 #' temp_DIR <- tempdir()
 #' setwd( temp_DIR )
 #' write.table(FH_IBD_scores,"FH_IBD_scores.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-#' Analyse_FH("FH_IBD_scores.txt",temp_DIR,0.99)
+#' Analyse_FH("FH_IBD_scores.txt",temp_DIR,99)
 #' setwd(orig_DIR)
 
 Analyse_FH=function(results_FILE,save_FH_output_DIR,critical_percentile=99,from_control=TRUE)
