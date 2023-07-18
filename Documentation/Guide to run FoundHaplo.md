@@ -20,14 +20,14 @@ If you do not have the Nextflow pipeline, run the main R function [Generate_FH_s
 6. After running FoundHaplo, Run [Analyse_FH.R](https://github.com/bahlolab/FoundHaplo/blob/main/R/Analyse_FH.R) to get the predictions and plot the test samples likely to carry the tested disease-causing variants.
 
 ```R
-Analyse_FH(results_FILE="/mypath/FoundHaplo/results/FH_IBD_scores/results.txt",save_FH_output_DIR="/mypath/FoundHaplo/results/FH_Analysis",critical_percentile=0.99,from_control = FALSE)
+Analyse_FH(results_FILE="/mypath/FoundHaplo/results/FH_IBD_scores/results.txt",save_FH_output_DIR="/mypath/FoundHaplo/results/FH_Analysis",critical_percentile=99,from_control = FALSE)
 ```
 
 All the parameters that the user has to specify are described below
 
 * results_FILE = Path to a single .txt file with all the FH scores
 * save_FH_output_DIR = Directory to save the graphical output of the FH scores 
-* critical_percentile = Critical percentile of the control cohort to derive predictions. Recommend above 0.9
+* critical_percentile = Critical percentile of the control cohort (or the test cohort itself) to derive predictions. Recommend above the 90th percentile; default is 99th percentile
 * from_control = TRUE if the critical value is calculated from a control cohort or FALSE otherwise. Recommend running a control cohort; default is, from_control = TRUE
 
 Go back to the [main page](https://github.com/bahlolab/FoundHaplo).
