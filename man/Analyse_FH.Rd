@@ -7,7 +7,7 @@
 Analyse_FH(
   results_FILE,
   save_FH_output_DIR,
-  critical_percentile = 0.99,
+  critical_percentile = 99,
   from_control = TRUE
 )
 }
@@ -16,9 +16,9 @@ Analyse_FH(
 
 \item{save_FH_output_DIR}{Directory to save the graphical output of the FH scores}
 
-\item{critical_percentile}{Critical percentile of the control cohort to derive predictions}
+\item{critical_percentile}{Critical percentile of the control cohort (or the test cohort itself) to derive predictions. Recommend above the 90th percentile. Default is 99th percentile}
 
-\item{from_control}{If the critical value should be calculated from a control cohort or not. Default is from_control=TRUE. We recommend running a control cohort.}
+\item{from_control}{If the critical value should be calculated from a control cohort or not. Default is from_control=TRUE. We recommend running a control cohort}
 }
 \value{
 A data frame with predictions that gave FH scores greater than a selected critical percentile. This function plots the predicted samples in a pdf file in save_FH_output_DIR
