@@ -12,7 +12,7 @@ Database setup follows recommendations from [Research Computing guide to running
 mkdir -p /mypath/FoundHaplo_database
 FoundHaplo_database_DIR=/mypath/FoundHaplo_database
 ```
-Or create a folder "FoundHaplo_database" for the database inside FoundHaplo_DIR/FoundHaplo_database directory
+It may be convenient to create a folder "FoundHaplo_database" for the database inside FoundHaplo_DIR/FoundHaplo_database directory
 ```bash
 mkdir -p $FoundHaplo_DIR/FoundHaplo_database/FoundHaplo_database
 FoundHaplo_database_DIR=$FoundHaplo_DIR/FoundHaplo_database/FoundHaplo_database
