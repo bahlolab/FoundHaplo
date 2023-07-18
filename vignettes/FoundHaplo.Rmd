@@ -208,7 +208,7 @@ temp_DIR <- tempdir()
 setwd( temp_DIR )
 # FH_IBD_scores represents all the concatenated FH scores from multiple .txt files. This could be for multiple test samples across multiple disease haplotypes, and across multiple DCVs
 write.table(FH_IBD_scores,"FH_IBD_scores.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
-Analyse_FH("FH_IBD_scores.txt",temp_DIR,0.99,from_control=FALSE) 
-# Samples predicted to carry the disease haplotypes will be plotted in red and will be returned as output in the function
+Analyse_FH("FH_IBD_scores.txt",temp_DIR,99,from_control=FALSE) 
+# Samples that passed the given critical_percentile will be predicted to carry the disease haplotypes and are plotted in red and returned as output in the function
 setwd(orig_DIR)
 ```{r}
