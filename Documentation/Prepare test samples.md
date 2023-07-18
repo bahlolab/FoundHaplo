@@ -62,6 +62,6 @@ Set the variables as below,
 * INPUT_VCF_BASE_NAME : File name of the imputed VCF file  
 * DCV : Name the disease variant of interest in the format of disease.chr.position. i.e FAME1.chr8.119379052 Use OMIM abbreviation for the disease.
 
-The test_samples_post_imputation.sh will create a VCF file with test individuals in FoundHaplo/input_files/input_vcf_data/test_cohort
+The test_samples_post_imputation.sh will create a VCF file with test individuals in FoundHaplo/input_files/input_vcf_data/test_cohort and test sample IDs will be saved to FoundHaplo/input_files/input_vcf_data/test_cohort/samples.txt
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
