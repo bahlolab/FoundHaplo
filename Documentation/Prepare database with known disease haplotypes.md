@@ -12,7 +12,7 @@ Database setup follows recommendations from [Research Computing guide to running
 mkdir -p /mypath/FoundHaplo_database
 FoundHaplo_database_DIR=/mypath/FoundHaplo_database
 ```
-Or create a folder "FoundHaplo_database" for the database inside FoundHaplo_DIR/FoundHaplo_database directory
+It may be convenient to create a folder "FoundHaplo_database" for the database inside FoundHaplo_DIR/FoundHaplo_database directory
 ```bash
 mkdir -p $FoundHaplo_DIR/FoundHaplo_database/FoundHaplo_database
 FoundHaplo_database_DIR=$FoundHaplo_DIR/FoundHaplo_database/FoundHaplo_database
@@ -133,11 +133,11 @@ singularity instance stop mysql
 
 ## How to acess the database in R and import disease haplotypes using RMariadaDB
 
-1. Download the relevant connector using [link](https://mariadatabase.com/downloads/#connectors)
+1. Download the relevant [connector](https://mariadatabase.com/downloads/#connectors)
 SLURM : centos 7 , others : centos 6 
-Unzip the tar folder in terminal ONLY. Do not unzip by right clicking
+Unzip the tar folder in the terminal ONLY. Do not unzip by right-clicking
 
-2. Add the downloaded files to your default path everytime the database is needed to be accessed from R
+2. Add the downloaded files to your default path every time the database is needed to be accessed from R
 
 Add the mariadatabase config to the $PATH  
 
