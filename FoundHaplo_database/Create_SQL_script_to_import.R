@@ -240,7 +240,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     Samples=dbSendQuery(db, "SELECT * FROM Samples;") # can not add LIMIT here as in SQL
     Samples <- dbFetch(Samples,)
     
-    if(Samples$sample_id %in% samples$sample_id & individuals$individual_id %in% Individuals$individual_id){
+    if(samples$sample_id %in% Samples$sample_id  & individuals$individual_id %in% Individuals$individual_id){
       stop("sample_id already exist the database for the same individual_id")
     }
     
