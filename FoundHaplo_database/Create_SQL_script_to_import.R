@@ -254,7 +254,7 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     PathogenicMutations=dbSendQuery(db, "SELECT * FROM DiseaseCausingVariants;") # can not add LIMIT here as in SQL
     PathogenicMutations <- dbFetch(PathogenicMutations,)
     
-    if(!(PathogenicMutations$DCV_id %in% pathogenic_mutations$mutation_id))
+    if(!(pathogenic_mutations$DCV_id %in% PathogenicMutations$mutation_id))
     {
       
       for (ii in seq_len(nrow(pathogenic_mutations))) {
