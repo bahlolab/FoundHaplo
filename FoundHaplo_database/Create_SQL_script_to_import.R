@@ -251,20 +251,20 @@ Create_SQL_script_to_import=function(disease_hap_FILE,save_SQL_FILE,db_port,db_h
     
     ##check if pathogenic_mutations is there
     
-    PathogenicMutations=dbSendQuery(db, "SELECT * FROM PathogenicMutations;") # can not add LIMIT here as in SQL
+    PathogenicMutations=dbSendQuery(db, "SELECT * FROM DiseaseCausingVariants;") # can not add LIMIT here as in SQL
     PathogenicMutations <- dbFetch(PathogenicMutations,)
     
     if(!(PathogenicMutations$mutation_id %in% pathogenic_mutations$mutation_id))
     {
       
       for (ii in seq_len(nrow(pathogenic_mutations))) {
-        ii_command <- paste0("INSERT INTO PathogenicMutations (", paste(names(pathogenic_mutations), collapse=","), ") VALUES(", paste(pathogenic_mutations[ii, ], collapse=","), ");\n")
+        ii_command <- paste0("INSERT INTO DiseaseCausingVariants (", paste(names(pathogenic_mutations), collapse=","), ") VALUES(", paste(pathogenic_mutations[ii, ], collapse=","), ");\n")
         cat(ii_command, file=mysql_commands, append=TRUE)
       }
     }
     
     for (ii in seq_len(nrow(individuals_with_known_mutations))) {
-      ii_command <- paste0("INSERT INTO IndividualsWithKnownMutations (", paste(names(individuals_with_known_mutations), collapse=","), ") VALUES(", paste(individuals_with_known_mutations[ii, ], collapse=","), ");\n")
+      ii_command <- paste0("INSERT INTO IndividualsWithDiseaseCausingVariants (", paste(names(individuals_with_known_mutations), collapse=","), ") VALUES(", paste(individuals_with_known_mutations[ii, ], collapse=","), ");\n")
       cat(ii_command, file=mysql_commands, append=TRUE)
     }
     ##write ONLY common_markers_genotypes to sql file
