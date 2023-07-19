@@ -133,7 +133,7 @@ singularity instance stop mysql
 
 ## How to acess the database in R and import disease haplotypes using RMariadaDB
 
-1. Download the relevant [connector] (https://mariadatabase.com/downloads/#connectors)
+1. Download the relevant [connector](https://mariadatabase.com/downloads/#connectors)
 SLURM : centos 7 , others : centos 6 
 Unzip the tar folder in the terminal ONLY. Do not unzip by right-clicking
 
