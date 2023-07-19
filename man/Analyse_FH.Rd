@@ -32,6 +32,6 @@ orig_DIR <- getwd()
 temp_DIR <- tempdir()
 setwd( temp_DIR )
 write.table(FH_IBD_scores,"FH_IBD_scores.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-Analyse_FH("FH_IBD_scores.txt",temp_DIR,0.99)
+Analyse_FH("FH_IBD_scores.txt",temp_DIR,99)
 setwd(orig_DIR)
 }
