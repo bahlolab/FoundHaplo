@@ -57,7 +57,7 @@ The function returns all the details of IBD sharing for each test/control sample
 The name of each text file corresponds to a single run of FoundHaplo (or a job if the pipeline explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing%20with%20Nextflow.md) is used)
 i.e. data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt.
 
-Concatenate all the .txt files in save_report_DIR and generate a single text file for further analysis as below.
+Concatenate all the .txt files in save_report_DIR and generate a single text file for further analysis as below. Feel free to copy your output text files wherever you want. 
 
 ```bash
 FoundHaplo_DIR=/mypath/FoundHaplo
