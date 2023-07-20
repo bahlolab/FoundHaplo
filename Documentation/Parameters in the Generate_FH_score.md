@@ -61,7 +61,11 @@ Concatenate all the .txt files in save_report_DIR and generate a single text fil
 
 ```bash
 FoundHaplo_DIR=/mypath/FoundHaplo
-cat "$FoundHaplo_DIR/results/output/"*.txt > $FoundHaplo_DIR/results/FH_IBD_scores/results.txt 
+cat "$FoundHaplo_DIR/results/output/"*.txt > $FoundHaplo_DIR/results/FH_IBD_scores/results.txt
+```
+Delete all the text files in the $FoundHaplo_DIR/results/output after you copied them to $FoundHaplo_DIR/results/FH_IBD_scores/results.txt
+```bash
+rm -rf $FoundHaplo_DIR/results/output/*.txt 
 ```
 
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
