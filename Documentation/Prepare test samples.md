@@ -64,4 +64,6 @@ Set the variables as below,
 
 The test_samples_post_imputation.sh will create a VCF file with test individuals in FoundHaplo/input_files/input_vcf_data/test_cohort and test sample IDs will be saved to FoundHaplo/input_files/input_vcf_data/test_cohort/samples.txt
 
+You can copy the test cohort and samples.txt in FoundHaplo/input_files/input_vcf_data/test_cohort to your preferred directory. **It is recommended to dedicate a directory to store test cohort and samples.txt for a single disease variant.**
+
 Go back to the [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
