@@ -1,7 +1,6 @@
 # Setting up FoundHaplo MySQL Database
 
-This document describes the steps required to setup the FoundHaplo MySQL database.
-
+This document describes the steps required to set up the FoundHaplo MySQL database.
 
 Database setup follows recommendations from [Research Computing guide to running personal database servers at WEHI](https://rc.wehi.edu.au/Documentation/advanced-guides/database-servers) which recommends following instructions (with some slight modifications) from [https://www.hpc.iastate.edu/guides/containers/mysql-server](https://www.hpc.iastate.edu/guides/containers/mysql-server)
 
@@ -66,7 +65,7 @@ cp setup/my.cnf ${HOME}/.my.cnf
 cp setup/mysqlrootpw ${HOME}/.mysqlrootpw
 ```
 
-7. Create local directories for MySQL to be bind-mounted with singularity container
+7. Create local directories for MySQL to be bind-mounted with a singularity container
 
 ```bash
 mkdir -p $FoundHaplo_database_DIR/mysql/var/lib/mysql
@@ -91,9 +90,9 @@ singularity run instance://mysql
 ```
 The MySQL instance is now running on the server
 
-## How to acess the MySQL instance
+## How to access the MySQL instance
 
-1. Run singularity instance if its already stopped.
+1. Run the singularity instance if it's already stopped.
 ```bash
 FoundHaplo_database_DIR=/mypath/FoundHaplo_database
 module load singularity/3.6.2
@@ -112,14 +111,14 @@ singularity run instance://mysql
 singularity exec instance://mysql create_remote_admin_user.sh 
 ```
 
-3. Now you can connect to the the MySQL instance from different nodes using below command
+3. Now you can connect to the MySQL instance from different nodes using the below command
 ```bash
 mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword 
 ```
 
-You are now connected to MySQL server using singularity!
+You are now connected to the MySQL server using singularity!
 
-4. If you have not already created the FoundHaplo database, create the FoundHaplo database (FoundHaploDB) and tables in MySQL using schema as below.
+4. If you have not already created the FoundHaplo database, create the FoundHaplo database (FoundHaploDB) and tables in MySQL using the schema below.
 
 ```MySQL
 source /mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database_create_schema.sql;
@@ -131,7 +130,7 @@ exit;
 singularity instance stop mysql
 ```
 
-## How to acess the database in R and import disease haplotypes using RMariadaDB
+## How to access the database in R and import disease haplotypes using RMariadaDB
 
 1. Download the relevant [connector](https://mariadatabase.com/downloads/#connectors)
 SLURM : centos 7 , others : centos 6 
@@ -139,7 +138,7 @@ Unzip the tar folder in the terminal ONLY. Do not unzip by right-clicking
 
 2. Add the downloaded files to your default path every time the database is needed to be accessed from R
 
-Add the mariadatabase config to the $PATH  
+Add the maria database config to the $PATH  
 
 Add the directory containing libmariadatabase.so.3 to your LD_LIBRARY_PATH. 
 
@@ -164,7 +163,7 @@ install.packages("RMariaDB")
 ```R
 Create_SQL_script_to_import(disease_hap_FILE="/mypath/FoundHaplo/input_files/input_vcf_data/disease_haplotypes/HG00313_1_HG00313_1,HG00313_2_HG00313_2.vcf.gz",save_SQL_FILE="/mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database/scripts/example.sql",db_port=port_number,db_host=server_where_the_instance_is_running,db_password=pwd,db_name=FoundHaploDB,db_unix_socket=/mypath/FoundHaplo/FoundHaplo_database/FoundHaplo_database/mysql/run/mysqld/mysqld.sock,family_id=1,individual_id=1,father_id=0,mother_id=0,sex=1,sex_method="UNK",ancestral_population="Australian",ancestral_superpopulation="EUR",ancestry_method="reported",sample_id=1,data_type="SNP genotyping",external_lab_id="external_lab_id_example",external_source="external_source_example",phasing_method="trio phasing",impute_method="MIS",impute_phasing_panel="1000 Genomes EUR hg19",import_date="2023-05-01",DCV_id=1,disease_name="FAME1",omim_id=601068,gene="SAMD12",genomic_region="intronic",inheritance_model="AD",chromosome="chr8",start_position_hg19=19379052,end_position_hg19=-99999,start_position_hg38=-99999,end_position_hg38=-99999,start_position_cM=-99999,end_position_cM=-99999,genotype=1,validated=1,validation_method="RP-PCR",validation_note="UNK")
 ```
-All the parameters that user has to specify are described below
+All the parameters that the user has to specify are described below
 
 * disease_hap_FILE = Disease haplotype VCF file created using guidelines [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Prepare%20known%20disease%20haplotypes.md)
 * save_SQL_FILE = Path to save the .sql command files 
@@ -174,9 +173,9 @@ All the parameters that user has to specify are described below
 * db_name= Name of the database
 * db_unix_socket= Path to .sock of the database i.e $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock
 
-Parameters starting from family_id must be specified based on the databse schema as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/FoundHaplo_database/FoundHaplo_database_info.md)
+Parameters starting from family_id must be specified based on the database schema as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/FoundHaplo_database/FoundHaplo_database_info.md)
 
-5. Connect to the database and source the resulting sql script of the Create_SQL_script_to_import.R saved in save_SQL_FILE into the FoundHaploDB to import disease haplotypes
+5. Connect to the database and source the resulting SQL script of the Create_SQL_script_to_import.R saved in save_SQL_FILE into the FoundHaploDB to import disease haplotypes
 ```bash
 mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword 
 ```
@@ -191,7 +190,7 @@ Repeat steps 4 and 5 to import all the disease haplotypes into the database
 singularity instance stop mysql
 ```
 
-Note : You can keep connecting to the MySQL instance using "mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword" as long as the the singularity instance is not terminated. Singularity instance must be terminated after working/accessing the database to help prevent database getting crashed.
+Note: You can keep connecting to the MySQL instance using "mysql -h server_where_the_instance_is_running -P port_number -u remote_usr -ppassword" as long as the singularity instance is not terminated. The singularity instance must be terminated after working/accessing the database to help prevent the database from getting crashed.
 
 Go back to the [documentaton](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md).
 

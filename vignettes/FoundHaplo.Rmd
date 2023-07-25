@@ -1,5 +1,5 @@
 ---
-  title: "FoundHaplo Introduction"
+title: "FoundHaplo Introduction"
 author: "Erandee Robertson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -10,7 +10,7 @@ vignette: >
 \usepackage[utf8]{inputenc}
 ---
   
-  Individuals who inherit the same genetic mutation from a common ancestor also share genomic regions on either side of the shared disease-causing variant. This suggests that the presence of a disease-causing genetic variant can be inferred by assessing identity by descent sharing of the variant-associated haplotype between an individual known to have the disease-causing mutation and a patient with unknown aetiology.
+Individuals who inherit the same genetic mutation from a common ancestor also share genomic regions on either side of the shared disease-causing variant. This suggests that the presence of a disease-causing genetic variant can be inferred by assessing identity by descent sharing of the variant-associated haplotype between an individual known to have the disease-causing mutation and a patient with unknown aetiology.
 
 Using a Hidden Markov Model, Foundhaplo calculates the FH score, which is the likelihood of identity by descent between the samples of interest and a known disease-causing haplotype and evaluates the resulted scores against a control cohort to predict individuals that carry disease-causing haplotypes using SNP chip data.
 
@@ -19,9 +19,11 @@ Using a Hidden Markov Model, Foundhaplo calculates the FH score, which is the li
 
 There are three types of input data required by the FoundHaplo R package
 
-1. bgzipped imputed VCF file with individuals with known diseases and at least one of their family members to create the disease haplotype
-2. bgzipped imputed VCF file with test samples
+1. bgzipped imputed VCF file with individuals with known diseases and at least one of their family members to create the disease haplotype.
+2. bgzipped imputed and phased (using genome-wide imputation and phasing tools) VCF file with test samples.
 3. bgzipped VCF file with 1000 Genomes control samples for a specific population from EUR, AMR, SAS, EAS and AFR.
+
+FoundHaplo GitHub repository documents the preparation of input data required by the FoundHaplo R package. 
 
 Disease and test VCF files are generated from PLINK BED, BIM and FAM files, which are the binary files of .ped/map (http://www.cog-genomics.org/plink2).
 
@@ -29,26 +31,26 @@ Disease and test VCF files are generated from PLINK BED, BIM and FAM files, whic
 
 The input for FoundHaplo is imputed  bgzipped VCF files with haplotype data with the below columns.
 
-1. CHROM : Chromosome 
-2. POS : Base-pair position
-3. ID : rs# or variant identifier
-4. REF :  Reference allele
-5. ALT : Alternate allele
-6. QUAL : A quality score associated with the inference of the given alleles.
-7. FILTER : A flag indicating which of a given set of filters the variation has failed or PASS if all the filters were passed successfully.
-8. INFO : An extensible list of key-value pairs (fields) describing the variation. See below for some common fields. Multiple fields are separated by semicolons with optional values in the format
-9. FORMAT :  An (optional) extensible list of fields for describing the samples
+1. CHROM: Chromosome 
+2. POS: Base-pair position
+3. ID: rs# or variant identifier
+4. REF: Reference allele
+5. ALT: Alternate allele
+6. QUAL: A quality score associated with the inference of the given alleles.
+7. FILTER: A flag indicating which of a given set of filters the variation has failed or passed if all the filters were passed successfully.
+8. INFO: An extensible list of key-value pairs (fields) describing the variation. See below for some common fields. Multiple fields are separated by semicolons with optional values in the format
+9. FORMAT:  An (optional) extensible list of fields for describing the samples
 + SAMPLES
 
 INFO column in the disease cohort must have the gnomAD population frequencies annotated from ANNOVAR as explained in https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%20run%20FoundHaplo.md with below flags,
-INFO/AF_raw
 
-1. INFO/AF_afr
-2. INFO/AF_sas
-3. INFO/AF_amr
-4. INFO/AF_eas
-5. INFO/AF_nfe
-6. INFO/AF_fin 
+1. INFO/AF_raw (General population frequency)
+1. INFO/AF_afr (African population frequency)
+2. INFO/AF_sas (South Asian population frequency)
+3. INFO/AF_amr (Admixed American population frequency)
+4. INFO/AF_eas (East Asian population frequency)
+5. INFO/AF_nfe (Non-Finnish European population frequency)
+6. INFO/AF_fin (Finnish population frequency)
 
 ### Phased VCF files for the 1000 Genomes control cohort
 
@@ -57,27 +59,27 @@ Refer https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Guide%20to%
 ### Reference Data
 
 HapMap genetic maps are needed to annotate genetic map distances and are in https://github.com/bahlolab/Foundhaplo/tree/main/input_files/public_data/genetic_map_HapMapII_GRCh37
-gnomAD population frequencies to disease cort VCF files are annotated from ANNOVR, https://annovar.openbioinformatics.org/en/latest/user-guide/download/
+gnomAD population frequencies are annotated to disease cohort VCF files from ANNOVR, https://annovar.openbioinformatics.org/en/latest/user-guide/download/
   
   ## Key Functions
   
-  Function | Description
+Function | Description
 ------------------ | --------------------------------------------------
-  Find_bp_to_trim | Outputs the base pair positions corresponding to +-10cM from a given locus
-Create_hap_VCF | Takes a phased input data file with columns in VCF format and separates haplotypes into two columns
-Convert_bp_cM | Adds a column with centiMorgan values to the input file
+Find_bp_to_trim | Outputs the base pair positions corresponding to +-10cM from a given locus
+Create_hap_VCF | Takes a data frame with phased genotype data with columns in VCF format and separates haplotypes into two columns
+Convert_bp_cM | Adds a column with centiMorgan values to the input file 
 Phasing_by_pedigree | Phase samples with a disease variant by pedigrees
 Calculate_IBD |  Calculate the FH score and IBD details between a known disease haplotype and a test individual for a disease variant of interest
-Generate_FH_score | The wrapper function to generate FH scores and IBD details for each test/control - disease pair. 
+Generate_FH_score | The wrapper function to generate FH scores and IBD details for each test/control-disease pair. 
 Analyse_FH |  This function analyse the FoundHaplo scores and predicts samples that carry the known disease haplotypes
 
 ## Example
 
 Below is an IBD analysis performed on simulated data to demonstrate the steps involved in FoundHaplo. Change the parameters for each function to see how it affects the results.
 
-**NOTE: Run Generate_FH_score function on the R command line since the system() command used in the function to utilise vcfools/bcftools may not work on R studio..**
+**NOTE: Run the Generate_FH_score function on the R command line since the system() command used in the function to utilise vcfools/bcftools may not work on R studio..**
   
-  ### Calculate the corresponding base pair positions and trim the dataset to contain +-10cM on either side of the disease-causing variant
+### Calculate the corresponding base pair positions to trim the datasets to contain +-10cM on either side of the disease-causing variant
   ```{r}
 library(FoundHaplo)
 library(vcfR)
@@ -89,7 +91,7 @@ file.remove(list.files())
 str(genetic_map_GRCh37_chr8)
 orig_DIR <- getwd()
 temp_DIR <- tempdir()
-setwd( temp_DIR )
+setwd(temp_DIR)
 # save the Hapmap genetic map file to read from
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE) # save genetic_map_GRCh37_chr8 as a text file to read from
 # Find_bp_to_trim gives the corresponding base pair positions of +-10cM from a given disease locus
@@ -99,7 +101,7 @@ Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052"),geneticMap_DIR=temp_DIR,o
 ### Create haplotype columns from the test cohort VCF file
 
 ```{r}
-# FAME1_test_cohort is a VCF file with imputed SNP genotyped samples to test using FoundHaplo
+# FAME1_test_cohort is a VCF file with phased SNP genotyped samples to test using FoundHaplo
 #Create_hap_VCF separates haplotype data into two columns of a data frame.
 test_haplotype_info=Create_hap_VCF(haplotype_file=data.frame(cbind(FAME1_test_cohort@fix,FAME1_test_cohort@gt)))
 head(test_haplotype_info)
@@ -107,36 +109,36 @@ head(test_haplotype_info)
 ### Adds a column with centiMorgan values to the input file
 
 ```{r}
-# Convert_bp_cM adds a new column with centiMorgan positions corresponding to the base pairs in haplotype_file data
+# Convert_bp_cM adds a new column with centiMorgan positions corresponding to the base pairs in test_haplotype_info data
 test_haplotype_info_cM=Convert_bp_cM(haplotype_file=test_haplotype_info, DCV="FAME1.chr8.119379052",geneticMap_DIR=temp_DIR)
 head(test_haplotype_info_cM)
 ```
-### Phase samples with a disease variant by pedigrees
+### Phase samples with a disease variant by pedigrees to create disease haplotypes
 
 ```{r}
-if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} # create a temporary directory to save disease haplotypes
+if(!dir.exists(paste0(tempdir(), "/1"))){dir.create(paste0(tempdir(), "/1"))} # create a temporary directory to save disease haplotypes. There should be a dedicated directory to save disease haplotypes for a single disease variant.
 
 # FAME1_disease_cohort is a VCF file with genotype data of disease individuals
 write.vcf(FAME1_disease_cohort,paste0(temp_DIR,"/","FAME1_disease_cohort.vcf.gz")) # save FAME1_disease_cohort as a VCF file to read from
 sample_info=data.frame(rbind(c("HG00362_1_HG00362_1,HG00362_2_HG00362_2","duo"),c("NA11920_NA11920,Affected_parent_NA11920_Affected_parent_NA11920,Unaffected_parent_NA11920_Unaffected_parent_NA11920","trio"),c("HG00313_1_HG00313_1,HG00313_2_HG00313_2","duo")))
-sample_info # sample_info has three lines with instructions to pedigree phase three disease haplotypes in three separate VCF files, using the FAME1_disease_cohort
-write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save sample_info as a tab delimited text file to read from
+sample_info # sample_info has three lines with instructions to pedigree phase three disease haplotypes using the FAME1_disease_cohort and save phased genotype data in three separate VCF files 
+write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE) # save sample_info as a tab-delimited text file to read from
 # Phasing_by_pedigree will create disease haplotypes in a given directory
 Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
                     output_DIR = paste0(tempdir(), "/1"),
                     sample_info_file = paste0(temp_DIR,"/","sample_info.txt"),n.cores=1)
-# temp_DIR/1 will have disease haplotypes in VCF format. disease haplotype column in each file is named as "h1" with homozygous genotypes in every VCF file.
+# temp_DIR/1 will have disease haplotypes in VCF format. The disease haplotype column in each file is named "h1", with homozygous genotypes in every position in column "h1".
 ```
 ### Calculate the FH score and IBD details between a known disease haplotype and a test individual for a disease variant of interest
 
 ```{r}
 # Read one of the created disease haplotype files to test using FoundHaplo
-disease_file <-fread(paste0(tempdir(), "/1","/",paste(c("NA11920_NA11920","Affected_parent_NA11920_Affected_parent_NA11920","Unaffected_parent_NA11920_Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
+disease_file <-fread(paste0(tempdir(), "/1","/",paste0(c("NA11920_NA11920","Affected_parent_NA11920_Affected_parent_NA11920","Unaffected_parent_NA11920_Unaffected_parent_NA11920"), collapse = ','),".vcf"), skip = "#CHROM")
 MAF=sapply(strsplit(disease_file$INFO,";",fixed=TRUE),"[[", 6) # Taking "AF_nfe" as MAF
 MAF=sapply(strsplit(MAF,"=",fixed=TRUE),"[[", 2)
 disease_file=as.data.frame(cbind(disease_file[,c("#CHROM","POS","REF","ALT")],MAF,disease_file[,"h1"]))
 disease_file=disease_file[,c("#CHROM","POS","REF","ALT","MAF","h1")]
-h1=substr(disease_file[,"h1"],0,1) # h1 is the disease haplotype. get the first allele of every marker in the VCF file. both alleles are the same in database_file
+h1=substr(disease_file[,"h1"],0,1) # h1 is the disease haplotype. get the first allele of every marker in the VCF file. both alleles are the same in disease_file
 disease_file[,"h1"]=h1
 colnames(disease_file)[ncol(disease_file)]=paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ',') # add the name of the disease individual into the database_file
 disease_file$MAF=as.numeric(disease_file$MAF)
@@ -156,8 +158,8 @@ final_file=na.omit(final_file)
 final_file=distinct(final_file,position_cM,.keep_all= TRUE)
 attach(final_file)
 final_file <- final_file[order(POS),]
-detach(final_file) # final_file is ready to compare disease and the two test haplotypes for IBD relateness
-#Calculate_IBD generates the IBD report and saves in a given directory as a text file
+detach(final_file) # final_file is ready to compare disease and the two test haplotypes for IBD relatedness
+#Calculate_IBD generates the IBD report for a disease and a test sample
 Final_IBD_score <-Calculate_IBD(final_file,"FAME1.chr8.119379052",geneticMap_DIR=temp_DIR)
 Final_IBD_score
 setwd( orig_DIR )
@@ -194,8 +196,8 @@ write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quo
 # Assuming disease haplotypes are sourced from a directory instead of the FoundHaplo database
 Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
 setwd(paste0(temp_DIR,"/4"))
-FH_IBD_scores=read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE) # read the first .txt file with results to review
-# Concatanate all the results in list.files(paste0(temp_DIR,"/4"))  into one text file for analysis
+# Concatanate all the results in list.files(paste0(temp_DIR,"/4")) into one text file for analysis
+FH_IBD_scores=read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE) # Let's read the first .txt file with results as an example
 setwd(orig_DIR)
 ```
 
@@ -206,7 +208,7 @@ setwd(orig_DIR)
 orig_DIR <- getwd()
 temp_DIR <- tempdir()
 setwd( temp_DIR )
-# FH_IBD_scores represents all the concatenated FH scores from multiple .txt files. This could be for multiple test samples across multiple disease haplotypes, and across multiple DCVs
+# FH_IBD_scores represents all the concatenated FH scores from multiple .txt files. This could be for multiple test samples across multiple disease haplotypes and across multiple DCVs
 write.table(FH_IBD_scores,"FH_IBD_scores.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 Analyse_FH("FH_IBD_scores.txt",temp_DIR,99,from_control=FALSE) 
 # Samples that passed the given critical_percentile will be predicted to carry the disease haplotypes and are plotted in red and returned as output in the function
