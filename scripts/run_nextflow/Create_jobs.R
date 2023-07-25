@@ -21,7 +21,7 @@
 #' @param geneticMap_DIR Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
 #' @param disease_files_DIR Directory of the disease haplotype VCFs for a single disease variant(type \code{"character"})
 #' @param test_file File Path to the test cohort VCF (type \code{"character"})
-#' @param test_name a meaningful name for the test cohort  (type \code{"character"})
+#' @param test_name A meaningful name for the test cohort  (type \code{"character"})
 #' @param controls_file_DIR Directory where the 1000 Genomes control files are stored  (type \code{"character"})
 #' @param save_report_DIR Directory to save the required details of the IBD sharing to analyze later  (type \code{"character"})
 #' @param TEMP_DIR Directory to save the temporary files  (type \code{"character"})
