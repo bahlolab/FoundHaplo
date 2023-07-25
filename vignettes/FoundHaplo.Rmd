@@ -10,7 +10,7 @@ vignette: >
 \usepackage[utf8]{inputenc}
 ---
   
-  Individuals who inherit the same genetic mutation from a common ancestor also share genomic regions on either side of the shared disease-causing variant. This suggests that the presence of a disease-causing genetic variant can be inferred by assessing identity by descent sharing of the variant-associated haplotype between an individual known to have the disease-causing mutation and a patient with unknown aetiology.
+Individuals who inherit the same genetic mutation from a common ancestor also share genomic regions on either side of the shared disease-causing variant. This suggests that the presence of a disease-causing genetic variant can be inferred by assessing identity by descent sharing of the variant-associated haplotype between an individual known to have the disease-causing mutation and a patient with unknown aetiology.
 
 Using a Hidden Markov Model, Foundhaplo calculates the FH score, which is the likelihood of identity by descent between the samples of interest and a known disease-causing haplotype and evaluates the resulted scores against a control cohort to predict individuals that carry disease-causing haplotypes using SNP chip data.
 
