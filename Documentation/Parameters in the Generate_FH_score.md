@@ -12,7 +12,7 @@ Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_
 2. **db_port** Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory 
 3. **db_host** Server to the running FoundHaplo database instance, "invalid" if disease haplotypes are sourced from a directory
 4. **db_password** Password of the remote user, "invalid" if disease haplotypes are sourced from a directory
-5. **db_name Name** of the FoundHaplo database, default is FoundHaploDB, "invalid" if disease haplotypes are sourced from a directory
+5. **db_name** Name of the FoundHaplo database, default is FoundHaploDB, "invalid" if disease haplotypes are sourced from a directory
 6. **db_unix_socket** Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock, "invalid" if disease haplotypes are sourced from a directory
 7. **DCV** Name of the disease-causing variant of interest, i.e. FAME1.chr8.119379052. Use the OMIM abbreviation for the disease.
 8. **minor_allele_cutoff** The minimum minor allele frequency of SNPs allowed; we recommend this to be 0 
@@ -20,22 +20,22 @@ Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_
 10. **MA_cutoff** Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4
 11. **meiosis** Estimated number of meiosis between disease-test pair; default is 1
 12. **imputation_quality_score_cutoff_test** Minimum allowed imputation quality cut-off, which is R-squared for the test cohort. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise 
-13. **frequency_type** population of the test cohort, i.e. one of EUR, AMR, SAS, EAS, AFR etc 
-14. **geneticMap_DIR** directory path to genetic_map_HapMapII_GRCh37 files, which are in FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37/
+13. **frequency_type** Population of the test cohort, i.e. one of EUR, AMR, SAS, EAS, AFR etc 
+14. **geneticMap_DIR** Directory path to genetic_map_HapMapII_GRCh37 files, which are in FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37/
 15. **disease_files_DIR** directory of the disease haplotype VCFs for a single disease variant, which is FoundHaplo/input_files/input_vcf_data/disease_haplotypes by default. "invalid" if disease haplotypes are sourced from a database (type \code{"character"})
-16. **test_file** path of the test cohort file gzipped, which is in FoundHaplo/input_files/input_vcf_data/test_cohort.
-17. **test_name** meaningful name for the test cohort 
-18. **test_list** path to a .txt file that includes sample names from the test/control cohort. If running in parallel, We recommend a list of 1000 sample names. List of sample names in a test/control cohort can be split into chunks of samples as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing%20with%20Nextflow.md). Sample names for the example dataset of the test cohort are in FoundHaplo/input_files/input_vcf_data/test_cohort and sample names for the example dataset of the control cohort are in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population.  
+16. **test_file** Path of the test cohort file gzipped, which is in FoundHaplo/input_files/input_vcf_data/test_cohort.
+17. **test_name** a meaningful name for the test cohort 
+18. **test_list** Path to a .txt file that includes sample names from the test/control cohort. If running in parallel, We recommend a list of 1000 sample names. List of sample names in a test/control cohort can be split into chunks of samples as explained [here](https://github.com/bahlolab/FoundHaplo/blob/main/Documentation/Parallel%20processing%20with%20Nextflow.md). Sample names for the example dataset of the test cohort are in FoundHaplo/input_files/input_vcf_data/test_cohort and sample names for the example dataset of the control cohort are in FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_samples_by_population.  
 19. **data_type** "test" or "controls"
-20. **controls_file_DIR** directory, where the 1000 Genomes gzipped VCF control files are stored. Select the control population cohort the same as the test cohort corresponding to "frequency_type" above. Select one of the directories with control samples i.e FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR.
-21. **save_report_DIR** directory path to save the output of FoundHaplo IBD sharing for further analysis
-22. **TEMP_DIR** directory path to save the temporary files
+20. **controls_file_DIR** Directory, where the 1000 Genomes gzipped VCF control files are stored. Select the control population cohort the same as the test cohort corresponding to "frequency_type" above. Select one of the directories with control samples i.e FoundHaplo/input_files/public_data/1000G_control_haplotypes/1000G_haplotypes_by_variant/EUR.
+21. **save_report_DIR** Directory path to save the output of FoundHaplo IBD sharing for further analysis
+22. **TEMP_DIR** Directory path to save the temporary files
 
 The function returns all the details of IBD sharing for each test/control sample and will be saved in a separate tab-delimited text file in the save_report_DIR location, with the below columns:
 
 1. **data_type** "test" or "control" 
-2. **test_name** meaningful name for the test cohort 
-3. **frequency_type** population of the test cohort i.e. one of EUR, AMR, SAS, EAS, AFR etc 
+2. **test_name** a meaningful name for the test cohort 
+3. **frequency_type** Population of the test cohort i.e. one of EUR, AMR, SAS, EAS, AFR etc 
 4. **minor_allele_cutoff**
 5. **imputation_quality_score_cutoff_test**
 6. **DCV** 
