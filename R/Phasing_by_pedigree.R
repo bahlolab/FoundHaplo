@@ -6,11 +6,11 @@
 #' Make sure the input_vcf chromosome column doesn't have the "chr" prefix.
 #' @param input_vcf File path to a VCF file  (type \code{"character"})
 #' @param output_DIR Directory to save the output VCF files. Must have a dedicated directory for the output (type \code{"character"})
-#' @param sample_info_file File path to a tab delimited .txt file with sample names and type of phasing to be used. Each phasing is included in a new line, include sample names as in the VCF file in mentioned order.
-#' @param n.cores Number of cores to parallelize, default is 1.
-#' For the type "trio", affected-offspring,affected-parent,unaffected-parent trio
-#' For the type "duo" or "related", affected-offspring,affected-parent,unaffected-parent duo
-#' "duo" and "related" works similarly (type \code{"character"})
+#' @param sample_info_file File path to a tab delimited .txt file with sample names and type of phasing to be used. Each phasing is included in a new line, include sample names as in the VCF file in below mentioned order.
+#' For the type "trio": sample_info_file should have, affected-offspring,affected-parent,unaffected-parent trio.
+#' For the type "duo" or "related": sample_info_file should have, affected-sample_1,affected-sample_2 duo.
+#' The function works similarly for "duo" and "related".
+#' @param n.cores Number of cores to parallelize, default is 1 (type \code{"numeric"}).
 #' @return Write a valid new VCF file in output_DIR "h1" column contains the disease haplorype saved as homozygous genotypes.
 #' @import vcfR
 #' @import foreach

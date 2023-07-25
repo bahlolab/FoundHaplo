@@ -24,14 +24,14 @@ Find_bp_to_trim(
 Return a data frame with three columns 1.Original variant 2. base pair value of 10cM to the left of the variant 3. base pair value of 10cM to the right of the variant. The resulting dataframe is also written to the output_file location.
 }
 \description{
-Takes a vector with disease causing variants written in "FAME1.chr8.119379052." format, and calculate base pair values corresponding to +-10cM from the disease variant locus
-Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
+Takes a vector with disease causing variants written in "FAME1.chr8.119379052" format, and calculate base pair values corresponding to +-10cM from the disease variant locus.
+Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed.
 }
 \examples{
 orig_DIR <- getwd()
 temp_DIR <- tempdir()
-setwd( temp_DIR )
+setwd(temp_DIR)
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),geneticMap_DIR=temp_DIR,output_file=paste0(temp_DIR,"/DCV_bp.txt"))
+Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052"),geneticMap_DIR=temp_DIR,output_file=paste0(temp_DIR,"/DCV_bp.txt"))
 setwd( orig_DIR )
 }

@@ -1,8 +1,8 @@
-#' Takes a phased input data file with columns in VCF format and separate haplotypes into two columns
+#' Takes a data frame with phased genotype data with columns in VCF format and separates haplotypes into two columns
 #'
 #' @description
 #' sample.A with alleles 0|1 will be split to two columns with sample.A:a=0 and sample.A:b=1
-#' @param haplotype_file A dataframe file containing imputed SNP genotyped data in VCF format (including columns in a typical VCF file) after removing meta data
+#' @param haplotype_file A dataframe file containing phased SNP genotyped data in VCF format (including columns in a typical VCF file) after removing meta data
 #' @return A data frame with haplotypes of test individuals in two columns
 #' @import vcfR
 #' @importFrom dplyr mutate_all

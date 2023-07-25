@@ -22,8 +22,7 @@ Calculate_IBD(
 \item disease_haplotype, known disease haplotype (type \code{"numeric"})
 \item test_id:a, haplotype 1 of the test individual (type \code{"numeric"})
 \item test_id:b, haplotype 2 of the test individual  (type \code{"numeric"})
-}
-Make sure that data_file sample names do not have underscore}
+}}
 
 \item{DCV}{Name of the disease causing variant of interest i.e FAME1.chr8.119379052}
 
@@ -40,7 +39,7 @@ A data frame with all the details of the IBD sharing to analyze later :
 \enumerate{
 \item FH_score (type \code{"numeric"})
 \item left_LLR (type \code{"numeric"})
-\item right_LLr (type \code{"numeric"})
+\item right_LLR (type \code{"numeric"})
 \item total_cM_sharing (type \code{"numeric"})
 \item total_left_cM_sharing (type \code{"numeric"})
 \item total_right_cM_sharing (type \code{"numeric"})
@@ -54,7 +53,7 @@ A data frame with all the details of the IBD sharing to analyze later :
 }
 \description{
 Calculate the FH score and IBD details between a known disease haplotype and a test individual for a disease variant of interest.
-Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
+Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed.
 }
 \examples{
 library(vcfR)
@@ -79,7 +78,7 @@ disease_file=as.data.frame(cbind(disease_file[,c("#CHROM","POS","REF","ALT")],MA
 disease_file=disease_file[,c("#CHROM","POS","REF","ALT","MAF","h1")]
 h1=substr(disease_file[,"h1"],0,1) # h1 is the disease haplotype. get the first allele of every marker in the VCF file. both alleles are the same in database_file
 disease_file[,"h1"]=h1
-colnames(disease_file)[ncol(disease_file)]=paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ',') # add the name of the disease individual into the database_file
+colnames(disease_file)[ncol(disease_file)]=paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ',') # add the name of the disease individual into the disease_file
 disease_file$MAF=as.numeric(disease_file$MAF)
 disease_file=subset(disease_file,disease_file$MAF>0)
 colnames(test_haplotype_info_cM)[1]="#CHROM"

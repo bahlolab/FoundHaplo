@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Calculate the FH score and IBD details between a known disease haplotype and a test individual for a disease variant of interest.
-#' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
+#' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed.
 #' @param data_file A data frame with 6 columns containing genotype data of disease haplotype and test individual with
 #' \enumerate{
 #' \item position_bp, position in base pairs (type \code{"numeric"})
@@ -12,7 +12,6 @@
 #' \item test_id:a, haplotype 1 of the test individual (type \code{"numeric"})
 #' \item test_id:b, haplotype 2 of the test individual  (type \code{"numeric"})
 #' }
-#' Make sure that data_file sample names do not have underscore
 #' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052
 #' @param geneticMap_DIR Directory to genetic_map_HapMapII_GRCh37 location
 #' @param gen_allele_mismatch_rate Genotype and imputation error rate allowed, default is 0.1
@@ -22,7 +21,7 @@
 #' \enumerate{
 #' \item FH_score (type \code{"numeric"})
 #' \item left_LLR (type \code{"numeric"})
-#' \item right_LLr (type \code{"numeric"})
+#' \item right_LLR (type \code{"numeric"})
 #' \item total_cM_sharing (type \code{"numeric"})
 #' \item total_left_cM_sharing (type \code{"numeric"})
 #' \item total_right_cM_sharing (type \code{"numeric"})
@@ -57,7 +56,7 @@
 #' disease_file=disease_file[,c("#CHROM","POS","REF","ALT","MAF","h1")]
 #' h1=substr(disease_file[,"h1"],0,1) # h1 is the disease haplotype. get the first allele of every marker in the VCF file. both alleles are the same in database_file
 #' disease_file[,"h1"]=h1
-#' colnames(disease_file)[ncol(disease_file)]=paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ',') # add the name of the disease individual into the database_file
+#' colnames(disease_file)[ncol(disease_file)]=paste(c("NA11920","Affected_parent_NA11920","Unaffected_parent_NA11920"), collapse = ',') # add the name of the disease individual into the disease_file
 #' disease_file$MAF=as.numeric(disease_file$MAF)
 #' disease_file=subset(disease_file,disease_file$MAF>0)
 #' colnames(test_haplotype_info_cM)[1]="#CHROM"

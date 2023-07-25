@@ -2,12 +2,12 @@
 % Please edit documentation in R/Create_hap_VCF.R
 \name{Create_hap_VCF}
 \alias{Create_hap_VCF}
-\title{Takes a phased input data file with columns in VCF format and separate haplotypes into two columns}
+\title{Takes a data frame with phased genotype data with columns in VCF format and separates haplotypes into two columns}
 \usage{
 Create_hap_VCF(haplotype_file)
 }
 \arguments{
-\item{haplotype_file}{A dataframe file containing imputed SNP genotyped data in VCF format (including columns in a typical VCF file) after removing meta data}
+\item{haplotype_file}{A dataframe file containing phased SNP genotyped data in VCF format (including columns in a typical VCF file) after removing meta data}
 }
 \value{
 A data frame with haplotypes of test individuals in two columns

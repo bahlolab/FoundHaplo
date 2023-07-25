@@ -58,15 +58,15 @@ Generate_FH_score(
 
 \item{geneticMap_DIR}{Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})}
 
-\item{disease_files_DIR}{directory of the disease haplotype VCFs for a single disease variant. "invalid" if disease haplotypes are sourced from a database (type \code{"character"})}
+\item{disease_files_DIR}{Directory of the disease haplotype VCFs for a single disease variant. "invalid" if disease haplotypes are sourced from a database (type \code{"character"})}
 
 \item{test_file}{File path to the test cohort VCF (type \code{"character"})}
 
-\item{test_name}{meaningful name for the test cohort  (type \code{"character"})}
+\item{test_name}{A meaningful name for the test cohort  (type \code{"character"})}
 
 \item{test_list}{.txt File path to the file with a chunk of test/control samples names to be analysed from the test/control cohort  (type \code{"character"})}
 
-\item{data_type}{"test" or "control (type \code{"character"})}
+\item{data_type}{"test" or "control" (type \code{"character"})}
 
 \item{controls_file_DIR}{Directory where the 1000 Genomes control files are stored  (type \code{"character"})}
 
@@ -75,13 +75,13 @@ Generate_FH_score(
 \item{TEMP_DIR}{Directory to save the temporary files  (type \code{"character"})}
 }
 \value{
-All details of IBD sharing for each test/control sample will be saved in tab-delimited text files in the save_report_DIR location, with the below columns :
-name of each text file will be data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt
+All details of IBD sharing for each test/control sample will be saved in tab-delimited text files in the save_report_DIR location.
+The name of each text file will be data_type.test_name.DCV.disease_individual.test_individual.frequency_type.imputation_quality_score_cutoff_test.txt
 Each .txt file in the save_report_DIR location will correspond to each disease haplotype tested
-
+The saved text file will have below columns :
 \enumerate{
-\item data_type, "test" or "control (type \code{"character"})
-\item test_name, meaningful name for the test cohort (type \code{"character"})
+\item data_type, "test" or "control" (type \code{"character"})
+\item test_name, a meaningful name for the test cohort (type \code{"character"})
 \item frequency_type, the population of the test cohort i.e. one of EUR, AMR, SAS, EAS, AFR etc (type \code{"character"})
 \item minor_allele_cutoff (type \code{"numeric"})
 \item imputation_quality_score_cutoff_test (type \code{"numeric"})
@@ -103,10 +103,10 @@ Each .txt file in the save_report_DIR location will correspond to each disease h
 }
 }
 \description{
-This function save FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR"
+This function save FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR".
 Run this function on R command line since system() command used in the function to utilise vcfools/bcftools may not work on R studio.
-Ethnicity of the test cohort should be decided in advance EUR,AMR,SAS,EAS,AFR etc
-Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
+Ethnicity of the test cohort should be decided in advance. Must be one of the EUR,AMR,SAS,EAS,AFR etc.
+Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed.
 }
 \examples{
 orig_DIR <- getwd()
@@ -130,6 +130,6 @@ write.vcf(FAME1_control_cohort,paste0(temp_DIR,"/3/","FAME1.chr8.vcf.gz"))
 write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
 Generate_FH_score(source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",DCV="FAME1.chr8.119379052",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_DIR,disease_files_DIR=paste0(temp_DIR,"/1"),test_file=paste0(temp_DIR,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",test_list=paste0(temp_DIR,"/2/","file00.txt"),data_type="test",controls_file_DIR=paste0(temp_DIR,"/3"),save_report_DIR=paste0(temp_DIR,"/4"),temp_DIR)
 setwd(paste0(temp_DIR,"/4"))
-read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE)
+read.delim(list.files(paste0(temp_DIR,"/4"))[1],header=FALSE) # read one of the saved .txt files with IBD values
 setwd(orig_DIR)
 }

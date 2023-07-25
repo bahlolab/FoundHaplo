@@ -1,8 +1,8 @@
 #' Outputs the base pair positions corresponding to +-10cM from a given locus
 #'
 #' @description
-#' Takes a vector with disease causing variants written in "FAME1.chr8.119379052." format, and calculate base pair values corresponding to +-10cM from the disease variant locus
-#' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed
+#' Takes a vector with disease causing variants written in "FAME1.chr8.119379052" format, and calculate base pair values corresponding to +-10cM from the disease variant locus.
+#' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed.
 #' @param input_vector A vector with the variants (type \code{"character"})
 #' @param geneticMap_DIR Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
 #' @param output_file File path to save the results (type \code{"character"})
@@ -12,9 +12,9 @@
 #' @examples
 #' orig_DIR <- getwd()
 #' temp_DIR <- tempdir()
-#' setwd( temp_DIR )
+#' setwd(temp_DIR)
 #' write.table(genetic_map_GRCh37_chr8,"genetic_map_GRCh37_chr8.txt",sep = "\t",quote=FALSE, row.names=FALSE,col.names = TRUE)
-#' Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052."),geneticMap_DIR=temp_DIR,output_file=paste0(temp_DIR,"/DCV_bp.txt"))
+#' Find_bp_to_trim(input_vector=c("FAME1.chr8.119379052"),geneticMap_DIR=temp_DIR,output_file=paste0(temp_DIR,"/DCV_bp.txt"))
 #' setwd( orig_DIR )
 
 Find_bp_to_trim=function(input_vector,geneticMap_DIR,output_file,size_to_trim_cM=10)
