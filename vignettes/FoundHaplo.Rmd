@@ -19,9 +19,11 @@ Using a Hidden Markov Model, Foundhaplo calculates the FH score, which is the li
 
 There are three types of input data required by the FoundHaplo R package
 
-1. bgzipped imputed VCF file with individuals with known diseases and at least one of their family members to create the disease haplotype
-2. bgzipped imputed VCF file with test samples
+1. bgzipped imputed VCF file with individuals with known diseases and at least one of their family members to create the disease haplotype.
+2. bgzipped imputed and phased (using genome-wide imputation and phasing tools) VCF file with test samples.
 3. bgzipped VCF file with 1000 Genomes control samples for a specific population from EUR, AMR, SAS, EAS and AFR.
+
+FoundHaplo GitHub repository documents the preparation of input data required by the FoundHaplo R package. 
 
 Disease and test VCF files are generated from PLINK BED, BIM and FAM files, which are the binary files of .ped/map (http://www.cog-genomics.org/plink2).
 
@@ -32,7 +34,7 @@ The input for FoundHaplo is imputed  bgzipped VCF files with haplotype data with
 1. CHROM: Chromosome 
 2. POS: Base-pair position
 3. ID: rs# or variant identifier
-4. REF:  Reference allele
+4. REF: Reference allele
 5. ALT: Alternate allele
 6. QUAL: A quality score associated with the inference of the given alleles.
 7. FILTER: A flag indicating which of a given set of filters the variation has failed or passed if all the filters were passed successfully.
