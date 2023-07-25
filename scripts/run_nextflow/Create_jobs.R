@@ -5,23 +5,23 @@
 #' @param manifest_FILE Path of the manifest.txt file
 #' @param test_sample_chunks_DIR Directory to the .txt files with chunks of test sample IDs
 #' @param control_sample_chunks_DIR Directory to the .txt files with chunks of control sample IDs
-#' @param source_of_disease_haplotypes Are the disease haplotypes are sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"
+#' @param source_of_disease_haplotypes Are the disease haplotypes sourced from a "database" or from a "directory"? If from a directory, all the database-related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"
 #' @param db_port Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory  
 #' @param db_host Server to the running FoundHaplo database instance, "invalid" if disease haplotypes are sourced from a directory 
 #' @param db_password Password of the remote user, "invalid" if disease haplotypes are sourced from a directory 
 #' @param db_name Name of the FoundHaplo database, default is FoundHaploDB, "invalid" if disease haplotypes are sourced from a directory 
 #' @param db_unix_socket Path to the unix socket file, default is $FoundHaplo_database_DIR/mysql/run/mysqld/mysqld.sock, "invalid" if disease haplotypes are sourced from a directory 
-#' @param DCV Name of the disease causing variant of interest i.e FAME1.chr8.119379052. Use OMIM abbreviation for the disease. (type \code{"character"})
+#' @param DCV Name of the disease-causing variant of interest, i.e. FAME1.chr8.119379052. Use the OMIM abbreviation for the disease. (type \code{"character"})
 #' @param minor_allele_cutoff The minimum minor allele frequency of SNPs allowed, we recommend this to be 0 (type \code{"numeric"})
 #' @param gen_allele_mismatch_rate Genotype and imputation error rate allowed, default is 0.1
 #' @param MA_cutoff Moving average threshold for allowing genotype and imputation errors (derived based on simulation studies), default is -0.4
 #' @param meiosis Estimated number of meiosis between disease-test pair, default is 1
 #' @param imputation_quality_score_cutoff_test Minimum allowed imputation quality which is R-squared. Recommend to use 0.3 if the cohort has >100 samples ; 0 otherwise (type \code{"numeric"})
-#' @param frequency_type Population of the test cohort i.e one of EUR,AMR,SAS,EAS,AFR etc (type \code{"character"})
+#' @param frequency_type Population of the test cohort i.e. one of EUR, AMR, SAS, EAS, AFR etc (type \code{"character"})
 #' @param geneticMap_DIR Directory to genetic_map_HapMapII_GRCh37 location (type \code{"character"})
-#' @param disease_files_DIR directory of the disease haplotype VCFs for a single disease variant(type \code{"character"})
-#' @param test_file File path to the test cohort VCF (type \code{"character"})
-#' @param test_name meaningful name for the test cohort  (type \code{"character"})
+#' @param disease_files_DIR Directory of the disease haplotype VCFs for a single disease variant(type \code{"character"})
+#' @param test_file File Path to the test cohort VCF (type \code{"character"})
+#' @param test_name a meaningful name for the test cohort  (type \code{"character"})
 #' @param controls_file_DIR Directory where the 1000 Genomes control files are stored  (type \code{"character"})
 #' @param save_report_DIR Directory to save the required details of the IBD sharing to analyze later  (type \code{"character"})
 #' @param TEMP_DIR Directory to save the temporary files  (type \code{"character"})
