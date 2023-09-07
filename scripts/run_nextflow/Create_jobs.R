@@ -57,7 +57,7 @@
 #' {
 #' write.table(control_sample_names_chunk[[chunk]],paste0(temp_dir,"/2.controls/","file",chunk,".txt"),sep = "\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 #' }
-#' Create_jobs_DB(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),control_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),TEMP_DIR=temp_dir)
+#' Create_jobs_DB(manifest_FILE=paste0(temp_dir,"/4/manifest.txt"),test_sample_chunks_DIR=paste0(temp_dir,"/2.test"),control_sample_chunks_DIR=paste0(temp_dir,"/2.controls"),source_of_disease_haplotypes="directory",db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid",minor_allele_cutoff=0,gen_allele_mismatch_rate=0.01,MA_cutoff=-0.4,meiosis=1,imputation_quality_score_cutoff_test=0,frequency_type="EUR",geneticMap_DIR=temp_dir,disease_files_DIR=paste0(temp_dir,"/1"),test_file=paste0(temp_dir,"/","FAME1_test_cohort.vcf.gz"),test_name="FAME1_example_test_cohort",controls_file_DIR=paste0(temp_dir,"/3"),save_report_DIR=paste0(temp_dir,"/4"),TEMP_DIR=temp_dir)
 #' print("Example content of a manifest.txt file is below")
 #' read.delim(paste0(temp_dir,"/4/manifest.txt"),header=FALSE)
 #' 

@@ -5,7 +5,7 @@ Tool to Identify individuals with inherited disease-causing variants using SNP c
 Please contact the author, Erandee Robertson robertson.e@wehi.edu.au, if you would like to report any issues, feedback or feature requests.
 
 ## Citation
-If you use FoundHaplo, please acknowledge by citing "Erandee Robertson, Mark F Bennett and Melanie Bahlo. **FoundHaplo: Tool to Identify individuals with inherited disease-causing variants using SNP chip data [![DOI](https://zenodo.org/badge/542031544.svg)](https://zenodo.org/badge/latestdoi/542031544)**"
+If you use FoundHaplo, please acknowledge by citing "Erandee Robertson, Mark F Bennett and Melanie Bahlo. **FoundHaplo: Tool to Identify individuals with inherited disease-causing variants using SNP chip data [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8180852.svg)](https://doi.org/10.5281/zenodo.8180852)**"
 
 ## A guide to using FoundHaplo
 
