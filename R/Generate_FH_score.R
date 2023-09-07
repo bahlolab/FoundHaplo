@@ -1,12 +1,6 @@
 #' A wrapper function to generate FH score and IBD details for each test/control - disease pair using known disease haplotypes sourced from a directory or from a database of disease haplotypes
 #'
 #' @description
-#' This function save FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR".
-#' Run this function on R command line since system() command used in the function to utilise vcfools/bcftools may not work on R studio.
-#' Ethnicity of the test cohort should be decided in advance. Must be one of the EUR,AMR,SAS,EAS,AFR etc.
-#' Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed.
-#' @param source_of_disease_haplotypes Are the disease haplotypes sourced from a "database" or from a "directory"?. If from a directory, all the database related parameters must be set to "invalid". db_port="invalid",db_host="invalid",db_password="invalid",db_name="invalid",db_unix_socket="invalid"
-#' @param db_port Network port of the FoundHaplo database, "invalid" if disease haplotypes are sourced from a directory
 #' This function saves FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR"
 #' Run this function on the R command line since the system() command used in the function to utilise vcfools/bcftools may not work on R studio.
 #' Ethnicity of the test cohort should be decided in advance EUR, AMR, SAS, EAS, AFR etc
