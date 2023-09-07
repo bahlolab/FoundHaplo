@@ -103,10 +103,11 @@ The saved text file will have below columns :
 }
 }
 \description{
-This function save FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR".
-Run this function on R command line since system() command used in the function to utilise vcfools/bcftools may not work on R studio.
-Ethnicity of the test cohort should be decided in advance. Must be one of the EUR,AMR,SAS,EAS,AFR etc.
-Genome built should be GRCh37 and genetic map in "geneticMap_DIR" must have chromosomes named with "chr" prefix, add the prefix if needed.
+This function saves FH score and IBD details for each test/control - disease pair in a .txt file in "save_report_DIR"
+Run this function on the R command line since the system() command used in the function to utilise vcfools/bcftools may not work on R studio.
+Ethnicity of the test cohort should be decided in advance EUR, AMR, SAS, EAS, AFR etc
+Make sure that imputation quality score R2 or R-squared is the third field of the INFO column of the test VCF file.
+Genome built should be GRCh37, and genetic map in "geneticMap_DIR" must have chromosomes named with the "chr" prefix; add the prefix if needed
 }
 \examples{
 orig_DIR <- getwd()
