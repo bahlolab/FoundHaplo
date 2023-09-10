@@ -14,6 +14,7 @@ Phasing_by_pedigree(input_vcf, output_DIR, sample_info_file, n.cores = 1)
 \item{sample_info_file}{File path to a tab delimited .txt file with sample names and type of phasing to be used. Each phasing is included in a new line, include sample names as in the VCF file in below mentioned order.
 For the type "trio": sample_info_file should have, affected-offspring,affected-parent,unaffected-parent trio.
 For the type "duo" or "related": sample_info_file should have, affected-sample_1,affected-sample_2 duo.
+For the type "recessive", a single affected sample is phased around a recessive variant using haplotype homozygosity : sample_info_file should have, affected-sample, recessive.
 The function works similarly for "duo" and "related".}
 
 \item{n.cores}{Number of cores to parallelize, default is 1 (type \code{"numeric"}).}
@@ -22,7 +23,7 @@ The function works similarly for "duo" and "related".}
 Write a valid new VCF file in output_DIR "h1" column contains the disease haplorype saved as homozygous genotypes.
 }
 \description{
-Takes a VCF file with at least two known disease individuals and create disease haplotypes based on trio/duo or related data.
+Takes a VCF file with known disease individuals and create disease haplotypes based on trio/duo, related samples or recessive variants .
 }
 \details{
 Make sure the input_vcf chromosome column doesn't have the "chr" prefix.
@@ -37,6 +38,6 @@ sample_info=data.frame(rbind(c("HG00362_1_HG00362_1,HG00362_2_HG00362_2","duo"),
 write.table(sample_info,paste0(temp_DIR,"/","sample_info.txt"),sep ="\t",quote=FALSE, row.names=FALSE,col.names = FALSE)
 Phasing_by_pedigree(input_vcf = paste0(temp_DIR,"/FAME1_disease_cohort",".vcf.gz"),
                          output_DIR = temp_DIR,
-                         sample_info_file = paste0(temp_DIR,"/","sample_info.txt"))
+                         sample_info_file = paste0(temp_DIR,"/","sample_info.txt"),n.cores=1)
 setwd( orig_DIR )
 }
