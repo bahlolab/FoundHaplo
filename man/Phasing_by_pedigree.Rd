@@ -4,7 +4,7 @@
 \alias{Phasing_by_pedigree}
 \title{Phase samples with a disease variant by pedigrees}
 \usage{
-Phasing_by_pedigree(input_vcf, output_DIR, sample_info_file, n.cores = 1)
+Phasing_by_pedigree(input_vcf, output_DIR, sample_info_file, n.cores)
 }
 \arguments{
 \item{input_vcf}{File path to a VCF file  (type \code{"character"})}
@@ -17,7 +17,7 @@ For the type "duo" or "related": sample_info_file should have, affected-sample_1
 For the type "recessive", a single affected sample is phased around a recessive variant using haplotype homozygosity : sample_info_file should have, affected-sample, recessive.
 The function works similarly for "duo" and "related".}
 
-\item{n.cores}{Number of cores to parallelize, default is 1 (type \code{"numeric"}).}
+\item{n.cores}{Number of cores to parallelize (type \code{"numeric"}).}
 }
 \value{
 Write a valid new VCF file in output_DIR "h1" column contains the disease haplorype saved as homozygous genotypes.

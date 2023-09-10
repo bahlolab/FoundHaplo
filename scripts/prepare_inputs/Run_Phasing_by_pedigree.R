@@ -14,5 +14,5 @@ library(stringr)
 library(doParallel)
 library(parallel)
 
-Phasing_by_pedigree(input_vcf,output_DIR,sample_info_file)
+Phasing_by_pedigree(input_vcf,output_DIR,sample_info_file,n.cores)
 
