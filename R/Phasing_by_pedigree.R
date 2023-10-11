@@ -95,7 +95,7 @@ Phasing_by_pedigree=function(input_vcf,output_DIR,sample_info_file,n.cores)
       haplotype_file_1=data.frame(cbind(haplotype_file_1,dummy_sum))
 
       # remove markers that can not be distinguished
-      haplotype_file_1[which(haplotype_file_1$affected.o!=1 | haplotype_file_1$affected.p!=1|haplotype_file_1$unaffected.p!=1),]
+      haplotype_file_1=haplotype_file_1[which(haplotype_file_1$affected.o!=1 | haplotype_file_1$affected.p!=1|haplotype_file_1$unaffected.p!=1),]
 
       haplotype_file_2 = haplotype_file_1[,!(names(haplotype_file_1) %in% c("affected.o","affected.p","unaffected.p"))]
 
