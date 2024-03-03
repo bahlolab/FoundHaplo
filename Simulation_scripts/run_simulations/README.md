@@ -12,7 +12,7 @@ dataset.details_controls_total.txt contains the same columns as dataset.details_
 We only run each simulaion once for controls since controls are not simulated to share with the any other samples. Therefore dataset.details_controls_total.txt contains combinations of columns 1, 2 and 3 only.
 
 We use nextflow to perform the simulation study. Which runs the script, R/Simulations_FoundHaplo_single_founder_effects.R.    
-Check Simulations_FoundHaplo_single_founder_effects.R to understand parameters.   
+Check Args_Generate_IBD.R and Simulations_FoundHaplo_single_founder_effects.R to understand parameters.   
    
 Specify different path_to_save when running cases and controls.
 
@@ -28,7 +28,7 @@ module load nextflow
 nohup /path/run_simulations/cases/./run_controls.nf 
 ```
 
-Each output text file in path_to_save should be concatenated to one text file
+Once the FoundHaplo run is completed, each output text file in path_to_save should be concatenated to one text file
 
 Run for cases...
 ```bash
