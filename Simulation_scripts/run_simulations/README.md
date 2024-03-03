@@ -72,9 +72,9 @@ results_cases.txt and results_controls.txt will have columns as below;
 29.Total number of SNPs in the analysis  
 30.Total cM length in the analysis  
 
-31.Type of comparison (simulated_case, truth or control) 
-simulated_case : The test sample is being simulated to share the respective disease haplotype.
-truth : The test sample is being simulated to share a different disease haplotype.
+31.Type of comparison (simulated_case, truth or control)  
+simulated_case : The test sample is being simulated to share the respective disease haplotype.  
+truth : The test sample is being simulated to share a different disease haplotype.  
 control : The test sample is not simulated to share any disease haplotype i.e its a control sample.
 
 Note: Please remove duplicated columns before analysing the results .txt file.
