@@ -9,10 +9,10 @@ S_Er_rate=args[5] # switch error rate allowed; default is 20.05 switches per mbp
 path_to_save=args[6] # Directory path to save the output of FoundHaplo IBD sharing for further analysis
 meiosis=args[7] # Estimated number of meiosis between disease-test pair; default is 1
 
-root= args[8]  # The folder to 1000 Genomes VCF files in .RDS format. save all 1000 Genomes VCF files by disease_variant (example: FAME1.chr8.vcf.RDS) in RDS format in a single folder.
+root= args[8]  # The folder to 1000 Genomes VCF files in .RDS format. save all 1000 Genomes VCF files by disease_variant (example: FAME1.chr8.vcf.RDS) in RDS format in a single folder. Make sure to trim and keep only +-10cM around the disease locus.
 path_MIS_ref= args[9] # The folder to MIS-1000 Genomes reference panel, which is used to filter in genetic markers based on 1000 Genomes reference panel in the Michigan Imputation Server. Make sure the reference files are in chr.vcf format for all the chromosomes
 path_hapmap= args[10] # Directory path to genetic_map_HapMapII_GRCh37 files, which are also FoundHaplo/input_files/public_data/genetic_map_HapMapII_GRCh37/
-path_gnomad_frq= args[11] #The path to .txt file that has gnomAD EUR frequency. path_gnomad_frq would be in "/path/hg19_EUR.sites.2015_08.txt" format (This MAF file was taken from ANNOVAR)
+path_gnomad_frq= args[11] #The path to .txt file that has gnomAD EUR frequency. path_gnomad_frq would be in "/path/hg19_EUR.sites.2015_08.txt" format (This MAF file is taken from ANNOVAR)
 
 
 seed_id = args[12] # Integer to identify the founder scenario, values take 1-10
