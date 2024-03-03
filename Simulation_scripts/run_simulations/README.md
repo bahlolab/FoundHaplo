@@ -11,8 +11,8 @@ Column 4 : Expected sharing length in total around the disease variant (0.5,1,2 
 dataset.details_controls_total.txt contains the same columns as dataset.details_cases_total.txt.   
 We only run each simulaion once for controls since controls are not simulated to share with the any other samples. Therefore dataset.details_controls_total.txt contains combinations of columns 1, 2 and 3 only.
 
-We use nextflow to perform the simulation study. Which runs the script, R/Simulations_FoundHaplo_single_founder_effects.R.    
-Check Args_Generate_IBD.R and Simulations_FoundHaplo_single_founder_effects.R to understand parameters.   
+We use nextflow to perform the simulation study. Which runs the script, [R/Simulations_FoundHaplo_single_founder_effects.R](https://github.com/bahlolab/FoundHaplo/blob/main/Simulation_scripts/R/Simulations_FoundHaplo_single_founder_effects.R).    
+Check [Args_Generate_IBD.R](https://github.com/bahlolab/FoundHaplo/blob/main/Simulation_scripts/R/Args_Generate_IBD.R) and [Simulations_FoundHaplo_single_founder_effects.R](https://github.com/bahlolab/FoundHaplo/blob/main/Simulation_scripts/R/Simulations_FoundHaplo_single_founder_effects.R) to understand parameters.   
    
 Specify different path_to_save when running cases and controls.
 
@@ -77,5 +77,6 @@ simulated_case : The test sample is being simulated to share the respective dise
 truth : The test sample is being simulated to share a different disease haplotype.
 control : The test sample is not simulated to share any disease haplotype i.e its a control sample.
 
-
 Note: Please remove duplicated columns before analysing the results .txt file.
+
+Now, you can analyse the FoundHaplo simulation results in results_cases.txt and results_controls.txt.
