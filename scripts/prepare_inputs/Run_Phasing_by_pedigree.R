@@ -14,5 +14,7 @@ library(stringr)
 library(doParallel)
 library(parallel)
 
+class(n.cores)="numeric"
+
 Phasing_by_pedigree(input_vcf,output_DIR,sample_info_file,n.cores)
 
