@@ -19,6 +19,9 @@ see [documentation](https://github.com/bahlolab/FoundHaplo/blob/main/Documentati
 ## Install the R package using devtools packages
 
 ```R
+install.packages("RMariaDB")
+```
+```R
 devtools::install_github("bahlolab/FoundHaplo")
 library(FoundHaplo)
 ```
